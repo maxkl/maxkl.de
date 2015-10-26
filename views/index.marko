@@ -7,13 +7,13 @@
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 	</head>
 	<body>
-		<section for="section in data.sections">
+		<for each="section in data.sections">
 			<h2>${section.title}</h2>
 			<ul>
 				<li for="link in section.links">
 					<a href="${link.href}" target="${link.external ? '_blank' : null}">${link.title}</a>
 				</li>
 			</ul>
-		</section>
+		</for>
 	</body>
 </html>
