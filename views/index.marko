@@ -11,7 +11,7 @@
 			<h2>${section.title}</h2>
 			<ul>
 				<li for="link in section.links">
-					<a href="${link.href}" target="${link.external ? '_blank' : '_self'}">${link.title}</a>
+					<a href="${link.href}" target="${link.external ? '_blank' : null}">${link.title}</a>
 				</li>
 			</ul>
 		</section>
