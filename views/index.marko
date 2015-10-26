@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>maxkl.de</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+	</head>
+	<body>
+		<section for="section in data.sections">
+			<h2>${section.title}</h2>
+			<ul>
+				<li for="link in section.links">
+					<a href="${link.href}" target="${link.external ? '_blank' : '_self'}">${link.title}</a>
+				</li>
+			</ul>
+		</section>
+	</body>
+</html>

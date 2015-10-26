@@ -9,4 +9,4 @@ node_modules/
 # Other
 config.json
 subpages/*
-
+*.marko.js

@@ -1,0 +1,50 @@
+
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+
+	font: 16px Menlo, Monaco, Consolas, "Courier New", monospace;
+	color: #444;
+	background-color: #FFFFFC;
+	/*background-color: #fff;*/
+}
+
+body {
+	width: 70%;
+	margin: 0 auto;
+}
+
+a {
+	color: #4077c8;
+	text-decoration: none;
+
+	transition: color .3s ease;
+}
+
+a[target="_blank"]:before {
+	display: inline-block;
+	content: '\2197';
+	margin-right: .2em;
+
+	font-weight: bold;
+}
+
+a:hover {
+	color: #3e55a3;
+	text-decoration: underline;
+}
+
+a:active {
+	color: #3a4387;
+}
+
+@media (max-width: 768px) {
+	body {
+		width: 100%;
+		padding: 0 10px;
+	}
+}
