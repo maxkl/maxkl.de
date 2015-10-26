@@ -1,0 +1,12 @@
+
+# IntelliJ/WebStorm
+.idea/
+*.iml
+
+# node.js
+node_modules/
+
+# Other
+config.json
+subpages/*
+

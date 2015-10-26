@@ -1,1 +1,7 @@
-{}
+{
+  "dependencies": {
+    "express": "^4.13.3",
+    "marko": "^2.7.27",
+    "serve-static": "^1.10.0"
+  }
+}
