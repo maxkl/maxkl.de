@@ -11,7 +11,9 @@ var fs = require("fs"),
 
 // npm modules
 var express = require("express"),
-	serveStatic = require("serve-static");
+	serveStatic = require("serve-static"),
+	mongodb = require("mongodb"),
+	MongoClient = mongodb.MongoClient;
 
 // Custom/local modules
 var readConfig = require("./lib/readConfig");
@@ -33,103 +35,116 @@ var options = {
 	cert: fs.readFileSync(config.sslCert)
 };
 
-// Create app
-var app = express();
-
-// Global static files
-app.use("/", serveStatic("./public"));
-
-// Global routes
-require("./routes/index")(app);
-
-// TODO: mongodb for vertretungsplan (database: 'maxkl_de')
-
-// Search for subpages
-try {
-	// This throws an error if subpages/ does not exist
-	fs.lstat(subpageDir);
-
-	// Iterate over every file in subpages/
-	fs.readdirSync(subpageDir).forEach(function (file) {
-		var name = file;
-
-		// Get full path
-		file = path.resolve(subpageDir, file);
-
-		// Skip if file is not a directory
-		if(!fs.lstatSync(file).isDirectory()) return;
-
-		var publicDir = path.join(file, "public"),
-			indexFile = path.join(file, "index.js"),
-			route = "/" + name;
-
-		// Public/static files (html, css, js, ...)
-		try {
-			// throws an error if publicDir does not exist
-			var stat = fs.lstatSync(publicDir);
-
-			// We can only serve from a directory
-			if(stat.isDirectory()) {
-				app.use(route, serveStatic(publicDir));
-			}
-		} catch(e) {
-			// Ignore (publicDir does not exist or is not a directory)
-		}
-
-		// index.js file (for page-specific logic)
-		try {
-			// require() throws an error if the file does not exist or can not be read
-			// TODO: check if file exists, then require and log errors (e.g. modules not found, syntax errors, ...)
-			var createMiddleware = require(indexFile);
-
-			// This throws an error if createMiddleware is not a function
-			var middleware = createMiddleware();
-
-			// Check if middleware is valid
-			if(typeof middleware === "function") {
-				// Mount the middleware
-				app.use(route, middleware);
-			}
-		} catch(e) {
-			// Ignore (The subpage has no custom logic)
-		}
-	});
-} catch(e) {
-	// Ignore (No subpages/ directory available)
-}
-
-// Catch-all middleware to display 404 errors
-app.use(function (req, res, next) {
-	var err = new Error();
-	err.status = 404;
-	next(err);
-});
-
-// Error handler for 404 errors
-app.use(function (err, req, res, next) {
-	if(err.status === 404) {
-		res.status(404);
-
-		error404Template.render({}, res);
-	} else {
-		next(err);
+// Connect to mongodb database
+MongoClient.connect(config.dbUrl, options, function (err, db) {
+	if(err) {
+		console.error(err);
+		return;
 	}
-});
 
-// Assume all other errors to be server errors (500)
-app.use(function (err, req, res, next) {
-	res.status(500);
+	// Create app
+	var app = express();
 
-	error500Template.render({}, res);
-});
+	app.set("db", db);
 
-// The server runs on HTTPS only
-https.createServer(options, app).listen(config.httpsPort);
+	// Global static files
+	app.use("/", serveStatic("./public"));
 
-// Redirect all HTTP requests to HTTPS
-http.createServer(function (req, res) {
-	res.writeHead(301, {
-		"Location": "https://" + req.headers["host"] + req.url
+	// Global routes
+	require("./routes/index")(app, db);
+
+	// Search for subpages
+	try {
+		// TODO: async, better error handling
+
+		// This throws an error if subpages/ does not exist
+		fs.lstat(subpageDir);
+
+		// Iterate over every file in subpages/
+		fs.readdirSync(subpageDir).forEach(function (file) {
+			var name = file;
+
+			// Get full path
+			file = path.resolve(subpageDir, file);
+
+			// Skip if file is not a directory
+			if(!fs.lstatSync(file).isDirectory()) return;
+
+			var publicDir = path.join(file, "public"),
+				indexFile = path.join(file, "index.js"),
+				route = "/" + name;
+
+			// Public/static files (html, css, js, ...)
+			try {
+				// throws an error if publicDir does not exist
+				var stat = fs.lstatSync(publicDir);
+
+				// We can only serve from a directory
+				if(stat.isDirectory()) {
+					app.use(route, serveStatic(publicDir));
+				}
+			} catch(e) {
+				// Ignore (publicDir does not exist or is not a directory)
+			}
+
+			// index.js file (for page-specific logic)
+			try {
+				// require() throws an error if the file does not exist or can not be read
+				// TODO: check if file exists, then require and log errors (e.g. modules not found, syntax errors, ...)
+				var createMiddleware = require(indexFile);
+
+				// This throws an error if createMiddleware is not a function
+				var middleware = createMiddleware();
+
+				// Check if middleware is valid
+				if(typeof middleware === "function") {
+					// Mount the middleware
+					app.use(route, middleware);
+				}
+			} catch(e) {
+				// Ignore (The subpage has no custom logic)
+			}
+		});
+	} catch(e) {
+		// Ignore (No subpages/ directory available)
+	}
+
+	// Catch-all middleware to display 404 errors
+	app.use(function (req, res, next) {
+		var err = new Error();
+		err.status = 404;
+		next(err);
 	});
-	res.end();
-}).listen(config.httpPort);
+
+	// Error handler for 404 errors
+	app.use(function (err, req, res, next) {
+		if(err.status === 404) {
+			res.status(404);
+
+			error404Template.render({}, res);
+		} else {
+			next(err);
+		}
+	});
+
+	// Assume all other errors to be server errors (500)
+	app.use(function (err, req, res, next) {
+		console.error("Internal server error", err);
+
+		res.status(500);
+
+		error500Template.render({}, res);
+	});
+
+	// The server runs on HTTPS only
+	https.createServer(options, app).listen(config.httpsPort);
+
+	// Redirect all HTTP requests to HTTPS
+	http.createServer(function (req, res) {
+		res.writeHead(301, {
+			"Location": "https://" + req.headers["host"] + req.url
+		});
+		res.end();
+	}).listen(config.httpPort);
+
+});
