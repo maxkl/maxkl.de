@@ -19,6 +19,7 @@ var readConfig = require("./lib/readConfig");
 // Register .marko template file type
 require("marko/node-require").install();
 
+// Load error templates
 var error404Template = require("./views/errors/404.marko"),
 	error500Template = require("./views/errors/500.marko");
 
@@ -40,6 +41,8 @@ app.use("/", serveStatic("./public"));
 
 // Global routes
 require("./routes/index")(app);
+
+// TODO: mongodb for vertretungsplan (database: 'maxkl_de')
 
 // Search for subpages
 try {
@@ -76,6 +79,7 @@ try {
 		// index.js file (for page-specific logic)
 		try {
 			// require() throws an error if the file does not exist or can not be read
+			// TODO: check if file exists, then require and log errors (e.g. modules not found, syntax errors, ...)
 			var createMiddleware = require(indexFile);
 
 			// This throws an error if createMiddleware is not a function
@@ -101,15 +105,12 @@ app.use(function (req, res, next) {
 	next(err);
 });
 
+// Error handler for 404 errors
 app.use(function (err, req, res, next) {
 	if(err.status === 404) {
 		res.status(404);
 
 		error404Template.render({}, res);
-
-		//res.render("errors/404", {
-		//	err: err
-		//});
 	} else {
 		next(err);
 	}
@@ -120,10 +121,6 @@ app.use(function (err, req, res, next) {
 	res.status(500);
 
 	error500Template.render({}, res);
-
-	//res.render("errors/500", {
-	//	err: err
-	//});
 });
 
 // The server runs on HTTPS only
