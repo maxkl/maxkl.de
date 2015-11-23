@@ -94,7 +94,7 @@ MongoClient.connect(config.dbUrl, options, function (err, db) {
 				var createMiddleware = require(indexFile);
 
 				// This throws an error if createMiddleware is not a function
-				var middleware = createMiddleware();
+				var middleware = createMiddleware(app);
 
 				// Check if middleware is valid
 				if(typeof middleware === "function") {
