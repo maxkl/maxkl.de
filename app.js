@@ -103,6 +103,7 @@ MongoClient.connect(config.dbUrl, options, function (err, db) {
 				}
 			} catch(e) {
 				// Ignore (The subpage has no custom logic)
+				console.error(e);
 			}
 		});
 	} catch(e) {
