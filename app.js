@@ -92,7 +92,7 @@ function ldirectoryExists(path) {
 /**
  * TODO: async
  */
-function includeSubpages() {
+function includeSubpages(app) {
 	// subpages/ has to exist and be a directory
 	if(!directoryExists(subpageDir))
 		return;
@@ -171,7 +171,7 @@ MongoClient.connect(config.dbUrl, options, function (err, db) {
 	require("./routes/index")(app, db);
 
 	// Search for subpages
-	includeSubpages();
+	includeSubpages(app);
 
 	// Catch-all middleware to display 404 errors
 	app.use(function (req, res, next) {
