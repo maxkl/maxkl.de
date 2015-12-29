@@ -94,8 +94,10 @@ function ldirectoryExists(path) {
  */
 function includeSubpages(app) {
 	// subpages/ has to exist and be a directory
-	if(!directoryExists(subpageDir))
+	if(!directoryExists(subpageDir)) {
+		console.log(subpageDir + ":", "not a directory");
 		return;
+	}
 
 	// Iterate over every file in subpages/
 	fs.readdirSync(subpageDir).forEach(function (file) {
@@ -105,9 +107,15 @@ function includeSubpages(app) {
 		file = path.resolve(subpageDir, name);
 
 		// Skip if file is not a directory
-		if(!directoryExists(file))
+		if(!directoryExists(file)) {
+			console.error(file + ":", "not a directory");
 			return;
+		}
 
+		/*
+		 public/    Static files
+		 index.js   Index file
+		 */
 		var publicDir = path.join(file, "public"),
 			indexFile = path.join(file, "index.js"),
 			route = "/" + name;
@@ -117,7 +125,7 @@ function includeSubpages(app) {
 			app.use(route, serveStatic(publicDir));
 		}
 
-		// index.js file (for page-specific logic)
+		// include index.js file (for page-specific logic)
 		if(fileExists(indexFile)) {
 			var initSubpage;
 			try {
@@ -143,7 +151,7 @@ function includeSubpages(app) {
 				return;
 			}
 
-			// If initSubpage returns a function, use it as middleware
+			// If initSubpage returned a function, use it as middleware
 			if(typeof ret === "function") {
 				// Mount the middleware
 				app.use(route, ret);
