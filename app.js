@@ -27,13 +27,130 @@ var error404Template = require("./views/errors/404.marko"),
 
 // Configuration variables
 var config = readConfig("./config.json", __dirname),
-	subpageDir = path.resolve("subpages");
+	subpageDir = path.join(__dirname, "subpages");
 
 // SSL key & certificate for HTTPS
 var options = {
 	key: fs.readFileSync(config.sslKey),
 	cert: fs.readFileSync(config.sslCert)
 };
+
+//region *exists* functions
+
+function exists(path) {
+	try {
+		fs.statSync(path);
+		return true;
+	} catch(e) {
+		return false;
+	}
+}
+
+function lexists(path) {
+	try {
+		fs.lstatSync(path);
+		return true;
+	} catch(e) {
+		return false;
+	}
+}
+
+function fileExists(path) {
+	try {
+		return fs.statSync(path).isFile();
+	} catch(e) {
+		return false;
+	}
+}
+
+function lfileExists(path) {
+	try {
+		return fs.lstatSync(path).isFile();
+	} catch(e) {
+		return false;
+	}
+}
+
+function directoryExists(path) {
+	try {
+		return fs.statSync(path).isDirectory();
+	} catch(e) {
+		return false;
+	}
+}
+
+function ldirectoryExists(path) {
+	try {
+		return fs.lstatSync(path).isDirectory();
+	} catch(e) {
+		return false;
+	}
+}
+
+//endregion
+
+/**
+ * TODO: async
+ */
+function includeSubpages() {
+	// subpages/ has to exist and be a directory
+	if(!directoryExists(subpageDir))
+		return;
+
+	// Iterate over every file in subpages/
+	fs.readdirSync(subpageDir).forEach(function (file) {
+		var name = file;
+
+		// Get full path
+		file = path.resolve(subpageDir, name);
+
+		// Skip if file is not a directory
+		if(!directoryExists(file))
+			return;
+
+		var publicDir = path.join(file, "public"),
+			indexFile = path.join(file, "index.js"),
+			route = "/" + name;
+
+		// Public/static files (html, css, js, ...)
+		if(directoryExists(publicDir)) {
+			app.use(route, serveStatic(publicDir));
+		}
+
+		// index.js file (for page-specific logic)
+		if(fileExists(indexFile)) {
+			var initSubpage;
+			try {
+				initSubpage = require(indexFile);
+			} catch(e) {
+				// An error occured while parsing/executing the file
+				console.error(indexFile + ":", e);
+				return;
+			}
+
+			// initSubpage has to be a function
+			if(typeof initSubpage !== "function") {
+				console.error(indexFile + ":", "module.exports is not a function");
+				return;
+			}
+
+			var ret;
+			try {
+				ret = initSubpage(app);
+			} catch(e) {
+				// An error occured in the initSubpage function
+				console.error(indexFile + ":", e);
+				return;
+			}
+
+			// If initSubpage returns a function, use it as middleware
+			if(typeof ret === "function") {
+				// Mount the middleware
+				app.use(route, ret);
+			}
+		}
+	});
+}
 
 // Connect to mongodb database
 MongoClient.connect(config.dbUrl, options, function (err, db) {
@@ -54,61 +171,7 @@ MongoClient.connect(config.dbUrl, options, function (err, db) {
 	require("./routes/index")(app, db);
 
 	// Search for subpages
-	try {
-		// TODO: async, better error handling
-
-		// This throws an error if subpages/ does not exist
-		fs.lstat(subpageDir);
-
-		// Iterate over every file in subpages/
-		fs.readdirSync(subpageDir).forEach(function (file) {
-			var name = file;
-
-			// Get full path
-			file = path.resolve(subpageDir, file);
-
-			// Skip if file is not a directory
-			if(!fs.lstatSync(file).isDirectory()) return;
-
-			var publicDir = path.join(file, "public"),
-				indexFile = path.join(file, "index.js"),
-				route = "/" + name;
-
-			// Public/static files (html, css, js, ...)
-			try {
-				// throws an error if publicDir does not exist
-				var stat = fs.lstatSync(publicDir);
-
-				// We can only serve from a directory
-				if(stat.isDirectory()) {
-					app.use(route, serveStatic(publicDir));
-				}
-			} catch(e) {
-				// Ignore (publicDir does not exist or is not a directory)
-			}
-
-			// index.js file (for page-specific logic)
-			try {
-				// require() throws an error if the file does not exist or can not be read
-				// TODO: check if file exists, then require and log errors (e.g. modules not found, syntax errors, ...)
-				var createMiddleware = require(indexFile);
-
-				// This throws an error if createMiddleware is not a function
-				var middleware = createMiddleware(app);
-
-				// Check if middleware is valid
-				if(typeof middleware === "function") {
-					// Mount the middleware
-					app.use(route, middleware);
-				}
-			} catch(e) {
-				// Ignore (The subpage has no custom logic)
-				console.error(e);
-			}
-		});
-	} catch(e) {
-		// Ignore (No subpages/ directory available)
-	}
+	includeSubpages();
 
 	// Catch-all middleware to display 404 errors
 	app.use(function (req, res, next) {
