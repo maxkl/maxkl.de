@@ -35,6 +35,12 @@ var options = {
 	cert: fs.readFileSync(config.sslCert)
 };
 
+if(config.sslCa) {
+	options.ca = config.sslCa.map(function (file) {
+		return fs.readFileSync(file);
+	});
+}
+
 //region *exists* functions
 
 function exists(path) {
