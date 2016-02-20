@@ -18,6 +18,6 @@
 
 		Cookie message:
 		<div>Cookies accepted: ${"" + data.cookiesAccepted}</div>
-		<include ("./parts/cookieMessage.marko") cookiesAccepted="$data.cookiesAccepted" />
+		<include ("./parts/cookieMessage.marko") template-data="{ cookiesAccepted: data.cookiesAccepted }" />
 	</body>
 </html>
