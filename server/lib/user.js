@@ -220,12 +220,11 @@ function createMiddleware(options) {
 
 	return function middleware(req, res, next) {
 		// Don't overwrite
-		if(req.user) {
-			next();
-			return;
+		if(!req.user) {
+			req.user = new User(req, db);
 		}
 
-		req.user = new User(req, db);
+		next();
 	}
 }
 
