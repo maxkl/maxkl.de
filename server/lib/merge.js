@@ -3,6 +3,8 @@
  * License: MIT
  */
 
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+
 /**
  * Merge (only!) object literals
  * @param {Object} target
@@ -14,7 +16,7 @@ function merge(target) {
 			var source = arguments[i];
 			if(typeof source !== "undefined" && source !== null) {
 				for(var prop in source) {
-					if(source.hasOwnProperty(prop)) {
+					if(hasOwnProperty.call(source, prop)) {
 						target[prop] = source[prop];
 					}
 				}
