@@ -203,7 +203,9 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 	}));
 
 	app.use(function (req, res, next) {
+		console.log("req.cookies", req.cookies);
 		res.locals.cookiesAccepted = !!req.cookies["a"];
+		console.log("Cookies accepted:", res.locals.cookiesAccepted);
 		next();
 	});
 
