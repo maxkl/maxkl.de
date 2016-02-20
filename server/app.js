@@ -22,6 +22,7 @@ var express = require("express"),
 // Custom/local modules
 var readConfig = require("./lib/readConfig"),
 	merge = require("./lib/merge"),
+	getViewData = require("./lib/getViewData"),
 	user = require("./lib/user");
 
 // Register *.marko template file type
@@ -221,7 +222,7 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 	// Global static files
 	app.use("/", serveStatic("./public"));
 
-	// TODO login/register/logout pages, cookie message, js message
+	// TODO login/register/logout pages
 
 	// Global routes
 	require("./routes/index")(app, db);
@@ -242,7 +243,7 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 		if(err.status !== 404) return next(err);
 
 		res.status(404);
-		error404Template.render(merge({}, app.locals, res.locals), res);
+		error404Template.render(getViewData(res), res);
 	});
 
 	// Assume all other errors to be server errors (500)
@@ -250,7 +251,7 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 		console.error("Internal server error:", err.stack || err);
 
 		res.status(500);
-		error500Template.render(merge({}, app.locals, res.locals), res);
+		error500Template.render(getViewData(res), res);
 	});
 
 	// The server runs on HTTPS only

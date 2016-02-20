@@ -5,20 +5,17 @@
 
 var path = require("path");
 var express = require("express");
-var merge = require("../lib/merge");
+var merge = require("../lib/merge"),
+	getViewData = require("../lib/getViewData");
 var sites = require("../../sites.json");
 
 var indexTemplate = require("../views/index.marko");
 
-var model = {
-	sections: sites
-};
-
 module.exports = function (app) {
 
 	app.get("/", function (req, res) {
-		indexTemplate.render(merge({}, app.locals, res.locals, model, {
-			$global: merge({}, app.locals.$global, res.locals.$global)
+		indexTemplate.render(getViewData(res, {
+			sections: sites
 		}), res);
 	});
 
