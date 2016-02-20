@@ -151,6 +151,7 @@ function includeSubpages(app) {
 		// Exclude hidden files & directories
 		if(filename[0] == ".") {
 			console.log("Excluding hidden file " + filename);
+			return;
 		}
 
 		// Get full path
