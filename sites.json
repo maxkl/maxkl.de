@@ -58,11 +58,11 @@
     "links": [
       {
         "title": "Powered by",
-        "href": "/powered-by.html"
+        "href": "/powered-by"
       },
       {
-        "title": "Impressum",
-        "href": "/impressum.html"
+        "title": "Legal notice",
+        "href": "/legal"
       }
     ]
   }

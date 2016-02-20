@@ -9,12 +9,26 @@ var merge = require("../lib/merge"),
 	getViewData = require("../lib/getViewData");
 var sites = require("../../sites.json");
 
-var indexTemplate = require("../views/index.marko");
+var indexTemplate = require("../views/index.marko"),
+	poweredByTemplate = require("../views/powered-by.marko"),
+	legalTemplate = require("../views/legal.marko");
 
 module.exports = function (app) {
 
 	app.get("/", function (req, res) {
 		indexTemplate.render(getViewData(res, {
+			sections: sites
+		}), res);
+	});
+
+	app.get("/powered-by", function (req, res) {
+		poweredByTemplate.render(getViewData(res, {
+			sections: sites
+		}), res);
+	});
+
+	app.get("/legal", function (req, res) {
+		legalTemplate.render(getViewData(res, {
 			sections: sites
 		}), res);
 	});
