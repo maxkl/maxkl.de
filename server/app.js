@@ -111,9 +111,9 @@ function includeSubpage(app, directory, name) {
 	if(fileExists(indexFile)) {
 		try {
 			var initSubpage = require(indexFile);
-		} catch(e) {
+		} catch(err) {
 			// An error occured while parsing/executing the file
-			console.error(indexFile + ":", e);
+			console.error(indexFile + ":", err.stack || err);
 			return;
 		}
 
@@ -125,9 +125,9 @@ function includeSubpage(app, directory, name) {
 
 		try {
 			var ret = initSubpage(app);
-		} catch(e) {
+		} catch(err) {
 			// An error occured in the initSubpage function
-			console.error(indexFile + ":", e);
+			console.error(indexFile + ":", err.stack || err);
 			return;
 		}
 
@@ -189,7 +189,7 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 
 	// Catch-all middleware to display 404 errors
 	app.use(function (req, res, next) {
-		var err = new Error();
+		var err = new Error("Not Found");
 		err.status = 404;
 		next(err);
 	});
@@ -205,7 +205,7 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 
 	// Assume all other errors to be server errors (500)
 	app.use(function (err, req, res, next) {
-		console.error("Internal server error", err);
+		console.error("Internal server error:", err.stack || err);
 
 		res.status(500);
 		error500Template.render(merge({}, app.locals, res.locals), res);
