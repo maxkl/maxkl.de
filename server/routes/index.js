@@ -5,7 +5,7 @@
 
 var path = require("path");
 var express = require("express");
-var sites = require("../sites.json");
+var sites = require("../../sites.json");
 
 var indexTemplate = require("../views/index.marko");
 
@@ -17,9 +17,6 @@ module.exports = function (app) {
 
 	app.get("/", function (req, res) {
 		indexTemplate.render(model, res);
-		//res.render("index", model);
 	});
-
-	//app.use("/vp", require(extDir + "/vp")());
 
 };

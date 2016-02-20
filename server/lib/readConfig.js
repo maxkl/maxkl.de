@@ -21,6 +21,9 @@ module.exports = function (file, root) {
 				return path.resolve(root, "" + file);
 			});
 		config.dbUrl = config.dbUrl || null;
+
+		config.publicDir = config.publicDir ? "" + config.publicDir : "public";
+		config.indexFile = config.indexFile ? "" + config.indexFile : "index.js";
 		
 		return config;
 	} catch(e) {
