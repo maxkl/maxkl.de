@@ -12,12 +12,16 @@ var fs = require("fs"),
 // npm modules
 var express = require("express"),
 	serveStatic = require("serve-static"),
+	session = require("express-session"),
 	mongodb = require("mongodb"),
+	MongoStore = require("connect-mongo")(session),
+	bodyParser = require("body-parser"),
 	MongoClient = mongodb.MongoClient;
 
 // Custom/local modules
 var readConfig = require("./lib/readConfig"),
-	merge = require("./lib/merge");
+	merge = require("./lib/merge"),
+	user = require("./lib/user");
 
 // Register *.marko template file type
 require("marko/node-require").install();
@@ -179,8 +183,38 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 	// Assign db to app so that subpages can access it
 	app.set("db", db);
 
+	app.use(bodyParser.urlencoded({
+		extended: false
+	}));
+
+	//app.use(bodyParser.json());
+
+	app.use(session({
+		cookie: {
+			secure: true
+		},
+		name: "sid",
+		resave: false,
+		saveUninitialized: false,
+		secret: "Magic is magnificient! Ministry of mediocre mangos! Is this true?",
+		store: new MongoStore({
+			db: db
+		})
+	}));
+
+	app.use(function (req, res, next) {
+		res.locals.cookiesAccepted = !!req.cookies["a"];
+		next();
+	});
+
+	app.use(user({
+		db: db
+	}));
+
 	// Global static files
 	app.use("/", serveStatic("./public"));
+
+	// TODO login/register/logout pages, cookie message, js message
 
 	// Global routes
 	require("./routes/index")(app, db);
