@@ -17,6 +17,7 @@
 		</for>
 
 		Cookie message:
-		<include ("./parts/cookieMessage.marko") template-data="data" />
+		<div>Cookies accepted: ${"" + data.cookiesAccepted}</div>
+		<include ("./parts/cookieMessage.marko") cookiesAccepted="$data.cookiesAccepted" />
 	</body>
 </html>
