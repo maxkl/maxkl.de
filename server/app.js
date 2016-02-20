@@ -16,7 +16,8 @@ var express = require("express"),
 	MongoClient = mongodb.MongoClient;
 
 // Custom/local modules
-var readConfig = require("./lib/readConfig");
+var readConfig = require("./lib/readConfig"),
+	merge = require("./lib/merge");
 
 // Register *.marko template file type
 require("marko/node-require").install();
@@ -170,6 +171,10 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 
 	var app = express();
 
+	app.locals.site = {
+		title: config.site.title
+	};
+
 	// Assign db to app so that subpages can access it
 	app.set("db", db);
 
@@ -195,7 +200,7 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 		if(err.status !== 404) return next(err);
 
 		res.status(404);
-		error404Template.render({}, res);
+		error404Template.render(merge({}, app.locals, res.locals), res);
 	});
 
 	// Assume all other errors to be server errors (500)
@@ -203,7 +208,7 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 		console.error("Internal server error", err);
 
 		res.status(500);
-		error500Template.render({}, res);
+		error500Template.render(merge({}, app.locals, res.locals), res);
 	});
 
 	// The server runs on HTTPS only

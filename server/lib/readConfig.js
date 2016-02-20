@@ -24,6 +24,8 @@ module.exports = function (file, root) {
 
 		config.publicDir = config.publicDir ? "" + config.publicDir : "public";
 		config.indexFile = config.indexFile ? "" + config.indexFile : "index.js";
+
+		config.site = config.site || {};
 		
 		return config;
 	} catch(e) {
