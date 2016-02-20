@@ -13,6 +13,7 @@ var fs = require("fs"),
 var express = require("express"),
 	serveStatic = require("serve-static"),
 	session = require("express-session"),
+	cookieParser = require("cookie-parser"),
 	mongodb = require("mongodb"),
 	MongoStore = require("connect-mongo")(session),
 	bodyParser = require("body-parser"),
@@ -201,6 +202,8 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 			db: db
 		})
 	}));
+
+	app.use(cookieParser());
 
 	app.use(function (req, res, next) {
 		console.log("req.cookies", req.cookies);
