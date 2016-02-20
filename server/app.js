@@ -221,13 +221,13 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 	});
 
 	// Redirect all HTTP requests to HTTPS
-	http.createServer(function (req, res) {
+	var httpServer = http.createServer(function (req, res) {
 		res.writeHead(301, {
 			"Location": "https://" + req.headers["host"] + req.url
 		});
 		res.end();
 	}).listen(config.httpPort, function () {
-		var addr = httpsServer.address(),
+		var addr = httpServer.address(),
 			addrString = (addr.family == "IPv6" ? "[" + addr.address + "]" : addr.address) + ":" + addr.port;
 
 		console.log("HTTP server listening on " + addrString);
