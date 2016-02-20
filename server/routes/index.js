@@ -17,7 +17,9 @@ var model = {
 module.exports = function (app) {
 
 	app.get("/", function (req, res) {
-		indexTemplate.render(merge({}, app.locals, res.locals, model), res);
+		indexTemplate.render(merge({}, app.locals, res.locals, model, {
+			$global: merge({}, app.locals.$global, res.locals.$global)
+		}), res);
 	});
 
 };

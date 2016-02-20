@@ -181,6 +181,10 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 		title: config.site.title
 	};
 
+	app.locals.$global = {
+		site: app.locals.site
+	};
+
 	// Assign db to app so that subpages can access it
 	app.set("db", db);
 
@@ -206,9 +210,7 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 	app.use(cookieParser());
 
 	app.use(function (req, res, next) {
-		console.log("req.cookies", req.cookies);
-		res.locals.cookiesAccepted = !!req.cookies["a"];
-		console.log("Cookies accepted:", res.locals.cookiesAccepted);
+		res.locals.cookiesAccepted = req.cookiesAccepted = !!req.cookies["a"];
 		next();
 	});
 

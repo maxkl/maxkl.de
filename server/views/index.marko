@@ -1,3 +1,18 @@
+<layout-use template="./layout/default.marko">
+	<layout-put into="title" value="Start" />
+	<layout-put into="content" >
+		<for each="section in data.sections">
+			<h2>${section.title}</h2>
+			<ul>
+				<li for="link in section.links">
+					<a href="${link.href}" target="${link.external ? '_blank' : null}">${link.title}</a>
+				</li>
+			</ul>
+		</for>
+	</layout-put>
+</layout-use>
+
+<!--
 <!DOCTYPE html>
 <html>
 	<head>
@@ -20,4 +35,4 @@
 		<div>Cookies accepted: ${"" + data.cookiesAccepted}</div>
 		<include ("./parts/cookieMessage.marko") cookiesAccepted="${data.cookiesAccepted}" />
 	</body>
-</html>
+</html>-->

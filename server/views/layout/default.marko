@@ -1,0 +1,26 @@
+<var name="global" value="out.global" />
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title><layout-placeholder name="title"></layout-placeholder> :: ${global.site.title}</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<link if="!data.excludeDefaultStylesheet" rel="stylesheet" type="text/css" href="/css/index.css" />
+		<layout-placeholder name="stylesheets"></layout-placeholder>
+	</head>
+	<body>
+		<layout-placeholder name="content"></layout-placeholder>
+
+		<div if="!data.excludeCookieMessage && !global.cookiesAccepted" class="cookie-message">
+			Please accept cookies! Now! Please!
+		</div>
+		<noscript if="!data.excludeJsMessage">
+			<div class="js-message">
+				Enable JavaScript! Hurry!
+			</div>
+		</noscript>
+
+		<layout-placeholder name="scripts"></layout-placeholder>
+	</body>
+</html>
