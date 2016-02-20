@@ -213,7 +213,12 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 	});
 
 	// The server runs on HTTPS only
-	https.createServer(options, app).listen(config.httpsPort);
+	var httpsServer = https.createServer(options, app).listen(config.httpsPort, function () {
+		var addr = httpsServer.address(),
+			addrString = (addr.family == "IPv6" ? "[" + addr.address + "]" : addr.address) + ":" + addr.port;
+
+		console.log("HTTPS server listening on " + addrString);
+	});
 
 	// Redirect all HTTP requests to HTTPS
 	http.createServer(function (req, res) {
@@ -221,7 +226,12 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 			"Location": "https://" + req.headers["host"] + req.url
 		});
 		res.end();
-	}).listen(config.httpPort);
+	}).listen(config.httpPort, function () {
+		var addr = httpsServer.address(),
+			addrString = (addr.family == "IPv6" ? "[" + addr.address + "]" : addr.address) + ":" + addr.port;
+
+		console.log("HTTP server listening on " + addrString);
+	});
 
 }).catch(function (err) {
 	console.error(err);
