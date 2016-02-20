@@ -12,7 +12,7 @@ module.exports = function (file, root) {
 	
 	try {
 		var config = require(file);
-		
+
 		config.httpPort = +config.httpPort || 8080;
 		config.httpsPort = +config.httpsPort || 8443;
 		config.sslKey = config.sslKey && path.resolve(root, "" + config.sslKey);
@@ -26,9 +26,9 @@ module.exports = function (file, root) {
 		config.indexFile = config.indexFile ? "" + config.indexFile : "index.js";
 
 		config.site = config.site || {};
-		
+
 		return config;
 	} catch(e) {
-		return null;
+		throw new Error("Failed to read config file:", e);
 	}
 };
