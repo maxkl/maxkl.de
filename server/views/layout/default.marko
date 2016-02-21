@@ -1,4 +1,4 @@
-<!--suppress ALL-->
+<!--suppress ALLs-->
 <!DOCTYPE html>
 <html>
 	<head>
@@ -9,12 +9,13 @@
 		<layout-placeholder name="stylesheets"></layout-placeholder>
 	</head>
 	<body>
-		<div if="!data.excludeCookieMessage && !out.global.cookiesAccepted" class="cookie-message">
+		<div if="!data.excludeCookieMessage && !out.global.cookiesAccepted" class="cookie-message" id="cookie-message">
 			This site uses cookies. They are required to store whether you are signed in
 			and to improve your overall experience.
 			They are <strong>not</strong> used to track you or to analyze your behaviour!
 			<strong>No cookies are created until you accept this message.</strong>
-			<a href="/accept-cookies" class="accept-cookies">Accept</a>
+			<br />
+			<a href="/accept-cookies" class="accept-cookies" id="accept-cookies">Accept</a>
 		</div>
 		<noscript if="!data.excludeJsMessage">
 			<div class="js-message">
@@ -28,6 +29,7 @@
 			<layout-placeholder name="content"></layout-placeholder>
 		</div>
 
+		<script src="/js/main.js"></script>
 		<layout-placeholder name="scripts"></layout-placeholder>
 	</body>
 </html>

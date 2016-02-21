@@ -33,4 +33,14 @@ module.exports = function (app) {
 		}), res);
 	});
 
+	app.get("/accept-cookies", function (req, res) {
+		res.cookie("a", "1", {
+			path: "/",
+			domain: ".maxkl.de",
+			maxAge: 60 * 60 * 24 * 365 * 25
+		});
+
+		res.redirect(req.header("referer"));
+	});
+
 };
