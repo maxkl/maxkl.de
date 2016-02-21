@@ -7,7 +7,7 @@
 		<meta name="description" content="${data.description}" />
 		<meta property="og:title" content="${data.ogTitle || data.title}" />
 		<meta property="og:description" content="${data.ogDescription || data.description}" />
-		<meta if="${data.ogImage}" property="og:image" content="${data.ogImage}" />
+		<meta if="data.ogImage" property="og:image" content="${data.ogImage}" />
 		<meta else property="og:image" content="" />
 		<!-- TODO: favicon -->
 
