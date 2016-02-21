@@ -2,10 +2,10 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title><layout-placeholder name="title">${data.title}</layout-placeholder> :: ${out.global.site.title}</title>
+		<title>${(data.title ? data.title + " :: " : "") + out.global.site.title}</title>
 
 		<meta name="description" content="${data.description}" />
-		<meta property="og:title" content="${data.ogTitle || data.title}" />
+		<meta property="og:title" content="${data.ogTitle || data.title || 'maxkl.de'}" />
 		<meta property="og:description" content="${data.ogDescription || data.description}" />
 		<meta if="data.ogImage" property="og:image" content="${data.ogImage}" />
 		<meta else property="og:image" content="" />
@@ -24,6 +24,13 @@
 			<strong>No cookies are created until you accept this message.</strong>
 			<br />
 			<a href="/accept-cookies" class="accept-cookies" id="accept-cookies">Accept</a>
+			<script>
+				document.getElementById("accept-cookies").addEventListener("click", function (evt) {
+					evt.preventDefault();
+					document.cookie = "a=1" + "; expires=" + new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 25) + "; path=/; domain=.maxkl.de";
+					document.getElementById("cookie-message").style.display = "none";
+				});
+			</script>
 		</div>
 		<noscript if="!data.excludeJsMessage">
 			<div class="js-message">
@@ -38,6 +45,5 @@
 		</div>
 
 		<script src="/js/main.js"></script>
-		<layout-placeholder name="scripts"></layout-placeholder>
 	</body>
 </html>
