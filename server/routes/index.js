@@ -6,7 +6,8 @@
 var path = require("path");
 var express = require("express");
 var merge = require("../lib/merge"),
-	getViewData = require("../lib/getViewData");
+	getViewData = require("../lib/getViewData"),
+	renderMarko = require("../lib/renderMarko");
 var sites = require("../../sites.json");
 
 var indexTemplate = require("../views/index.marko"),
@@ -18,9 +19,15 @@ const chars = "abcdefghijklmnopqrstuvwxyz";
 module.exports = function (app) {
 
 	app.get("/", function (req, res) {
-		indexTemplate.render(getViewData(res, {
+		//res.type("html");
+		//
+		//indexTemplate.render(getViewData(res, {
+		//	sections: sites
+		//}), res);
+
+		renderMarko(res, indexTemplate, {
 			sections: sites
-		}), res);
+		});
 	});
 
 	app.get("/powered-by", function (req, res) {
