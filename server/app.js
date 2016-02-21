@@ -33,7 +33,7 @@ require("marko/node-require").install();
 var rootDir = path.join(__dirname, ".."),
 	config = readConfig("config.json", rootDir),
 	publicDir = path.join(rootDir, "public"),
-	faviconDir = path.join(rootDir, "public-favicon"),
+	publicMetaDir = path.join(rootDir, "public-meta"),
 	subpageDir = path.join(rootDir, "subpages");
 
 // SSL key & certificate for HTTPS
@@ -181,11 +181,8 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 	// Global static files
 	app.use("/", serveStatic(publicDir));
 
-	// Favicon files (in separate dir to reduce clutter)
-	app.use("/", serveStatic(faviconDir));
-
-	// TODO: finish legal notice
-	// TODO login/register/logout pages (copy & modifiy from ll)
+	// Meta files like favicon, robots.txt, ... (in separate dir to reduce clutter)
+	app.use("/", serveStatic(publicMetaDir));
 
 	// Global routes
 	require("./routes/index")(app, db);
@@ -194,7 +191,7 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 	includeSubpages(app);
 
 	// Error handlers
-	require("./routes/errors")(app);
+	require("./routes/errors")(app, db);
 
 	// The server runs on HTTPS only
 	var httpsServer = https.createServer(options, app).listen(config.httpsPort, function () {

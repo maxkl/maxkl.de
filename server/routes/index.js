@@ -10,9 +10,7 @@ var indexTemplate = require("../views/index.marko"),
 	poweredByTemplate = require("../views/powered-by.marko"),
 	legalTemplate = require("../views/legal.marko");
 
-const chars = "abcdefghijklmnopqrstuvwxyz";
-
-module.exports = function (app) {
+module.exports = function (app, db) {
 
 	app.get("/", function (req, res) {
 		renderMarko(res, indexTemplate, {
@@ -38,20 +36,6 @@ module.exports = function (app) {
 		res.redirect(req.header("referer"));
 	});
 
-	app.get("/gzipped", function (req, res) {
-		res.type("html");
-
-		for(var i = 0; i < 200; i++) {
-			var chunk = "";
-
-			for(var j = 0; j < 100; j++) {
-				chunk += chars[Math.round(Math.random() * (chars.length - 1))];
-			}
-
-			res.write(chunk);
-		}
-
-		res.end();
-	});
+	require("./auth")(app, db);
 
 };
