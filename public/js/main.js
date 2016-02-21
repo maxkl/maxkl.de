@@ -16,4 +16,5 @@
 
 		document.getElementById("cookie-message").style.display = "none";
 	});
+
 })();
