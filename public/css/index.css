@@ -8,14 +8,8 @@ html, body {
 	padding: 0;
 
 	font: 16px Menlo, Monaco, Consolas, "Courier New", monospace;
-	color: #444;
-	background-color: #FFFFFC;
-	/*background-color: #fff;*/
-}
-
-body {
-	width: 70%;
-	margin: 0 auto;
+	color: #444444;
+	background-color: #fffffc;
 }
 
 a {
@@ -42,8 +36,29 @@ a:active {
 	color: #3a4387;
 }
 
+.content {
+	width: 70%;
+	margin: 0 auto;
+}
+
+.cookie-message, .js-message {
+	width: 70%;
+	margin: 0 auto;
+	padding: 5px 10px;
+}
+
+.cookie-message {
+	background-color: #2f355f;
+	color: #eeeeee;
+}
+
+.js-message {
+	background-color: #fff698;
+	color: #000000;
+}
+
 @media (max-width: 768px) {
-	body {
+	.content {
 		width: 100%;
 		padding: 0 10px;
 	}

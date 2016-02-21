@@ -222,7 +222,9 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 	// Global static files
 	app.use("/", serveStatic("./public"));
 
-	// TODO login/register/logout pages
+	// TODO: finish cookie message (with & without js), js message, legal notice
+	// TODO: back link on powered by & legal notice
+	// TODO login/register/logout pages (copy & modifiy from ll)
 
 	// Global routes
 	require("./routes/index")(app, db);
