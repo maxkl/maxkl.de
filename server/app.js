@@ -192,7 +192,9 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 
 	app.disable("x-powered-by");
 
-	app.use(compress());
+	app.use(compress({
+		threshold: 0
+	}));
 
 	app.use(bodyParser.urlencoded({
 		extended: false
