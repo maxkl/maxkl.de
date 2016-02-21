@@ -1,4 +1,3 @@
-<!--suppress ALLs-->
 <!DOCTYPE html>
 <html>
 	<head>
@@ -8,7 +7,8 @@
 		<meta name="description" content="${data.description}" />
 		<meta property="og:title" content="${data.ogTitle || data.title}" />
 		<meta property="og:description" content="${data.ogDescription || data.description}" />
-		<meta property="og:image" content="${data.ogImage || ''}" />
+		<meta if="${data.ogImage}" property="og:image" content="${data.ogImage}" />
+		<meta else property="og:image" content="" />
 		<!-- TODO: favicon -->
 
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
