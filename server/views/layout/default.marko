@@ -3,8 +3,16 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title><layout-placeholder name="title"></layout-placeholder> :: ${out.global.site.title}</title>
+		<title><layout-placeholder name="title">${data.title}</layout-placeholder> :: ${out.global.site.title}</title>
+
+		<meta name="description" content="${data.description}" />
+		<meta property="og:title" content="${data.ogTitle || data.title}" />
+		<meta property="og:description" content="${data.ogDescription || data.description}" />
+		<meta property="og:image" content="${data.ogImage || ''}" />
+		<!-- TODO: favicon -->
+
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
+
 		<link if="!data.excludeDefaultStylesheet" rel="stylesheet" type="text/css" href="/css/index.css" />
 		<layout-placeholder name="stylesheets"></layout-placeholder>
 	</head>
