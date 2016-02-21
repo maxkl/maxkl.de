@@ -77,4 +77,8 @@ a:active {
 		width: 100%;
 		padding: 0 10px;
 	}
+
+	.cookie-message, .js-message {
+		width: 100%;
+	}
 }
