@@ -30,8 +30,11 @@ var readConfig = require("./lib/readConfig"),
 require("marko/node-require").install();
 
 // Configuration variables
-var config = readConfig("../config.json", __dirname),
-	subpageDir = path.join(__dirname, "../subpages");
+var rootDir = path.join(__dirname, ".."),
+	config = readConfig("config.json", rootDir),
+	publicDir = path.join(rootDir, "public"),
+	faviconDir = path.join(rootDir, "public-favicon"),
+	subpageDir = path.join(rootDir, "subpages");
 
 // SSL key & certificate for HTTPS
 var options = {
@@ -176,7 +179,10 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 	}));
 
 	// Global static files
-	app.use("/", serveStatic("./public"));
+	app.use("/", serveStatic(publicDir));
+
+	// Favicon files (in separate dir to reduce clutter)
+	app.use("/", serveStatic(faviconDir));
 
 	// TODO: finish legal notice
 	// TODO login/register/logout pages (copy & modifiy from ll)
