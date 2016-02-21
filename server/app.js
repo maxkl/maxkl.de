@@ -12,6 +12,7 @@ var fs = require("fs"),
 // npm modules
 var express = require("express"),
 	serveStatic = require("serve-static"),
+	compress = require("compression"),
 	session = require("express-session"),
 	cookieParser = require("cookie-parser"),
 	mongodb = require("mongodb"),
@@ -188,6 +189,10 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 
 	// Assign db to app so that subpages can access it
 	app.set("db", db);
+
+	app.disable("x-powered-by");
+
+	app.use(compress());
 
 	app.use(bodyParser.urlencoded({
 		extended: false
