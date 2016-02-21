@@ -22,17 +22,12 @@ var express = require("express"),
 
 // Custom/local modules
 var readConfig = require("./lib/readConfig"),
-	merge = require("./lib/merge"),
-	getViewData = require("./lib/getViewData"),
+	exists = require("./lib/exists"),
 	renderMarko = require("./lib/renderMarko"),
 	user = require("./lib/user");
 
 // Register *.marko template file type
 require("marko/node-require").install();
-
-// Load error templates
-var error404Template = require("./views/errors/404.marko"),
-	error500Template = require("./views/errors/500.marko");
 
 // Configuration variables
 var config = readConfig("../config.json", __dirname),
@@ -50,60 +45,6 @@ if(config.sslCa) {
 	});
 }
 
-//region *exists* functions
-
-function exists(path) {
-	try {
-		fs.statSync(path);
-		return true;
-	} catch(e) {
-		return false;
-	}
-}
-
-function lexists(path) {
-	try {
-		fs.lstatSync(path);
-		return true;
-	} catch(e) {
-		return false;
-	}
-}
-
-function fileExists(path) {
-	try {
-		return fs.statSync(path).isFile();
-	} catch(e) {
-		return false;
-	}
-}
-
-function lfileExists(path) {
-	try {
-		return fs.lstatSync(path).isFile();
-	} catch(e) {
-		return false;
-	}
-}
-
-function directoryExists(path) {
-	try {
-		return fs.statSync(path).isDirectory();
-	} catch(e) {
-		return false;
-	}
-}
-
-function ldirectoryExists(path) {
-	try {
-		return fs.lstatSync(path).isDirectory();
-	} catch(e) {
-		return false;
-	}
-}
-
-//endregion
-
 function includeSubpage(app, directory, name) {
 	var publicDir = path.join(directory, config.publicDir),
 		indexFile = path.join(directory, config.indexFile),
@@ -111,12 +52,12 @@ function includeSubpage(app, directory, name) {
 		route = "/" + name.replace(/[?+*()]/g, "\\$&");
 
 	// Public/static files (html, css, js, ...)
-	if(directoryExists(publicDir)) {
+	if(exists.dir(publicDir)) {
 		app.use(route, serveStatic(publicDir));
 	}
 
 	// include index file (for page-specific logic)
-	if(fileExists(indexFile)) {
+	if(exists.file(indexFile)) {
 		try {
 			var initSubpage = require(indexFile);
 		} catch(err) {
@@ -149,8 +90,8 @@ function includeSubpage(app, directory, name) {
 
 function includeSubpages(app) {
 	// subpages/ must exist and must be a directory
-	if(!directoryExists(subpageDir)) {
-		console.log(subpageDir + ":", "not a directory");
+	if(!exists.dir(subpageDir)) {
+		console.error(subpageDir + ":", "not a directory");
 		return;
 	}
 
@@ -166,7 +107,7 @@ function includeSubpages(app) {
 		var subpagePath = path.resolve(subpageDir, filename);
 
 		// Warn & skip if subpage is not a directory
-		if(!directoryExists(subpagePath)) {
+		if(!exists.dir(subpagePath)) {
 			console.warn(subpagePath + ":", "not a directory");
 			return;
 		}
@@ -201,7 +142,7 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 		extended: false
 	}));
 
-	//app.use(bodyParser.json());
+	app.use(bodyParser.json());
 
 	app.use(session({
 		cookie: {
@@ -237,7 +178,7 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 	// Global static files
 	app.use("/", serveStatic("./public"));
 
-	// TODO: finish cookie message (with & without js), js message, legal notice
+	// TODO: finish legal notice
 	// TODO login/register/logout pages (copy & modifiy from ll)
 
 	// Global routes
@@ -246,31 +187,8 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 	// Search for subpages
 	includeSubpages(app);
 
-	// Catch-all middleware to display 404 errors
-	app.use(function (req, res, next) {
-		var err = new Error("Not Found");
-		err.status = 404;
-		next(err);
-	});
-
-	// Error handler for 404 errors
-	app.use(function (err, req, res, next) {
-		// Skip not a 404 error
-		if(err.status !== 404) return next(err);
-
-		res.status(404);
-		//error404Template.render(getViewData(res), res);
-		renderMarko(res, error404Template);
-	});
-
-	// Assume all other errors to be server errors (500)
-	app.use(function (err, req, res, next) {
-		console.error("Internal server error:", err.stack || err);
-
-		res.status(500);
-		//error500Template.render(getViewData(res), res);
-		renderMarko(res, error500Template);
-	});
+	// Error handlers
+	require("./routes/errors")(app);
 
 	// The server runs on HTTPS only
 	var httpsServer = https.createServer(options, app).listen(config.httpsPort, function () {

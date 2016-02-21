@@ -3,11 +3,7 @@
  * License: MIT
  */
 
-var path = require("path");
-var express = require("express");
-var merge = require("../lib/merge"),
-	getViewData = require("../lib/getViewData"),
-	renderMarko = require("../lib/renderMarko");
+var renderMarko = require("../lib/renderMarko");
 var sites = require("../../sites.json");
 
 var indexTemplate = require("../views/index.marko"),
@@ -25,18 +21,10 @@ module.exports = function (app) {
 	});
 
 	app.get("/powered-by", function (req, res) {
-		//poweredByTemplate.render(getViewData(res, {
-		//	sections: sites
-		//}), res);
-
 		renderMarko(res, poweredByTemplate);
 	});
 
 	app.get("/legal", function (req, res) {
-		//legalTemplate.render(getViewData(res, {
-		//	sections: sites
-		//}), res);
-
 		renderMarko(res, legalTemplate);
 	});
 
