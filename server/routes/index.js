@@ -19,27 +19,25 @@ const chars = "abcdefghijklmnopqrstuvwxyz";
 module.exports = function (app) {
 
 	app.get("/", function (req, res) {
-		//res.type("html");
-		//
-		//indexTemplate.render(getViewData(res, {
-		//	sections: sites
-		//}), res);
-
 		renderMarko(res, indexTemplate, {
 			sections: sites
 		});
 	});
 
 	app.get("/powered-by", function (req, res) {
-		poweredByTemplate.render(getViewData(res, {
-			sections: sites
-		}), res);
+		//poweredByTemplate.render(getViewData(res, {
+		//	sections: sites
+		//}), res);
+
+		renderMarko(res, poweredByTemplate);
 	});
 
 	app.get("/legal", function (req, res) {
-		legalTemplate.render(getViewData(res, {
-			sections: sites
-		}), res);
+		//legalTemplate.render(getViewData(res, {
+		//	sections: sites
+		//}), res);
+
+		renderMarko(res, legalTemplate);
 	});
 
 	app.get("/accept-cookies", function (req, res) {
