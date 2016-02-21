@@ -8,7 +8,7 @@ html, body {
 	padding: 0;
 
 	font: 16px Menlo, Monaco, Consolas, "Courier New", monospace;
-	color: #444444;
+	color: #444;
 	background-color: #fffffc;
 }
 
@@ -44,17 +44,32 @@ a:active {
 .cookie-message, .js-message {
 	width: 70%;
 	margin: 0 auto;
-	padding: 5px 10px;
+	padding: 15px 20px;
 }
 
 .cookie-message {
 	background-color: #2f355f;
-	color: #eeeeee;
+	color: #fff;
+}
+
+.accept-cookies {
+	display: inline-block;
+	padding: 5px 10px;
+	margin-top: 10px;
+
+	background-color: #fff;
+	color: #000;
+}
+
+.accept-cookies:hover {
+	text-decoration: none;
+	color: #000;
+	background-color: #ddd;
 }
 
 .js-message {
-	background-color: #fff698;
-	color: #000000;
+	background-color: #ffd625;
+	color: #000;
 }
 
 @media (max-width: 768px) {
