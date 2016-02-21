@@ -46,6 +46,8 @@ module.exports = function (app) {
 	});
 
 	app.get("/gzipped", function (req, res) {
+		res.type("html");
+
 		for(var i = 0; i < 200; i++) {
 			var chunk = "";
 
