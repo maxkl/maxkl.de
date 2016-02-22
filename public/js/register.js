@@ -6,7 +6,7 @@
 (function () {
 	"use strict";
 
-	var form = document.getElementById("register"),
+	var form = document.getElementById("registration"),
 		errorElem = document.getElementById("error"),
 		emailInput = document.getElementById("email"),
 		nameInput = document.getElementById("name"),
