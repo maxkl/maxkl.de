@@ -148,8 +148,14 @@ a:active {
 	background-color: #c4c4c4;
 }
 
-.block-form button:hover,
-.block-form input[type="submit"]:hover {
+.block-form button:enabled:hover,
+.block-form input[type="submit"]:enabled:hover {
+	background-color: #4783d7;
+	/*background-color: #4894ff;*/
+}
+
+.block-form button:enabled:active,
+.block-form input[type="submit"]:enabled:active {
 	/*background-color: #4783d7;*/
 	background-color: #4894ff;
 }
