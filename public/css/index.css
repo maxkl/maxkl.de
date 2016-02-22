@@ -72,6 +72,83 @@ a:active {
 	color: #000;
 }
 
+.red {
+	color: #cc392a;
+}
+
+.green {
+	color: #50b307;
+}
+
+.block-form {
+	display: block;
+}
+
+.block-form .form-row {
+	display: block;
+	padding: 10px;
+}
+
+.block-form input[type="text"],
+.block-form input[type="password"] {
+	display: inline-block;
+	width: 200px;
+	padding: 0 10px;
+
+	vertical-align: middle;
+	font: 16px Menlo, Monaco, Consolas, "Courier New", monospace;
+	line-height: 32px;
+	border: 1px solid #979797;
+	border-radius: 0;
+	background: none;
+	background-color: #e5e5e5;
+	box-shadow: 0 0 5px rgba(100, 100, 100, .3) inset;
+
+	transition: background-color .3s ease;
+}
+
+.block-form input[type="text"].error,
+.block-form input[type="password"].error {
+	border-color: #cc392a;
+	background-color: #ffc9af;
+}
+
+.block-form input[type="text"]:focus,
+.block-form input[type="password"]:focus {
+	background-color: #fff;
+	outline: 1px solid #4894ff;
+}
+
+.block-form button,
+.block-form input[type="submit"] {
+	display: inline-block;
+	width: auto;
+	padding: 0 10px;
+
+	vertical-align: middle;
+	font: 16px Menlo, Monaco, Consolas, "Courier New", monospace;
+	line-height: 32px;
+	border: none;
+	border-radius: 0;
+	background: none;
+	background-color: #192136;
+	color: #fff;
+	cursor: pointer;
+
+	transition: background-color .3s ease;
+}
+
+.block-form button:disabled,
+.block-form input[type="submit"]:disabled {
+
+}
+
+.block-form button:hover,
+.block-form input[type="submit"]:hover {
+	/*background-color: #4783d7;*/
+	background-color: #4894ff;
+}
+
 @media (max-width: 768px) {
 	.content {
 		width: 100%;
