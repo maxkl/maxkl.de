@@ -88,7 +88,7 @@
 	});
 
 	passwordInput.addEventListener("input", function () {
-		if(usernameInput.value) {
+		if(passwordInput.value) {
 			if(passwordError) {
 				passwordError = false;
 				passwordInput.classList.remove("error");
@@ -107,16 +107,23 @@
 		var username = usernameInput.value.trim(),
 			password = passwordInput.value;
 
-		if(!username) {
-			usernameError = true;
-			usernameInput.classList.add("error");
-			return;
-		}
+		if(!username || !password) {
+			if(!username) {
+				usernameError = true;
+				usernameInput.classList.add("error");
+			}
 
-		if(!password) {
-			passwordError = true;
-			passwordInput.classList.add("error");
+			if(!password) {
+				passwordError = true;
+				passwordInput.classList.add("error");
+			}
+
 			return;
+		} else {
+			usernameError = false;
+			usernameInput.classList.remove("error");
+			passwordError = false;
+			passwordInput.classList.remove("error");
 		}
 
 		submit.disabled = true;
