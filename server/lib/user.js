@@ -97,6 +97,7 @@ function User(req, db) {
 	this.signedIn = typeof this._sess.user_id !== "undefined";
 	this.id = this.signedIn ? this._sess.user_id : null;
 	this.email = this.signedIn ? this._sess.user_email : null;
+	this.name = this.signedIn ? this._sess.user_name : null;
 }
 
 /**
@@ -162,6 +163,7 @@ User.prototype.signIn = function signIn(email, password) {
 			if(matches) {
 				self._sess.user_id = self.id = doc._id.toString();
 				self._sess.user_email = self.email = email;
+				self._sess.user_name = self.name = doc.name || null;
 				self.signedIn = true;
 			}
 
@@ -176,12 +178,14 @@ User.prototype.signIn = function signIn(email, password) {
 User.prototype.signOut = function signOut() {
 	this._sess.user_id = this.id = null;
 	this._sess.user_email = this.email = null;
+	this._sess.user_name = this.name = null;
 	this.signedIn = false;
 };
 
 /**
  * Register a new user
  * @param {string} email
+ * @param {string} name
  * @param {string} password
  * @return {Promise}
  */
@@ -203,7 +207,7 @@ User.prototype.register = function register(email, name, password) {
 			keyLength,
 			hashDigest
 		).then(function (key) {
-			return storeUser(self._db, email, name, key.toString("base64"), salt, iterations, keyLength, hashDigest);
+			return storeUser(self._db, email, name, key, salt, iterations, keyLength, hashDigest);
 		}).then(function () {
 			return true;
 		});
