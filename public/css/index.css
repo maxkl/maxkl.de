@@ -145,7 +145,7 @@ a:active {
 
 .block-form button:disabled,
 .block-form input[type="submit"]:disabled {
-
+	background-color: #c4c4c4;
 }
 
 .block-form button:hover,

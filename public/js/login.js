@@ -10,7 +10,7 @@
 		errorElem = document.getElementById("error"),
 		usernameInput = document.getElementById("username"),
 		passwordInput = document.getElementById("password"),
-		submitBtn = document.getElementById("submit"),
+		submit = document.getElementById("submit"),
 		usernameError = false,
 		passwordError = false;
 
@@ -104,8 +104,6 @@
 	form.addEventListener("submit", function (evt) {
 		evt.preventDefault();
 
-		submitBtn.disabled = true;
-
 		var username = usernameInput.value.trim(),
 			password = passwordInput.value;
 
@@ -121,6 +119,7 @@
 			return;
 		}
 
+		submit.disabled = true;
 		errorElem.style.display = "none";
 
 		login(username, password, function (success) {
@@ -128,6 +127,7 @@
 				var query = parseQueryString();
 				window.location.href = query["ret"] || "/";
 			} else {
+				submit.disabled = false;
 				errorElem.style.display = "block";
 			}
 		});
