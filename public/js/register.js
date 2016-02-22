@@ -132,7 +132,7 @@
 		register(email, name, password, function (success) {
 			if(success) {
 				var query = parseQueryString(), ret = query["ret"];
-				window.location.href = "/login" + (ret ? "?ret=" + encodeURIComponent(ret) : "");
+				window.location.href = "/login?registered" + (ret ? "&ret=" + encodeURIComponent(ret) : "");
 			} else {
 				submit.disabled = false;
 				errorElem.style.display = "block";

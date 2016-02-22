@@ -20,7 +20,9 @@ module.exports = function (app, db) {
 			return;
 		}
 
-		renderMarko(res, loginTemplate);
+		renderMarko(res, loginTemplate, {
+			registrationSuccessful: req.query.hasOwnProperty("registered")
+		});
 	});
 
 	app.post("/login", requireCookies(), function (req, res, next) {
@@ -138,7 +140,7 @@ module.exports = function (app, db) {
 					});
 				} else {
 					// TODO: send verification email
-					res.redirect("/login" + (returnUrl ? "?ret=" + encodeURIComponent(returnUrl) : ""));
+					res.redirect("/login?registered" + (returnUrl ? "&ret=" + encodeURIComponent(returnUrl) : ""));
 				}
 			} else {
 				registrationError();
