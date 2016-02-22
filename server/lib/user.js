@@ -94,7 +94,7 @@ function User(req, db) {
 	this._sess = req.session;
 	this._db = db;
 
-	this.signedIn = typeof this._sess.user_id !== "undefined";
+	this.signedIn = !!this._sess.user_id;
 	this.id = this.signedIn ? this._sess.user_id : null;
 	this.email = this.signedIn ? this._sess.user_email : null;
 	this.name = this.signedIn ? this._sess.user_name : null;

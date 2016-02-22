@@ -30,11 +30,6 @@ module.exports = function (app, db) {
 	// TODO: legal notice
 
 	app.get("/login", requireCookies(), reqNotSignedIn, function (req, res) {
-		if(req.user.signedIn) {
-			res.redirect(req.query["ret"] || "/");
-			return;
-		}
-
 		renderMarko(res, loginTemplate, {
 			registrationSuccessful: req.query.hasOwnProperty("registered")
 		});
