@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /accept-cookies
+Disallow: /login
+Disallow: /logout
+Disallow: /register

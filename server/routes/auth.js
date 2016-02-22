@@ -9,7 +9,6 @@ var loginTemplate = require("../views/auth/login.marko");
 
 module.exports = function (app, db) {
 
-	// TODO: robots.txt etc
 	// TODO: legal notice
 	// TODO: requireCookies middleware, login/logout/register/
 
