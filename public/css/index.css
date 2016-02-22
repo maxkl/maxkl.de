@@ -119,6 +119,11 @@ a:active {
 	outline: 1px solid #4894ff;
 }
 
+.block-form input[type="text"].error:focus,
+.block-form input[type="password"].error:focus {
+	background-color: #ffdccb;
+}
+
 .block-form button,
 .block-form input[type="submit"] {
 	display: inline-block;
