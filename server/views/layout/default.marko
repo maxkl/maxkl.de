@@ -67,7 +67,6 @@
 				document.getElementById("cookie-message").style.display = "none";
 				var query = parseQueryString(), ret = query["cookies_ret"];
 				if(ret) window.location.href = ret;
-				else if(query.hasOwnProperty("cookies_ret")) window.location.href = document.referrer;
 			});
 		</script>
 		<layout-placeholder name="scripts"></layout-placeholder>

@@ -11,7 +11,7 @@ module.exports = function requireCookies(returnUrl) {
 
 	return function requireCookiesMiddleware(req, res, next) {
 		if(!req.cookiesAccepted) {
-			res.redirect("/accept-cookies" + (returnUrl ? "?cookies_ret=" + encodeURIComponent(returnUrl) : ""));
+			res.redirect("/accept-cookies" + "?cookies_ret=" + encodeURIComponent(returnUrl || req.originalUrl));
 			return;
 		}
 
