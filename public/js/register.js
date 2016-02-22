@@ -131,8 +131,8 @@
 
 		register(email, name, password, function (success) {
 			if(success) {
-				var query = parseQueryString();
-				window.location.href = query["ret"] || "/";
+				var query = parseQueryString(), ret = query["ret"];
+				window.location.href = "/login" + (ret ? "?ret=" + encodeURIComponent(ret) : "");
 			} else {
 				submit.disabled = false;
 				errorElem.style.display = "block";
