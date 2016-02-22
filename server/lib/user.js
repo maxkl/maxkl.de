@@ -1,5 +1,5 @@
 /**
- * Copyright: (c) 2016 Max Klein
+ * Copyright: (c) 2015-2016 Max Klein
  * License: MIT
  */
 
@@ -124,6 +124,7 @@ function findUser(db, email) {
  * Insert a user into the database
  * @param {Db} db
  * @param {string} email
+ * @param {string|null} name
  * @param {Buffer} key
  * @param {string} salt
  * @param {int} iterations
@@ -131,9 +132,10 @@ function findUser(db, email) {
  * @param {string} hashDigest
  * @return {Promise}
  */
-function storeUser(db, email, key, salt, iterations, keyLength, hashDigest) {
+function storeUser(db, email, name, key, salt, iterations, keyLength, hashDigest) {
 	return db.collection("users").insertOne({
 		email: email,
+		name: name,
 		password: {
 			key: key.toString("base64"),
 			salt: salt,
@@ -183,7 +185,7 @@ User.prototype.signOut = function signOut() {
  * @param {string} password
  * @return {Promise}
  */
-User.prototype.register = function register(email, password) {
+User.prototype.register = function register(email, name, password) {
 	var self = this;
 
 	return findUser(this._db, email).then(function (doc) {
@@ -201,7 +203,7 @@ User.prototype.register = function register(email, password) {
 			keyLength,
 			hashDigest
 		).then(function (key) {
-			return storeUser(self._db, email, key.toString("base64"), salt, iterations, keyLength, hashDigest);
+			return storeUser(self._db, email, name, key.toString("base64"), salt, iterations, keyLength, hashDigest);
 		}).then(function () {
 			return true;
 		});

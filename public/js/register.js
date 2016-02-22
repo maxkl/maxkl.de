@@ -6,13 +6,14 @@
 (function () {
 	"use strict";
 
-	var form = document.getElementById("login"),
+	var form = document.getElementById("register"),
 		errorElem = document.getElementById("error"),
 		emailInput = document.getElementById("email"),
-		passwordInput = document.getElementById("password"),
+		nameInput = document.getElementById("name"),
+		passwordInput = document.getElementById("password"), password2Input = document.getElementById("password2"),
 		submit = document.getElementById("submit"),
 		emailError = false,
-		passwordError = false;
+		passwordError = false, password2Error = false;
 
 	function parseQueryString(queryString) {
 		queryString = "" + (queryString || window.location.search);
@@ -41,7 +42,7 @@
 		return params;
 	}
 
-	function login(email, password, callback) {
+	function register(email, name, password, callback) {
 		var req = new XMLHttpRequest();
 
 		req.addEventListener("load", function () {
@@ -69,12 +70,13 @@
 
 		req.send(JSON.stringify({
 			email: email,
+			name: name,
 			password: password
 		}));
 	}
 
 	emailInput.addEventListener("input", function () {
-		if(emailInput.value.trim()) {
+		if(emailInput.value.trim() && emailInput.value.indexOf("@") !== -1) {
 			if(emailError) {
 				emailError = false;
 				emailInput.classList.remove("error");
@@ -101,13 +103,29 @@
 		}
 	});
 
+	password2Input.addEventListener("input", function () {
+		if(password2Input.value === passwordInput.value) {
+			if(password2Error) {
+				password2Error = false;
+				password2Input.classList.remove("error");
+			}
+		} else {
+			if(!password2Error) {
+				password2Error = true;
+				password2Input.classList.add("error");
+			}
+		}
+	});
+
 	form.addEventListener("submit", function (evt) {
 		evt.preventDefault();
 
 		var email = emailInput.value.trim(),
-			password = passwordInput.value;
+			name = nameInput.value.trim(),
+			password = passwordInput.value,
+			password2 = password2Input.value;
 
-		if(!email) {
+		if(!email || email.indexOf("@") === -1) {
 			emailError = true;
 			emailInput.classList.add("error");
 		} else {
@@ -123,14 +141,22 @@
 			passwordInput.classList.remove("error");
 		}
 
-		if(emailError || passwordError) {
+		if(password2 !== password) {
+			password2Error = true;
+			password2Input.classList.add("error");
+		} else {
+			password2Error = false;
+			password2Input.classList.remove("error");
+		}
+
+		if(emailError || passwordError || password2Error) {
 			return;
 		}
 
 		submit.disabled = true;
 		errorElem.style.display = "none";
 
-		login(email, password, function (success) {
+		register(email, name, password, function (success) {
 			if(success) {
 				var query = parseQueryString();
 				window.location.href = query["ret"] || "/";

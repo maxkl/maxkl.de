@@ -8,7 +8,8 @@ var sites = require("../../sites.json");
 
 var indexTemplate = require("../views/index.marko"),
 	poweredByTemplate = require("../views/powered-by.marko"),
-	legalTemplate = require("../views/legal.marko");
+	legalTemplate = require("../views/legal.marko"),
+	acceptCookiesTemplate = require("../views/acceptCookies.marko");
 
 module.exports = function (app, db) {
 
@@ -35,6 +36,10 @@ module.exports = function (app, db) {
 	//
 	//	res.redirect(req.header("referer"));
 	//});
+
+	app.get("/accept-cookies", function (req, res) {
+		renderMarko(res, acceptCookiesTemplate);
+	});
 
 	require("./auth")(app, db);
 
