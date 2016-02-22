@@ -10,7 +10,7 @@ function parseQueryString(queryString) {
 
 	if(queryString.length) {
 		if(queryString[0] == "?") {
-			queryString = queryString.substring(0);
+			queryString = queryString.substring(1);
 		}
 
 		var parts = queryString.split("&");
