@@ -170,6 +170,7 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 
 		if(!res.locals.$global) res.locals.$global = {};
 		res.locals.$global.cookiesAccepted = cookiesAccepted;
+		res.locals.$global.currentUrl = req.originalUrl;
 
 		next();
 	});
