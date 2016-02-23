@@ -36,6 +36,47 @@ a:active {
 	color: #3a4387;
 }
 
+nav {
+	display: block;
+	width: 100%;
+	height: 40px;
+}
+
+nav:after {
+	display: block;
+	content: "";
+	clear: both;
+}
+
+.navbar {
+	display: block;
+	width: 100%;
+	height: 100%;
+
+	background-color: #192136;
+}
+
+.navbar-icon {
+	float: left;
+	background-image: url(/favicon-96x96.png);
+	background-size: 100%;
+	width: 30px;
+	height: 30px;
+	margin: 5px;
+}
+
+.navbar-user {
+	float: right;
+	line-height: 20px;
+
+	text-align: right;
+	color: #fff;
+}
+
+.navbar-user a {
+	color: #fff;
+}
+
 .content {
 	width: 70%;
 	margin: 0 auto;
