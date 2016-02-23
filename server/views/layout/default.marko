@@ -39,6 +39,7 @@
 	<body>
 		<var name="cookieMessage" value="!data.excludeCookieMessage && !out.global.cookiesAccepted" />
 		<var name="user" value="out.global.user" />
+		<var name="currentUrlEncoded" value="encodeURIComponent(out.global.currentUrl)" />
 
 		<nav>
 			<div class="navbar">
@@ -52,7 +53,10 @@
 						<a href="/logout">Sign out</a>
 					</div>
 					<div else class="navbar-user">
-						<a if="!data.hideSignIn" href="/login?ret=${encodeURIComponent(out.global.currentUrl)}">Sign in</a>
+						<if test="!data.hideSignIn">
+							<a href="/login?ret=${currentUrlEncoded}">Sign in</a>
+							<a href="/register?ret=${currentUrlEncoded}">Register</a>
+						</if>
 					</div>
 				</div>
 			</div>
