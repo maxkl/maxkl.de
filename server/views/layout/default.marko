@@ -38,6 +38,7 @@
 	</head>
 	<body>
 		<var name="cookieMessage" value="!data.excludeCookieMessage && !out.global.cookiesAccepted" />
+		<var name="user" value="out.global.user" />
 
 		<nav>
 			<div class="navbar">
@@ -46,9 +47,12 @@
 						<div class="navbar-brand-icon"></div>
 						<div class="navbar-brand-name">maxkl.de</div>
 					</a>
-					<div class="navbar-user">
-						Max Klein (max@maxkl.de)<br />
+					<div if="user.signedIn" class="navbar-user">
+						${user.name ? user.name + " (" + user.email + ")" : user.email}<br />
 						<a href="/logout">Sign out</a>
+					</div>
+					<div else class="navbar-user">
+						<a href="/login">Sign in</a>
 					</div>
 				</div>
 			</div>

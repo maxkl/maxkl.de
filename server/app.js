@@ -178,6 +178,11 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 		db: db
 	}));
 
+	app.use(function (req, res) {
+		if(!res.locals.$global) res.locals.$global = {};
+		res.locals.$global.user = req.user;
+	});
+
 	// Global static files
 	app.use("/", serveStatic(publicDir));
 
