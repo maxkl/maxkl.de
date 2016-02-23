@@ -62,9 +62,11 @@ nav:after {
 	float: left;
 
 	text-decoration: none;
+	color: inherit;
 }
 
 .navbar-brand-icon {
+	float: left;
 	background-image: url(/favicon-32x32.png);
 	background-size: 100%;
 	width: 30px;
@@ -73,6 +75,7 @@ nav:after {
 }
 
 .navbar-brand-name {
+	float: left;
 	line-height: 40px;
 	margin-left: 10px;
 	font-size: 20px;
