@@ -23,8 +23,7 @@ module.exports = function (app, db) {
 
 		renderMarko(res, loginTemplate, {
 			registrationSuccessful: req.query.hasOwnProperty("registered"),
-			registerLink: "/register" + (returnUrl ? "?ret=" + encodeURIComponent(returnUrl) : ""),
-			hideSignIn: true
+			registerLink: "/register" + (returnUrl ? "?ret=" + encodeURIComponent(returnUrl) : "")
 		});
 	});
 
@@ -96,8 +95,7 @@ module.exports = function (app, db) {
 		var returnUrl = req.query["ret"];
 
 		renderMarko(res, registerTemplate, {
-			loginLink: "/login" + (returnUrl ? "?ret=" + encodeURIComponent(returnUrl) : ""),
-			hideSignIn: true
+			loginLink: "/login" + (returnUrl ? "?ret=" + encodeURIComponent(returnUrl) : "")
 		});
 	});
 
