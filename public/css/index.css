@@ -98,6 +98,10 @@ nav:after {
 	font-size: 14px;
 }
 
+.navbar-user.single-line {
+	line-height: 36px;
+}
+
 .navbar-user a {
 	color: #fff;
 	text-decoration: underline;

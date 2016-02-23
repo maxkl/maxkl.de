@@ -52,7 +52,7 @@
 						${user.name ? user.name + " (" + user.email + ")" : user.email}<br />
 						<a href="/logout">Sign out</a>
 					</div>
-					<div else class="navbar-user">
+					<div else class="navbar-user single-line">
 						<if test="!data.hideSignIn">
 							<a href="/login?ret=${currentUrlEncoded}">Sign in</a>
 						</if>
