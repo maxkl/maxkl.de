@@ -63,6 +63,8 @@ nav:after {
 
 	text-decoration: none;
 	color: #fff;
+
+	transition: none;
 }
 
 .navbar-brand-icon {
