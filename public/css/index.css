@@ -58,11 +58,14 @@ nav:after {
 }
 
 .navbar-brand {
+	display: block;
 	float: left;
+
+	text-decoration: none;
 }
 
 .navbar-brand-icon {
-	background-image: url(/favicon-96x96.png);
+	background-image: url(/favicon-32x32.png);
 	background-size: 100%;
 	width: 30px;
 	height: 30px;
