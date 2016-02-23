@@ -13,8 +13,6 @@ var loginTemplate = require("../views/auth/login.marko"),
 
 module.exports = function (app, db) {
 
-	// TODO: navbar
-	// TODO: User info on every page (name, email, profile link, /logout link)
 	// TODO: profile page (edit email, name, password; delete)
 	// TODO: user permission levels
 	// TODO: admin page
@@ -25,7 +23,8 @@ module.exports = function (app, db) {
 
 		renderMarko(res, loginTemplate, {
 			registrationSuccessful: req.query.hasOwnProperty("registered"),
-			registerLink: "/register" + (returnUrl ? "?ret=" + encodeURIComponent(returnUrl) : "")
+			registerLink: "/register" + (returnUrl ? "?ret=" + encodeURIComponent(returnUrl) : ""),
+			hideSignIn: true
 		});
 	});
 
@@ -97,7 +96,8 @@ module.exports = function (app, db) {
 		var returnUrl = req.query["ret"];
 
 		renderMarko(res, registerTemplate, {
-			loginLink: "/login" + (returnUrl ? "?ret=" + encodeURIComponent(returnUrl) : "")
+			loginLink: "/login" + (returnUrl ? "?ret=" + encodeURIComponent(returnUrl) : ""),
+			hideSignIn: true
 		});
 	});
 
