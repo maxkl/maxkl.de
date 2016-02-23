@@ -65,11 +65,6 @@ nav:after {
 	color: #fff;
 }
 
-.navbar-brand:hover {
-	color: #fff;
-	text-decoration: underline;
-}
-
 .navbar-brand-icon {
 	float: left;
 	background-image: url(/favicon-32x32.png);
@@ -84,6 +79,11 @@ nav:after {
 	line-height: 40px;
 	margin-left: 10px;
 	font-size: 20px;
+}
+
+.navbar-brand .navbar-brand-name:hover {
+	color: #fff;
+	text-decoration: underline;
 }
 
 .navbar-user {
