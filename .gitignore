@@ -6,8 +6,9 @@
 # node.js
 node_modules/
 
-# Other
+# Project specific
 config.json
+sites.json
 subpages/*
 *.marko.js
 logs/

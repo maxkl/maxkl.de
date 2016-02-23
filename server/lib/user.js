@@ -236,19 +236,19 @@ function createMiddleware(options) {
 
 /**
  * Create a middleware that redirects/ends the request if the user is not signed in
- * @param {string} [redirect]
+ * @param {string|boolean} [redirect]
  * @return {function(req: Object, res: Object, next: function)}
  */
 function requireSignedIn(redirect) {
-	var shouldRedirect = !!redirect;
-
 	return function requireSignedInMiddleware(req, res, next) {
 		if(!req.user.signedIn) {
-			if(shouldRedirect) {
-				res.redirect(redirect);
-			} else {
+			if(redirect === false) {
 				res.status(403).setContentType("text/plain");
 				res.end("You must be signed in to view this page");
+			} else if(redirect) {
+				res.redirect(redirect);
+			} else {
+				res.redirect("/login?ret=" + encodeURIComponent(req.originalUrl));
 			}
 
 			return;
@@ -260,19 +260,19 @@ function requireSignedIn(redirect) {
 
 /**
  * Create a middleware that redirects/ends the request if the user is signed in
- * @param redirect
+ * @param {string|boolean} [redirect]
  * @return {function(req: Object, res: Object, next: function)}
  */
 function requireNotSignedIn(redirect) {
-	var shouldRedirect = !!redirect;
-
 	return function requireNotSignedInMiddleware(req, res, next) {
 		if(req.user.signedIn) {
-			if(shouldRedirect) {
-				res.redirect(redirect);
-			} else {
+			if(redirect === false) {
 				res.status(403).setContentType("text/plain");
 				res.end("You must not be signed in to view this page");
+			} else if(redirect) {
+				res.redirect(redirect);
+			} else {
+				res.redirect(req.query["ret"] || req.headers["referer"] || "/");
 			}
 
 			return;

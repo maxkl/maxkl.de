@@ -13,15 +13,6 @@ var loginTemplate = require("../views/auth/login.marko"),
 
 module.exports = function (app, db) {
 
-	function reqNotSignedIn(req, res, next) {
-		if(req.user.signedIn) {
-			res.redirect(req.query["ret"] || "/");
-			return;
-		}
-
-		next();
-	}
-
 	// TODO: link to /register on /login, link to /login on /register
 	// TODO: User info on every page (name, email, profile link, /logout link)
 	// TODO: profile page (edit email, name, password; delete)
@@ -29,7 +20,7 @@ module.exports = function (app, db) {
 	// TODO: admin page
 	// TODO: legal notice
 
-	app.get("/login", requireCookies(), reqNotSignedIn, function (req, res) {
+	app.get("/login", requireCookies(), user.requireNotSignedIn(), function (req, res) {
 		renderMarko(res, loginTemplate, {
 			registrationSuccessful: req.query.hasOwnProperty("registered")
 		});
@@ -84,7 +75,7 @@ module.exports = function (app, db) {
 		});
 	});
 
-	app.get("/logout", user.requireSignedIn(), function (req, res) {
+	app.get("/logout", function (req, res) {
 		var useJson = req.query.hasOwnProperty("json"),
 			returnUrl = req.query["ret"];
 
@@ -99,7 +90,7 @@ module.exports = function (app, db) {
 		}
 	});
 
-	app.get("/register", requireCookies(), reqNotSignedIn, function (req, res) {
+	app.get("/register", requireCookies(), user.requireNotSignedIn(), function (req, res) {
 		renderMarko(res, registerTemplate);
 	});
 
@@ -160,7 +151,7 @@ module.exports = function (app, db) {
 		})
 	});
 
-	app.get("/user", requireCookies(), user.requireSignedIn("/login"), function (req, res) {
+	app.get("/user", requireCookies(), user.requireSignedIn(), function (req, res) {
 		renderMarko(res, userTemplate, {
 			user: {
 				id: req.user.id,
