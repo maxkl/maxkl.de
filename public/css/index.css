@@ -54,10 +54,14 @@ nav:after {
 	height: 100%;
 
 	background-color: #192136;
+	color: #fff;
 }
 
-.navbar-icon {
+.navbar-brand {
 	float: left;
+}
+
+.navbar-brand-icon {
 	background-image: url(/favicon-96x96.png);
 	background-size: 100%;
 	width: 30px;
@@ -65,16 +69,24 @@ nav:after {
 	margin: 5px;
 }
 
+.navbar-brand-name {
+	line-height: 40px;
+	margin-left: 10px;
+	font-size: 20px;
+}
+
 .navbar-user {
 	float: right;
-	line-height: 20px;
+	line-height: 18px;
+	height: 36px;
+	margin: 2px;
 
 	text-align: right;
-	color: #fff;
 }
 
 .navbar-user a {
 	color: #fff;
+	text-decoration: underline;
 }
 
 .content {
