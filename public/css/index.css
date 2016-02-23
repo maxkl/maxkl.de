@@ -81,7 +81,7 @@ nav:after {
 	font-size: 20px;
 }
 
-.navbar-brand .navbar-brand-name:hover {
+.navbar-brand:hover .navbar-brand-name {
 	color: #fff;
 	text-decoration: underline;
 }
