@@ -237,6 +237,10 @@ nav:after {
 		padding: 0 10px;
 	}
 
+	.navbar .content {
+		padding: 0;
+	}
+
 	.cookie-message, .js-message {
 		width: 100%;
 	}
