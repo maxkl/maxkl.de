@@ -112,10 +112,13 @@ nav:after {
 	margin: 0 auto;
 }
 
-.cookie-message, .js-message {
-	width: 70%;
-	margin: 0 auto;
+.message-box {
+	/*width: 70%;*/
+	/*margin: 0 auto;*/
 	padding: 15px 20px;
+
+	background-color: #eeeeee;
+	color: #222;
 }
 
 .cookie-message {
@@ -123,24 +126,32 @@ nav:after {
 	color: #fff;
 }
 
-.accept-cookies {
+.js-message {
+	background-color: #ffd625;
+	color: #000;
+}
+
+.abimotto-message {
+	margin: 20px 0;
+
+	background-color: #8ad43c;
+	font-weight: bold;
+}
+
+.message-button {
 	display: inline-block;
 	padding: 5px 10px;
 	margin-top: 10px;
 
 	background-color: #fff;
 	color: #000;
+	cursor: pointer;
 }
 
-.accept-cookies:hover {
+.message-button:hover {
 	text-decoration: none;
 	color: #000;
 	background-color: #ddd;
-}
-
-.js-message {
-	background-color: #ffd625;
-	color: #000;
 }
 
 .red {
