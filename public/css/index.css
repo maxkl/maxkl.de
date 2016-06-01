@@ -250,8 +250,4 @@ nav:after {
 	.navbar .content {
 		padding: 0;
 	}
-
-	.cookie-message, .js-message {
-		width: 100%;
-	}
 }
