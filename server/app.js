@@ -124,6 +124,27 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 
 	var app = express();
 
+	// The server runs on HTTPS only
+	var httpsServer = https.createServer(options, app).listen(config.httpsPort, function () {
+		var addr = httpsServer.address(),
+			addrString = (addr.family == "IPv6" ? "[" + addr.address + "]" : addr.address) + ":" + addr.port;
+
+		console.log("HTTPS server listening on " + addrString);
+	});
+
+	// Redirect all HTTP requests to HTTPS
+	var httpServer = http.createServer(function (req, res) {
+		res.writeHead(301, {
+			"Location": "https://" + req.headers["host"] + req.url
+		});
+		res.end();
+	}).listen(config.httpPort, function () {
+		var addr = httpServer.address(),
+			addrString = (addr.family == "IPv6" ? "[" + addr.address + "]" : addr.address) + ":" + addr.port;
+
+		console.log("HTTP server listening on " + addrString);
+	});
+
 	app.locals.site = {
 		title: config.site.title
 	};
@@ -132,8 +153,9 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 		site: app.locals.site
 	};
 
-	// Assign db to app so that subpages can access it
+	// Assign to app so that subpages can access it
 	app.set("db", db);
+	app.set("server", httpsServer);
 
 	app.disable("x-powered-by");
 
@@ -199,27 +221,6 @@ MongoClient.connect(config.dbUrl).then(function (db) {
 
 	// Error handlers
 	require("./routes/errors")(app, db);
-
-	// The server runs on HTTPS only
-	var httpsServer = https.createServer(options, app).listen(config.httpsPort, function () {
-		var addr = httpsServer.address(),
-			addrString = (addr.family == "IPv6" ? "[" + addr.address + "]" : addr.address) + ":" + addr.port;
-
-		console.log("HTTPS server listening on " + addrString);
-	});
-
-	// Redirect all HTTP requests to HTTPS
-	var httpServer = http.createServer(function (req, res) {
-		res.writeHead(301, {
-			"Location": "https://" + req.headers["host"] + req.url
-		});
-		res.end();
-	}).listen(config.httpPort, function () {
-		var addr = httpServer.address(),
-			addrString = (addr.family == "IPv6" ? "[" + addr.address + "]" : addr.address) + ":" + addr.port;
-
-		console.log("HTTP server listening on " + addrString);
-	});
 
 }).catch(function (err) {
 	console.error(err);
