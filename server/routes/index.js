@@ -3,44 +3,28 @@
  * License: MIT
  */
 
-var renderMarko = require("../lib/renderMarko");
-var sites = require("../../sites.json");
+const renderMarko = require('../lib/renderMarko');
 
-var indexTemplate = require("../views/index.marko"),
-	poweredByTemplate = require("../views/powered-by.marko"),
-	legalTemplate = require("../views/legal.marko"),
-	acceptCookiesTemplate = require("../views/acceptCookies.marko");
+const indexTemplate = require('../views/index.marko');
+const poweredByTemplate = require('../views/powered-by.marko');
+const legalTemplate = require('../views/legal.marko');
 
-module.exports = function (app, db) {
+module.exports = function (app, db, sites) {
 
-	app.get("/", function (req, res) {
+	app.get('/', function (req, res) {
 		renderMarko(res, indexTemplate, {
 			sections: sites
 		});
 	});
 
-	app.get("/powered-by", function (req, res) {
+	app.get('/powered-by', function (req, res) {
 		renderMarko(res, poweredByTemplate);
 	});
 
-	app.get("/legal", function (req, res) {
+	app.get('/legal', function (req, res) {
 		renderMarko(res, legalTemplate);
 	});
 
-	//app.get("/accept-cookies", function (req, res) {
-	//	res.cookie("a", "1", {
-	//		path: "/",
-	//		domain: ".maxkl.de",
-	//		maxAge: 60 * 60 * 24 * 365 * 25
-	//	});
-	//
-	//	res.redirect(req.header("referer"));
-	//});
-
-	app.get("/accept-cookies", function (req, res) {
-		renderMarko(res, acceptCookiesTemplate);
-	});
-
-	require("./auth")(app, db);
+	require('./auth')(app, db);
 
 };

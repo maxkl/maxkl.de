@@ -3,13 +3,12 @@
  * License: MIT
  */
 
-var renderMarko = require("../lib/renderMarko"),
-	user = require("../lib/user"),
-	requireCookies = require("../lib/requireCookies");
+const renderMarko = require('../lib/renderMarko');
+const user = require('../lib/user');
 
-var loginTemplate = require("../views/auth/login.marko"),
-	registerTemplate = require("../views/auth/register.marko"),
-	userTemplate = require("../views/auth/user.marko");
+const loginTemplate = require('../views/auth/login.marko');
+const registerTemplate = require('../views/auth/register.marko');
+const userTemplate = require('../views/auth/user.marko');
 
 module.exports = function (app, db) {
 
@@ -18,20 +17,20 @@ module.exports = function (app, db) {
 	// TODO: admin page
 	// TODO: legal notice
 
-	app.get("/login", requireCookies(), user.requireNotSignedIn(), function (req, res) {
-		var returnUrl = req.query["ret"];
+	app.get('/login', user.requireNotSignedIn(), function (req, res) {
+		var returnUrl = req.query['ret'];
 
 		renderMarko(res, loginTemplate, {
-			registrationSuccessful: req.query.hasOwnProperty("registered"),
-			registerLink: "/register" + (returnUrl ? "?ret=" + encodeURIComponent(returnUrl) : "")
+			registrationSuccessful: req.query.hasOwnProperty('registered'),
+			registerLink: '/register' + (returnUrl ? '?ret=' + encodeURIComponent(returnUrl) : '')
 		});
 	});
 
-	app.post("/login", function (req, res, next) {
-		if(!req.body) return next(new Error("Invalid request body"));
+	app.post('/login', function (req, res, next) {
+		if(!req.body) return next(new Error('Invalid request body'));
 
-		var useJson = req.query.hasOwnProperty("json"),
-			returnUrl = req.query["ret"];
+		var useJson = req.query.hasOwnProperty('json'),
+			returnUrl = req.query['ret'];
 
 		function loginSuccess() {
 			if(useJson) {
@@ -39,7 +38,7 @@ module.exports = function (app, db) {
 					success: true
 				});
 			} else {
-				res.redirect(returnUrl || "/");
+				res.redirect(returnUrl || '/');
 			}
 		}
 
@@ -51,17 +50,17 @@ module.exports = function (app, db) {
 					success: false
 				});
 			} else {
-				res.redirect("/login" + (returnUrl ? "?ret=" + encodeURIComponent(returnUrl) : ""));
+				res.redirect('/login' + (returnUrl ? '?ret=' + encodeURIComponent(returnUrl) : ''));
 			}
 		}
 
-		var email = req.body["email"],
-			password = req.body["password"];
+		var email = req.body['email'],
+			password = req.body['password'];
 
 		if(!email || !password) return loginError();
 
-		email = ("" + email).trim();
-		password = "" + password;
+		email = ('' + email).trim();
+		password = '' + password;
 
 		if(!email || !password) return loginError();
 
@@ -72,13 +71,13 @@ module.exports = function (app, db) {
 				loginError();
 			}
 		}).catch(function (err) {
-			next(err || new Error("Server error"));
+			next(err || new Error('Server error'));
 		});
 	});
 
-	app.get("/logout", function (req, res) {
-		var useJson = req.query.hasOwnProperty("json"),
-			returnUrl = req.query["ret"];
+	app.get('/logout', function (req, res) {
+		var useJson = req.query.hasOwnProperty('json'),
+			returnUrl = req.query['ret'];
 
 		req.user.signOut();
 
@@ -87,23 +86,23 @@ module.exports = function (app, db) {
 				success: true
 			});
 		} else {
-			res.redirect(returnUrl || "/login");
+			res.redirect(returnUrl || '/login');
 		}
 	});
 
-	app.get("/register", requireCookies(), user.requireNotSignedIn(), function (req, res) {
-		var returnUrl = req.query["ret"];
+	app.get('/register', user.requireNotSignedIn(), function (req, res) {
+		var returnUrl = req.query['ret'];
 
 		renderMarko(res, registerTemplate, {
-			loginLink: "/login" + (returnUrl ? "?ret=" + encodeURIComponent(returnUrl) : "")
+			loginLink: '/login' + (returnUrl ? '?ret=' + encodeURIComponent(returnUrl) : '')
 		});
 	});
 
-	app.post("/register", function (req, res, next) {
-		if(!req.body) return next(new Error("Invalid request body"));
+	app.post('/register', function (req, res, next) {
+		if(!req.body) return next(new Error('Invalid request body'));
 
-		var useJson = req.query.hasOwnProperty("json"),
-			returnUrl = req.query["ret"];
+		var useJson = req.query.hasOwnProperty('json'),
+			returnUrl = req.query['ret'];
 
 		if(req.user.signedIn) {
 			if(useJson) {
@@ -111,7 +110,7 @@ module.exports = function (app, db) {
 					success: true
 				});
 			} else {
-				res.redirect(returnUrl || "/");
+				res.redirect(returnUrl || '/');
 			}
 			return;
 		}
@@ -122,21 +121,21 @@ module.exports = function (app, db) {
 					success: false
 				});
 			} else {
-				res.redirect("/register" + (returnUrl ? "?ret=" + encodeURIComponent(returnUrl) : ""));
+				res.redirect('/register' + (returnUrl ? '?ret=' + encodeURIComponent(returnUrl) : ''));
 			}
 		}
 
-		var email = req.body["email"],
-			name = req.body["name"],
-			password = req.body["password"];
+		var email = req.body['email'],
+			name = req.body['name'],
+			password = req.body['password'];
 
 		if(!email || !password) return registrationError();
 
-		email = ("" + email).trim();
-		name = ("" + name).trim();
-		password = "" + password;
+		email = ('' + email).trim();
+		name = ('' + name).trim();
+		password = '' + password;
 
-		if(!email || email.indexOf("@") === -1 || !password) return registrationError();
+		if(!email || email.indexOf('@') === -1 || !password) return registrationError();
 
 		req.user.register(email, name || null, password).then(function (success) {
 			if(success) {
@@ -146,17 +145,17 @@ module.exports = function (app, db) {
 					});
 				} else {
 					// TODO: send verification email
-					res.redirect("/login?registered" + (returnUrl ? "&ret=" + encodeURIComponent(returnUrl) : ""));
+					res.redirect('/login?registered' + (returnUrl ? '&ret=' + encodeURIComponent(returnUrl) : ''));
 				}
 			} else {
 				registrationError();
 			}
 		}).catch(function (err) {
-			next(err || new Error("Server error"));
+			next(err || new Error('Server error'));
 		})
 	});
 
-	app.get("/user", requireCookies(), user.requireSignedIn(), function (req, res) {
+	app.get('/user', user.requireSignedIn(), function (req, res) {
 		renderMarko(res, userTemplate, {
 			user: {
 				id: req.user.id,
