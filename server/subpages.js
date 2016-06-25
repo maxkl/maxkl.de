@@ -101,38 +101,39 @@ function getSubpage(directory, name) {
 }
 
 function getSubpages(dir) {
-	if(!exists.dir(dir)) throw new Error(dir + ' is not a directory');
 
 	const entries = {};
 	const subpages = [];
 
-	// Iterate over every file in subpages/
-	fs.readdirSync(dir).forEach(filename => {
-		// Exclude hidden files & directories
-		if(filename.startsWith('.')) return;
+	if(exists.dir(dir)) {
+		// Iterate over every file in subpages/
+		fs.readdirSync(dir).forEach(filename => {
+			// Exclude hidden files & directories
+			if(filename.startsWith('.')) return;
 
-		// Get full path
-		var subpagePath = path.resolve(dir, filename);
+			// Get full path
+			var subpagePath = path.resolve(dir, filename);
 
-		// Skip if subpage is not a directory
-		if(!exists.dir(subpagePath) || exists(path.join(subpagePath, '.ignore'))) return;
+			// Skip if subpage is not a directory
+			if(!exists.dir(subpagePath) || exists(path.join(subpagePath, '.ignore'))) return;
 
-		const result = getSubpage(subpagePath, filename);
-		subpages.push(result.subpage);
+			const result = getSubpage(subpagePath, filename);
+			subpages.push(result.subpage);
 
-		const entry = result.entry;
-		if(entry) {
-			if(!entries[entry.section]) {
-				entries[entry.section] = [];
+			const entry = result.entry;
+			if(entry) {
+				if(!entries[entry.section]) {
+					entries[entry.section] = [];
+				}
+
+				entries[entry.section].push({
+					title: entry.title,
+					href: entry.href,
+					external: entry.external
+				});
 			}
-
-			entries[entry.section].push({
-				title: entry.title,
-				href: entry.href,
-				external: entry.external
-			});
-		}
-	});
+		});
+	}
 
 	const sections = [];
 	for(let section in entries) {

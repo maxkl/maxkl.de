@@ -60,32 +60,24 @@ connectDb().then(db => {
 
 	// The server runs on HTTPS only
 	const httpsServer = https.createServer(options, app).listen(config.httpsPort, () => {
-		var addr = httpsServer.address(),
-			addrString = (addr.family == 'IPv6' ? '[' + addr.address + ']' : addr.address) + ':' + addr.port;
+		const addr = httpsServer.address();
+		const addrString = (addr.family == 'IPv6' ? '[' + addr.address + ']' : addr.address) + ':' + addr.port;
 
 		console.log('HTTPS server listening on ' + addrString);
 	});
 
 	// Redirect all HTTP requests to HTTPS
-	var httpServer = http.createServer((req, res) => {
+	const httpServer = http.createServer((req, res) => {
 		res.writeHead(301, {
 			'Location': 'https://' + req.headers['host'] + req.url
 		});
 		res.end();
 	}).listen(config.httpPort, () => {
-		var addr = httpServer.address(),
-			addrString = (addr.family == 'IPv6' ? '[' + addr.address + ']' : addr.address) + ':' + addr.port;
+		const addr = httpServer.address();
+		const addrString = (addr.family == 'IPv6' ? '[' + addr.address + ']' : addr.address) + ':' + addr.port;
 
 		console.log('HTTP server listening on ' + addrString);
 	});
-
-	app.locals.site = {
-		title: config.siteTitle
-	};
-
-	app.locals.$global = {
-		site: app.locals.site
-	};
 
 	// Assign to app so that subpages can access it
 	app.set('db', db);

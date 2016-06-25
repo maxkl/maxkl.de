@@ -17,11 +17,10 @@ module.exports = function (file, root) {
 
 		config.httpPort = config.httpPort || 8080;
 		config.httpsPort = config.httpsPort || 8443;
-		config.sslKey = path.resolve(root, config.sslKey);
-		config.sslCert = path.resolve(root, config.sslCert);
-		config.sslCa = config.sslCa && config.sslCa.map(file => path.resolve(root, file));
+		config.sslKey = path.resolve(root, config.sslKey || 'key.pem');
+		config.sslCert = path.resolve(root, config.sslCert || 'cert.pem');
+		config.sslCa = Array.isArray(config.sslCa) ? config.sslCa.map(file => path.resolve(root, file)) : null;
 		config.dbUrl = config.dbUrl || 'mongodb://localhost/';
-		config.siteTitle = config.siteTitle || 'maxkl.de';
 
 		return config;
 	} catch(e) {
