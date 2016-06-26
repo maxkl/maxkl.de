@@ -102,7 +102,7 @@ connectDb().then(db => {
 		name: 'sid',
 		resave: false,
 		saveUninitialized: false,
-		secret: 'Magic is magnificient! Ministry of mediocre mangos! Is this true?',
+		secret: config.sessionSecret,
 		store: new MongoStore({
 			db: db
 		})

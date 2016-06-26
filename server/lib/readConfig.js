@@ -21,6 +21,7 @@ module.exports = function (file, root) {
 		config.sslCert = path.resolve(root, config.sslCert || 'cert.pem');
 		config.sslCa = Array.isArray(config.sslCa) ? config.sslCa.map(file => path.resolve(root, file)) : null;
 		config.dbUrl = config.dbUrl || 'mongodb://localhost/';
+		config.sessionSecret = config.sessionSecret || "This is NOT a secure secret!";
 
 		return config;
 	} catch(e) {
