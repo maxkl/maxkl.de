@@ -15,11 +15,7 @@ module.exports = function (file, root) {
 	try {
 		var config = require(file);
 
-		config.httpPort = config.httpPort || 8080;
-		config.httpsPort = config.httpsPort || 8443;
-		config.sslKey = path.resolve(root, config.sslKey || 'key.pem');
-		config.sslCert = path.resolve(root, config.sslCert || 'cert.pem');
-		config.sslCa = Array.isArray(config.sslCa) ? config.sslCa.map(file => path.resolve(root, file)) : null;
+		config.port = config.port || 8080;
 		config.dbUrl = config.dbUrl || 'mongodb://localhost/';
 		config.sessionSecret = config.sessionSecret || "This is NOT a secure secret!";
 

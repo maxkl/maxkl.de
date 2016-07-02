@@ -9,7 +9,6 @@
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
-const https = require('https');
 
 // npm modules
 const express = require('express');
@@ -39,16 +38,6 @@ const publicDir = path.join(rootDir, 'public');
 const publicMetaDir = path.join(rootDir, 'public-meta');
 const subpageDir = path.join(rootDir, 'subpages');
 
-// SSL key & certificate for HTTPS
-const options = {
-	key: fs.readFileSync(config.sslKey),
-	cert: fs.readFileSync(config.sslCert)
-};
-
-if(config.sslCa) {
-	options.ca = config.sslCa.map(file => fs.readFileSync(file));
-}
-
 function connectDb() {
 	return MongoClient.connect(config.dbUrl);
 }
@@ -59,29 +48,16 @@ connectDb().then(db => {
 	const app = express();
 
 	// The server runs on HTTPS only
-	const httpsServer = https.createServer(options, app).listen(config.httpsPort, () => {
-		const addr = httpsServer.address();
+	const server = http.createServer(app).listen(config.port, () => {
+		const addr = server.address();
 		const addrString = (addr.family == 'IPv6' ? '[' + addr.address + ']' : addr.address) + ':' + addr.port;
 
-		console.log('HTTPS server listening on ' + addrString);
-	});
-
-	// Redirect all HTTP requests to HTTPS
-	const httpServer = http.createServer((req, res) => {
-		res.writeHead(301, {
-			'Location': 'https://' + req.headers['host'] + req.url
-		});
-		res.end();
-	}).listen(config.httpPort, () => {
-		const addr = httpServer.address();
-		const addrString = (addr.family == 'IPv6' ? '[' + addr.address + ']' : addr.address) + ':' + addr.port;
-
-		console.log('HTTP server listening on ' + addrString);
+		console.log('Server listening on ' + addrString);
 	});
 
 	// Assign to app so that subpages can access it
 	app.set('db', db);
-	app.set('server', httpsServer);
+	app.set('server', server);
 
 	app.disable('x-powered-by');
 
