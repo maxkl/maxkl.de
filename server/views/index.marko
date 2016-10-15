@@ -13,8 +13,7 @@
 			<h2>${section.title}</h2>
 			<ul>
 				<li for="link in section.links">
-					<a href="${link.href}" target="${link.external ? '_blank' : null}">${link.title}</a>
-					<a if="link.source" href="${link.source}" target="_blank">(Source Code)</a>
+					<a href="${link.href}" target="${link.external ? '_blank' : null}">${link.title}</a> <a if="link.source" href="${link.source}" target="_blank">(Source Code)</a>
 				</li>
 			</ul>
 		</for>
