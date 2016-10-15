@@ -14,8 +14,7 @@
 			<ul>
 				<li for="link in section.links">
 					<a href="${link.href}" target="${link.external ? '_blank' : null}">
-						${link.title}
-						<a if="link.source" href="${link.source}" target="_blank">(Source Code)</a>
+						${link.title} <a if="link.source" href="${link.source}" target="_blank">(Source Code)</a>
 					</a>
 				</li>
 			</ul>
