@@ -11,3 +11,4 @@ config.json
 subpages/
 *.marko.js
 logs/
+*.pem
