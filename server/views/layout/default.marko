@@ -65,7 +65,6 @@
 			<div if="cookieMessage" class="message-box cookie-message" id="cookie-message">
 				This site uses cookies. They are required to store whether you are signed in
 				and to improve your overall experience.
-				They are <strong>not</strong> used to track you or to analyze your behaviour!
 				<br />
 				<a href="#" class="message-button" id="accept-cookies">Accept</a>
 			</div>
@@ -90,6 +89,7 @@
 				if(ret) window.location.href = ret;
 			});
 		</script>
+		<include template="./analytics.marko" />
 		<layout-placeholder name="scripts"></layout-placeholder>
 	</body>
 </html>
