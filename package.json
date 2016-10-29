@@ -1,4 +1,5 @@
 {
+  "name": "maxkl.de",
   "dependencies": {
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
