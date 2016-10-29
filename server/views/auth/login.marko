@@ -1,29 +1,32 @@
-<layout-use template="../layout/default.marko" title="Sign in" description="Sign in to maxkl.de" hideSignIn="true">
-	<layout-put into="content">
-		<h1>Sign in</h1>
-		<p if="data.registrationSuccessful" class="green">
-			Registration successful. You can now sign in with your credentials.
-		</p>
-		<p id="error" class="red" style="display:none;">
-			Login failed. Please check your email and password.
-		</p>
-		<form method="post" class="block-form" id="login">
-			<div class="form-row">
-				<input type="text" name="email" id="email" placeholder="E-mail&hellip;" />
-			</div>
-			<div class="form-row">
-				<input type="password" name="password" id="password" placeholder="Password&hellip;" />
-			</div>
-			<div class="form-row">
-				<input type="submit" id="submit" value="Sign in" autocomplete="off" />
-			</div>
-		</form>
-		<p>
-			You don't have an account yet? <a href="${data.registerLink}">Register now!</a>
-		</p>
-		<a href="/">To the start page</a>
-	</layout-put>
-	<layout-put into="scripts">
-		<script src="/js/login.js"></script>
-	</layout-put>
+<layout-use("../layout/default.marko") title="Sign in"
+    description="Sign in to maxkl.de" hideSignIn="true">
+    <layout-put into="content">
+        <h1>Sign in</h1>
+        <p if(data.registrationSuccessful) class="green">
+            Registration successful. You can now sign in with your credentials.
+        </p>
+        <p id="error" class="red" style="display:none;">
+            Login failed. Please check your email and password.
+        </p>
+        <form method="post" class="block-form" id="login">
+            <div class="form-row">
+                <input type="text" name="email" id="email" placeholder="E-mail&hellip;"/>
+            </div>
+            <div class="form-row">
+                <input type="password" name="password" id="password"
+                    placeholder="Password&hellip;"/>
+            </div>
+            <div class="form-row">
+                <input type="submit" id="submit" value="Sign in" autocomplete="off"/>
+            </div>
+        </form>
+        <p>
+            You don't have an account yet?
+            <a href=data.registerLink>Register now!</a>
+        </p>
+        <a href="/">To the start page</a>
+    </layout-put>
+    <layout-put into="scripts">
+        <script src="/js/login.js"/>
+    </layout-put>
 </layout-use>

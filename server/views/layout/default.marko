@@ -1,95 +1,98 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<title>${(data.title ? data.title + " :: " : "") + "maxkl.de"}</title>
-
-		<meta name="description" content="${data.description}" />
-		<meta property="og:title" content="${data.ogTitle || data.title || 'maxkl.de'}" />
-		<meta property="og:description" content="${data.ogDescription || data.description}" />
-		<meta if="data.ogImage" property="og:image" content="${data.ogImage}" />
-		<meta else property="og:image" content="" />
-
-		<!-- thanks to https://realfavicongenerator.net/ -->
-		<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png" />
-		<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png" />
-		<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png" />
-		<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png" />
-		<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png" />
-		<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png" />
-		<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png" />
-		<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png" />
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png" />
-		<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
-		<link rel="icon" type="image/png" href="/favicon-194x194.png" sizes="194x194" />
-		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-		<link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192" />
-		<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
-		<link rel="manifest" href="/manifest.json" />
-		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-		<meta name="msapplication-TileColor" content="#3da2c7" />
-		<meta name="msapplication-TileImage" content="/mstile-144x144.png" />
-		<!--<meta name="theme-color" content="#ffffff" />-->
-
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
-
-		<link if="!data.excludeDefaultStylesheet" rel="stylesheet" type="text/css" href="/css/index.css" />
-		<layout-placeholder name="stylesheets"></layout-placeholder>
-	</head>
-	<body>
-		<var name="cookieMessage" value="!data.excludeCookieMessage && !out.global.cookiesAccepted" />
-		<var name="user" value="out.global.user" />
-		<var name="currentUrlEncoded" value="encodeURIComponent(out.global.currentUrl)" />
-
-		<nav>
-			<div class="navbar">
-				<div class="content">
-					<a href="https://maxkl.de" class="navbar-brand">
-						<div class="navbar-brand-icon"></div>
-						<div class="navbar-brand-name">maxkl.de</div>
-					</a>
-					<div if="user.signedIn" class="navbar-user">
-						${user.name ? user.name + " (" + user.email + ")" : user.email}<br />
-						<a href="/logout">Sign out</a>
-					</div>
-					<div else class="navbar-user single-line">
-						<if test="!data.hideSignIn">
-							<a href="/login?ret=${currentUrlEncoded}">Sign in</a>
-						</if>
-					</div>
-				</div>
-			</div>
-		</nav>
-
-		<div class="content">
-			<div if="cookieMessage" class="message-box cookie-message" id="cookie-message">
-				This site uses cookies. They are required to store whether you are signed in
-				and to improve your overall experience.
-				<br />
-				<a href="#" class="message-button" id="accept-cookies">Accept</a>
-			</div>
-			<noscript if="!data.excludeJsMessage">
-				<div class="message-box js-message">
-					For full functionality of this site it is necessary to enable JavaScript.
-					Here are the <a href="http://www.enable-javascript.com/" target="_blank">
-					instructions how to enable JavaScript in your web browser</a>.
-				</div>
-			</noscript>
-
-			<layout-placeholder name="content"></layout-placeholder>
-		</div>
-
-		<script src="/js/main.js"></script>
-		<script if="cookieMessage">
-			document.getElementById("accept-cookies").addEventListener("click", function (evt) {
-				evt.preventDefault();
-				document.cookie = "a=1; expires=" + new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 25) + "; path=/; domain=.maxkl.de";
-				document.getElementById("cookie-message").style.display = "none";
-				var query = parseQueryString(), ret = query["cookies_ret"];
-				if(ret) window.location.href = ret;
-			});
-		</script>
-		<include template="./analytics.marko" />
-		<layout-placeholder name="scripts"></layout-placeholder>
-	</body>
+    <head>
+        <meta charset="utf-8"/>
+        <title>${(data.title ? data.title + " :: " : "") + "maxkl.de"}</title>
+        <meta name="description" content=data.description/>
+        <meta property="og:title"
+            content=((data.ogTitle || data.title) || "maxkl.de")/>
+        <meta property="og:description"
+            content=(data.ogDescription || data.description)/>
+        <meta if(data.ogImage) property="og:image" content=data.ogImage/>
+        <meta else property="og:image" content/>
+        <!-- thanks to https://realfavicongenerator.net/ -->
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png"/>
+        <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png"/>
+        <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png"/>
+        <link rel="apple-touch-icon" sizes="114x114"
+            href="/apple-touch-icon-114x114.png"/>
+        <link rel="apple-touch-icon" sizes="120x120"
+            href="/apple-touch-icon-120x120.png"/>
+        <link rel="apple-touch-icon" sizes="144x144"
+            href="/apple-touch-icon-144x144.png"/>
+        <link rel="apple-touch-icon" sizes="152x152"
+            href="/apple-touch-icon-152x152.png"/>
+        <link rel="apple-touch-icon" sizes="180x180"
+            href="/apple-touch-icon-180x180.png"/>
+        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32"/>
+        <link rel="icon" type="image/png" href="/favicon-194x194.png" sizes="194x194"/>
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96"/>
+        <link rel="icon" type="image/png" href="/android-chrome-192x192.png"
+            sizes="192x192"/>
+        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16"/>
+        <link rel="manifest" href="/manifest.json"/>
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"/>
+        <meta name="msapplication-TileColor" content="#3da2c7"/>
+        <meta name="msapplication-TileImage" content="/mstile-144x144.png"/>
+        <!--<meta name="theme-color" content="#ffffff" />-->
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <link if(!data.excludeDefaultStylesheet) rel="stylesheet" type="text/css"
+            href="/css/index.css"/>
+        <layout-placeholder name="stylesheets"/>
+    </head>
+    <body>
+        <var cookieMessage=((!data.excludeCookieMessage) && (!out.global.cookiesAccepted))/>
+        <var user=out.global.user/>
+        <var currentUrlEncoded=encodeURIComponent(out.global.currentUrl)/>
+        <nav>
+            <div class="navbar">
+                <div class="content">
+                    <a href="https://maxkl.de" class="navbar-brand">
+                        <div class="navbar-brand-icon"/>
+                        <div class="navbar-brand-name">maxkl.de</div>
+                    </a>
+                    <div if(user.signedIn) class="navbar-user">
+                        ${user.name ? user.name + " (" + user.email + ")" : user.email}<br/>
+                        <a href="/logout">Sign out</a>
+                    </div>
+                    <div else class="navbar-user single-line">
+                        <if(!data.hideSignIn)>
+                            <a href="/login?ret=${currentUrlEncoded}">Sign in</a>
+                        </if>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="content">
+            <div if(cookieMessage) class="message-box cookie-message" id="cookie-message">
+                This site uses cookies. They are required to store whether you are signed in
+                and to improve your overall experience.
+                <br/>
+                <a href="#" class="message-button" id="accept-cookies">Accept</a>
+            </div>
+            <noscript if(!data.excludeJsMessage)>
+                <div class="message-box js-message">
+                    For full functionality of this site it is necessary to enable JavaScript.
+                    Here are the
+                    <a href="http://www.enable-javascript.com/" target="_blank">
+                        instructions how to enable JavaScript in your web browser
+                    </a>.
+                </div>
+            </noscript>
+            <layout-placeholder name="content"/>
+        </div>
+        <script src="/js/main.js"/>
+        <script if(cookieMessage)>
+            document.getElementById("accept-cookies").addEventListener("click", function (evt) {
+            	evt.preventDefault();
+            	document.cookie = "a=1; expires=" + new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 25) + "; path=/; domain=.maxkl.de";
+            	document.getElementById("cookie-message").style.display = "none";
+            	var query = parseQueryString(), ret = query["cookies_ret"];
+            	if(ret) window.location.href = ret;
+            });
+        </script>
+        <include("./analytics.marko")/>
+        <layout-placeholder name="scripts"/>
+    </body>
 </html>

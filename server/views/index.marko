@@ -1,21 +1,27 @@
-<layout-use template="./layout/default.marko" description="Max Klein's personal website">
-	<layout-put into="content">
-		<div class="message-box abimotto-message">
-			Die Abstimmung für das <strong>Abimotto</strong> ist vorbei!<br />
-			Schau dir das Ergebnis an:<br />
-			<a href="/abimotto" class="message-button"><strong>Zum Ergebnis</strong></a>
-		</div>
-		<p>
-			Hi! Visit my <a href="https://github.com/maxkl" target="_blank">Github page</a>
-			for the source code of some of the pages below and for projects that don't run in a browser.
-		</p>
-		<for each="section in data.sections">
-			<h2>${section.title}</h2>
-			<ul>
-				<li for="link in section.links">
-					<a href="${link.href}" target="${link.external ? '_blank' : null}">${link.title}</a> <a if="link.source" href="${link.source}" target="_blank">(Source Code)</a>
-				</li>
-			</ul>
-		</for>
-	</layout-put>
+<layout-use("./layout/default.marko") description="Max Klein's personal website">
+    <layout-put into="content">
+        <div class="message-box abimotto-message">
+            Die Abstimmung für das
+            <strong>Abimotto</strong>
+            ist vorbei!<br/>
+            Schau dir das Ergebnis an:<br/>
+            <a href="/abimotto" class="message-button">
+                <strong>Zum Ergebnis</strong>
+            </a>
+        </div>
+        <p>
+            Hi! Visit my
+            <a href="https://github.com/maxkl" target="_blank">Github page</a>
+            for the source code of some of the pages below and for projects that don't run in a browser.
+        </p>
+        <for(section in data.sections)>
+            <h2>${section.title}</h2>
+            <ul>
+                <li for(link in section.links)>
+                    <a href=link.href target=(link.external ? "_blank" : null)>${link.title}</a>
+                    <a if(link.source) href=link.source target="_blank">(Source Code)</a>
+                </li>
+            </ul>
+        </for>
+    </layout-put>
 </layout-use>

@@ -1,32 +1,37 @@
-<layout-use template="../layout/default.marko" title="Register" description="Register at maxkl.de" hideSignIn="true">
-	<layout-put into="content">
-		<h1>Register</h1>
-		<p id="error" class="red" style="display:none;">
-			Registration failed. The e-mail is either invalid or already in use.
-		</p>
-		<form method="post" class="block-form" id="registration">
-			<div class="form-row">
-				<input type="text" name="email" id="email" placeholder="E-mail&hellip;" />
-			</div>
-			<div class="form-row">
-				<input type="text" name="name" id="name" placeholder="Name (optional)&hellip;" />
-			</div>
-			<div class="form-row">
-				<input type="password" name="password" id="password" placeholder="Password&hellip;" />
-			</div>
-			<div class="form-row">
-				<input type="password" name="password" id="password2" placeholder="Repeat password&hellip;" />
-			</div>
-			<div class="form-row">
-				<input type="submit" id="submit" value="Register" autocomplete="off" />
-			</div>
-		</form>
-		<p>
-			Already have an account? <a href="${data.loginLink}">Sign in</a>
-		</p>
-		<a href="/">To the start page</a>
-	</layout-put>
-	<layout-put into="scripts">
-		<script src="/js/register.js"></script>
-	</layout-put>
+<layout-use("../layout/default.marko") title="Register"
+    description="Register at maxkl.de" hideSignIn="true">
+    <layout-put into="content">
+        <h1>Register</h1>
+        <p id="error" class="red" style="display:none;">
+            Registration failed. The e-mail is either invalid or already in use.
+        </p>
+        <form method="post" class="block-form" id="registration">
+            <div class="form-row">
+                <input type="text" name="email" id="email" placeholder="E-mail&hellip;"/>
+            </div>
+            <div class="form-row">
+                <input type="text" name="name" id="name"
+                    placeholder="Name (optional)&hellip;"/>
+            </div>
+            <div class="form-row">
+                <input type="password" name="password" id="password"
+                    placeholder="Password&hellip;"/>
+            </div>
+            <div class="form-row">
+                <input type="password" name="password" id="password2"
+                    placeholder="Repeat password&hellip;"/>
+            </div>
+            <div class="form-row">
+                <input type="submit" id="submit" value="Register" autocomplete="off"/>
+            </div>
+        </form>
+        <p>
+            Already have an account?
+            <a href=data.loginLink>Sign in</a>
+        </p>
+        <a href="/">To the start page</a>
+    </layout-put>
+    <layout-put into="scripts">
+        <script src="/js/register.js"/>
+    </layout-put>
 </layout-use>

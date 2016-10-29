@@ -1,12 +1,13 @@
-<layout-use template="../layout/default.marko" title="User info" description="Your user account information at maxkl.de">
-	<layout-put into="content">
-		<h1>User info</h1>
-		<p>
-			User id: ${data.user.id}<br />
-			E-mail:  ${data.user.email}<br />
-			Name:    ${data.user.name}<br />
-			<a href="/logout">Sign out</a>
-		</p>
-		<a href="/">To the start page</a>
-	</layout-put>
+<layout-use("../layout/default.marko") title="User info"
+    description="Your user account information at maxkl.de">
+    <layout-put into="content">
+        <h1>User info</h1>
+        <p>
+            User id: ${data.user.id}<br/>
+            E-mail:  ${data.user.email}<br/>
+            Name:    ${data.user.name}<br/>
+            <a href="/logout">Sign out</a>
+        </p>
+        <a href="/">To the start page</a>
+    </layout-put>
 </layout-use>
