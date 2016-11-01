@@ -3,7 +3,7 @@ body.light {
 	color: #eee;
 }
 
-nav, .content {
+body > * {
 	position: relative;
 }
 
@@ -13,7 +13,9 @@ nav, .content {
 	left: 0;
 	width: 100%;
 	height: 100%;
+	overflow: hidden;
 
+	background-color: #0f1115;
 	visibility: hidden;
 	opacity: 0;
 
@@ -25,15 +27,7 @@ nav, .content {
 	opacity: 1;
 }
 
-.lost-in-space {
-	box-sizing: border-box;
-	position: relative;
-	overflow: hidden;
-
-	background-color: #0f1115;
-}
-
-.lost-in-space canvas {
+.bg canvas {
 	display: block;
 	position: absolute;
 	top: 0;
