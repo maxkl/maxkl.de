@@ -180,8 +180,8 @@
 		this.bgCanvas.style.width = w + 'px';
 		this.bgCanvas.style.height = h + 'px';
 
-		this.width = w;
-		this.height = h;
+		this.width = sw;
+		this.height = sh;
 
 		this.pendingBgUpdate = true;
 
