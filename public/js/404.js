@@ -176,8 +176,8 @@
 		var sw = w * ratio;
 		var sh = h * ratio;
 
-		// this.ctx.scale(scale, scale);
-		// this.bgCtx.scale(scale, scale);
+		this.ctx.scale(scale, scale);
+		this.bgCtx.scale(scale, scale);
 
 		this.width = sw;
 		this.height = sh;
