@@ -365,6 +365,14 @@
 		lostInSpace.resize();
 	});
 
+	document.addEventListener('visibilitychange', function () {
+		if(document.hidden) {
+			lostInSpace.pause();
+		} else {
+			lostInSpace.play();
+		}
+	});
+
 	setTimeout(function () {
 		lostInSpace.play();
 		document.body.classList.add('light');
