@@ -243,7 +243,7 @@
 		var stars = this.stars;
 
 		var chunkSize = 100;
-		var starsPerChunk = 20;
+		var starsPerChunk = 5;
 
 		function genChunk() {
 			var chunk = [];
