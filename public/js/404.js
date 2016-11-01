@@ -157,11 +157,6 @@
 		var w = this.wrapper.clientWidth;
 		var h = this.wrapper.clientHeight;
 
-		this.canvas.width = w;
-		this.canvas.height = h;
-		this.bgCanvas.width = w;
-		this.bgCanvas.height = h;
-
 		var ctx = this.ctx;
 		var devicePixelRatio = window.devicePixelRatio || 1;
         var backingStoreRatio =
@@ -176,11 +171,17 @@
 		var sw = w * ratio;
 		var sh = h * ratio;
 
-		this.ctx.scale(scale, scale);
-		this.bgCtx.scale(scale, scale);
+		this.canvas.width = sw;
+		this.canvas.height = sh;
+		this.canvas.style.width = w + 'px';
+		this.canvas.style.height = h + 'px';
+		this.bgCanvas.width = sw;
+		this.bgCanvas.height = sh;
+		this.bgCanvas.style.width = w + 'px';
+		this.bgCanvas.style.height = h + 'px';
 
-		this.width = sw;
-		this.height = sh;
+		this.width = w;
+		this.height = h;
 
 		this.pendingBgUpdate = true;
 
