@@ -1,0 +1,26 @@
+
+body.light {
+	color: #eee;
+}
+
+nav, .content {
+	position: relative;
+}
+
+.bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	visibility: hidden;
+	opacity: 0;
+
+	transition: visibility 1s ease, opacity 1s ease;
+}
+
+.bg.visible {
+	visibility: visible;
+	opacity: 1;
+}

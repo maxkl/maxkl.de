@@ -1,8 +1,22 @@
 <layout-use("../layout/default.marko") title="Not found"
     description="This page could not be found">
+	<layout-put into="stylesheets">
+        <link rel="stylesheet" href="/css/404.css" />
+    </layout-put>
     <layout-put into="content">
-        <h1>Oops! (404)</h1>
-        <p>Move along, nothing to see here!</p>
-        <a href="/">To the start page</a>
+        <h1>You seem to be lost! (404)</h1>
+        <p>
+			The requested page could not be found.<br />
+			Possible reasons are:
+			<ul>
+				<li>The page has been moved to a different location</li>
+				<li>You clicked on an invalid link</li>
+				<li>You misspelled the address</li>
+			</ul>
+		</p>
+        <a href="/">Show me the exit</a>
+    </layout-put>
+	<layout-put into="scripts">
+        <script src="/js/404.js"></script>
     </layout-put>
 </layout-use>
