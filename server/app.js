@@ -6,7 +6,6 @@
 'use strict';
 
 // Node core modules
-const fs = require('fs');
 const path = require('path');
 const http = require('http');
 
@@ -15,14 +14,12 @@ const express = require('express');
 const serveStatic = require('serve-static');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const mongodb = require('mongodb');
+const MongoClient = require('mongodb').MongoClient;
 const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
-const MongoClient = mongodb.MongoClient;
 
 // Custom/local modules
 const readConfig = require('./lib/readConfig');
-const exists = require('./lib/exists');
 const renderMarko = require('./lib/renderMarko');
 const user = require('./lib/user');
 const subpages = require('./subpages');
@@ -38,12 +35,8 @@ const publicDir = path.join(rootDir, 'public');
 const publicMetaDir = path.join(rootDir, 'public-meta');
 const subpageDir = path.join(rootDir, 'subpages');
 
-function connectDb() {
-	return MongoClient.connect(config.dbUrl);
-}
-
 // Connect to mongodb database
-connectDb().then(db => {
+MongoClient.connect(config.dbUrl).then(db => {
 
 	const app = express();
 
