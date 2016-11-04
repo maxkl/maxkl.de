@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>${(data.title ? data.title + " :: " : "") + "maxkl.de"}</title>
         <meta name="description" content=data.description />
         <meta property="og:title"
@@ -29,13 +30,12 @@
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#3da2c7" />
         <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" />
-        <link if(!data.excludeDefaultStylesheet) rel="stylesheet" type="text/css" href="/css/index.css" />
+        <link rel="stylesheet" href="/css/index.css" />
         <layout-placeholder name="stylesheets" />
     </head>
     <body>
-        <var cookieMessage=((!data.excludeCookieMessage) && (!out.global.cookiesAccepted)) />
+        <var cookieMessage=!out.global.cookiesAccepted />
         <var user=out.global.user />
         <var currentUrlEncoded=encodeURIComponent(out.global.currentUrl) />
         <nav>
@@ -64,7 +64,7 @@
                 <br />
                 <a href="#" class="message-button" id="accept-cookies">Accept</a>
             </div>
-            <noscript if(!data.excludeJsMessage)>
+            <noscript>
                 <div class="message-box js-message">
                     For full functionality of this site it is necessary to enable JavaScript.
                     Here are the
@@ -81,8 +81,6 @@
             	evt.preventDefault();
             	document.cookie = "a=1; expires=" + new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 25) + "; path=/; domain=.maxkl.de";
             	document.getElementById("cookie-message").style.display = "none";
-            	var query = parseQueryString(), ret = query["cookies_ret"];
-            	if(ret) window.location.href = ret;
             });
         </script>
         <include("./analytics.marko") />
