@@ -1,17 +1,11 @@
 /**
- * Copyright: (c) 2015 Max Klein
+ * Copyright: (c) 2015-2016 Max Klein
  * License: MIT
  */
 
 'use strict';
 
-var path = require('path');
-
-module.exports = function (file, root) {
-	root = root || __dirname;
-
-	file = path.resolve(root, file);
-	
+module.exports = function (file) {
 	try {
 		var config = require(file);
 

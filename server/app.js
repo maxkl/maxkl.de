@@ -29,11 +29,12 @@ require('marko/node-require').install();
 
 // Configuration variables
 const rootDir = path.join(__dirname, '..');
-const config = readConfig('config.json', rootDir);
 const viewsDir = path.join(rootDir, 'server/views');
 const publicDir = path.join(rootDir, 'public');
 const publicMetaDir = path.join(rootDir, 'public-meta');
 const subpageDir = path.join(rootDir, 'subpages');
+
+const config = readConfig(path.join(rootDir, 'config.json'));
 
 // Connect to mongodb database
 MongoClient.connect(config.dbUrl).then(db => {
