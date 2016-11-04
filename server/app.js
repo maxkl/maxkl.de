@@ -22,7 +22,7 @@ const bodyParser = require('body-parser');
 const readConfig = require('./lib/readConfig');
 const renderMarko = require('./lib/renderMarko');
 const user = require('./lib/user');
-const subpages = require('./subpages');
+const subpages = require('./lib/subpages');
 
 // Register *.marko template file type
 require('marko/node-require').install();

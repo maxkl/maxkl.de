@@ -10,7 +10,7 @@ const path = require('path');
 
 const serveStatic = require('serve-static');
 
-const exists = require('./lib/exists');
+const exists = require('./exists');
 
 function readSubpageConfig(dir, name) {
 	const filename = path.join(dir, 'subpage.json');
