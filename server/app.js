@@ -13,7 +13,6 @@ const http = require('http');
 // npm modules
 const express = require('express');
 const serveStatic = require('serve-static');
-const compress = require('compression');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const mongodb = require('mongodb');
@@ -60,10 +59,6 @@ connectDb().then(db => {
 	app.set('server', server);
 
 	app.disable('x-powered-by');
-
-	app.use(compress({
-		threshold: 0
-	}));
 
 	app.use(bodyParser.urlencoded({
 		extended: false
