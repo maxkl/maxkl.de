@@ -1,9 +1,10 @@
 
-* {
-	box-sizing: border-box;
+*, *:before, *:after {
+	box-sizing: inherit;;
 }
 
 html, body {
+	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 
@@ -60,23 +61,37 @@ nav:after {
 .navbar-brand {
 	display: block;
 	float: left;
+	margin-left: 5px;
 
+	line-height: 40px;
+	font-size: 20px;
 	text-decoration: none;
 	color: #fff;
 
 	transition: none;
 }
 
-.navbar-brand-name {
-	float: left;
-	line-height: 40px;
-	margin-left: 5px;
-	font-size: 20px;
+.navbar-brand:hover {
+	text-decoration: underline;
 }
 
-.navbar-brand:hover .navbar-brand-name {
-	color: #fff;
-	text-decoration: underline;
+.navbar-links {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.navbar-links li {
+	display: block;
+	height: 40px;
+	float: left;
+}
+
+.navbar-links a {
+	display: block;
+	line-height: 40px;
+	padding: 0 5px;
+	color: inherit;
 }
 
 .navbar-user {
@@ -232,9 +247,5 @@ nav:after {
 	.content {
 		width: 100%;
 		padding: 0 10px;
-	}
-
-	.navbar .content {
-		padding: 0;
 	}
 }

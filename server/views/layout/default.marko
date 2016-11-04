@@ -39,19 +39,20 @@
         <var currentUrlEncoded=encodeURIComponent(out.global.currentUrl) />
         <nav>
             <div class="navbar">
-                <div class="content">
-                    <a href="https://maxkl.de" class="navbar-brand">
-                        <div class="navbar-brand-name">maxkl.de</div>
-                    </a>
-                    <div if(user.signedIn) class="navbar-user">
-                        ${user.name ? user.name + " (" + user.email + ")" : user.email}<br />
-                        <a href="/logout">Sign out</a>
-                    </div>
-                    <div else class="navbar-user single-line">
-                        <if(!data.hideSignIn)>
-                            <a href="/login?ret=${currentUrlEncoded}">Sign in</a>
-                        </if>
-                    </div>
+                <a href="https://maxkl.de" class="navbar-brand">maxkl.de</a>
+				<ul class="navbar-links">
+					<li><a href="/">Home</a></li>
+					<li><a href="/projects">Projects</a></li>
+					<li><a href="/about">About</a></li>
+				</ul>
+                <div if(user.signedIn) class="navbar-user">
+                    ${user.name ? user.name + " (" + user.email + ")" : user.email}<br />
+                    <a href="/logout">Sign out</a>
+                </div>
+                <div else class="navbar-user single-line">
+                    <if(!data.hideSignIn)>
+                        <a href="/login?ret=${currentUrlEncoded}">Sign in</a>
+                    </if>
                 </div>
             </div>
         </nav>
