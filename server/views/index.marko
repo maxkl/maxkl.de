@@ -10,18 +10,7 @@
             </a>
         </div>
         <p>
-            Hi! Visit my
-            <a href="https://github.com/maxkl" target="_blank">Github page</a>
-            for the source code of some of the pages below and for projects that don't run in a browser.
+            Hi!
         </p>
-        <for(section in data.sections)>
-            <h2>${section.title}</h2>
-            <ul>
-                <li for(link in section.links)>
-                    <a href=link.href target=(link.external && "_blank")>${link.title}</a>
-                    <a if(link.source) href=link.source target="_blank">(Source Code)</a>
-                </li>
-            </ul>
-        </for>
     </layout-put>
 </layout-use>
