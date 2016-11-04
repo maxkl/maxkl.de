@@ -1,13 +1,7 @@
 /**
- * Copyright: (c) 2015 Max Klein
+ * Copyright: (c) 2015-2016 Max Klein
  * License: MIT
  */
-
-var renderMarko = require("../lib/renderMarko");
-
-// Load error templates
-var error404Template = require("../views/errors/404.marko"),
-	error500Template = require("../views/errors/500.marko");
 
 module.exports = function (app) {
 
@@ -24,7 +18,7 @@ module.exports = function (app) {
 		if(err.status !== 404) return next(err);
 
 		res.status(404);
-		renderMarko(res, error404Template);
+		res.render('errors/404');
 	});
 
 	// Assume all other errors to be server errors (500)
@@ -32,7 +26,7 @@ module.exports = function (app) {
 		console.error("Internal server error:", err.stack || err);
 
 		res.status(500);
-		renderMarko(res, error500Template);
+		res.render('errors/500');
 	});
 
 };

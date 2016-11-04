@@ -3,12 +3,7 @@
  * License: MIT
  */
 
-const renderMarko = require('../lib/renderMarko');
 const user = require('../lib/user');
-
-const loginTemplate = require('../views/auth/login.marko');
-const registerTemplate = require('../views/auth/register.marko');
-const userTemplate = require('../views/auth/user.marko');
 
 module.exports = function (app, db) {
 
@@ -20,7 +15,7 @@ module.exports = function (app, db) {
 	app.get('/login', user.requireNotSignedIn(), function (req, res) {
 		var returnUrl = req.query['ret'];
 
-		renderMarko(res, loginTemplate, {
+		res.render('auth/login', {
 			registrationSuccessful: req.query.hasOwnProperty('registered'),
 			registerLink: '/register' + (returnUrl ? '?ret=' + encodeURIComponent(returnUrl) : '')
 		});
@@ -93,7 +88,7 @@ module.exports = function (app, db) {
 	app.get('/register', user.requireNotSignedIn(), function (req, res) {
 		var returnUrl = req.query['ret'];
 
-		renderMarko(res, registerTemplate, {
+		res.render('auth/register', {
 			loginLink: '/login' + (returnUrl ? '?ret=' + encodeURIComponent(returnUrl) : '')
 		});
 	});
@@ -156,7 +151,7 @@ module.exports = function (app, db) {
 	});
 
 	app.get('/user', user.requireSignedIn(), function (req, res) {
-		renderMarko(res, userTemplate, {
+		res.render('auth/user', {
 			user: {
 				id: req.user.id,
 				email: req.user.email,
