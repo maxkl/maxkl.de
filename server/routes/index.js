@@ -3,26 +3,20 @@
  * License: MIT
  */
 
-const renderMarko = require('../lib/renderMarko');
-
-const indexTemplate = require('../views/index.marko');
-const poweredByTemplate = require('../views/powered-by.marko');
-const legalTemplate = require('../views/legal.marko');
-
 module.exports = function (app, db, sites) {
 
 	app.get('/', function (req, res) {
-		renderMarko(res, indexTemplate, {
+		res.render('index', {
 			sections: sites
 		});
 	});
 
 	app.get('/powered-by', function (req, res) {
-		renderMarko(res, poweredByTemplate);
+		res.render('powered-by');
 	});
 
 	app.get('/legal', function (req, res) {
-		renderMarko(res, legalTemplate);
+		res.render('legal');
 	});
 
 	require('./auth')(app, db);
