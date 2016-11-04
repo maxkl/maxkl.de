@@ -7,9 +7,9 @@ html, body {
 	margin: 0;
 	padding: 0;
 
-	font: 16px Menlo, Monaco, Consolas, "Courier New", monospace;
+	font: 16px "Roboto Slab", serif;
 	color: #444;
-	background-color: #fffffc;
+	background-color: #fff;
 }
 
 a {
@@ -67,19 +67,10 @@ nav:after {
 	transition: none;
 }
 
-.navbar-brand-icon {
-	float: left;
-	background-image: url(/favicon-32x32.png);
-	background-size: 100%;
-	width: 30px;
-	height: 30px;
-	margin: 5px;
-}
-
 .navbar-brand-name {
 	float: left;
 	line-height: 40px;
-	margin-left: 10px;
+	margin-left: 5px;
 	font-size: 20px;
 }
 
@@ -90,16 +81,16 @@ nav:after {
 
 .navbar-user {
 	float: right;
-	line-height: 18px;
-	height: 36px;
-	margin: 2px;
+	line-height: 20px;
+	height: 40px;
+	margin-right: 5px;
 
 	text-align: right;
 	font-size: 14px;
 }
 
 .navbar-user.single-line {
-	line-height: 36px;
+	line-height: 40px;
 }
 
 .navbar-user a {
@@ -113,8 +104,6 @@ nav:after {
 }
 
 .message-box {
-	/*width: 70%;*/
-	/*margin: 0 auto;*/
 	padding: 15px 20px;
 
 	background-color: #eeeeee;
@@ -232,12 +221,10 @@ nav:after {
 .block-form button:enabled:hover,
 .block-form input[type="submit"]:enabled:hover {
 	background-color: #4783d7;
-	/*background-color: #4894ff;*/
 }
 
 .block-form button:enabled:active,
 .block-form input[type="submit"]:enabled:active {
-	/*background-color: #4783d7;*/
 	background-color: #4894ff;
 }
 

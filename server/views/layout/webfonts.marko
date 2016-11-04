@@ -1,0 +1,12 @@
+<script>
+	function loadFont(url) {
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.href = url;
+		document.head.appendChild(link);
+	}
+
+	window.addEventListener('load', function () {
+		loadFont('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
+	});
+</script>
