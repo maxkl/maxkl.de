@@ -23,7 +23,7 @@ module.exports.install = function (viewsDir) {
 	viewsDir = path.resolve(viewsDir);
 	const templateCache = {};
 
-	function render(res, name, locals, cb) {
+	function render(res, name, locals) {
 		const templatePath = path.join(viewsDir, name + '.marko');
 
 		let template;
