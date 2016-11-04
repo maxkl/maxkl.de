@@ -3,8 +3,8 @@
         <div class="message-box abimotto-message">
             Die Abstimmung für das
             <strong>Abimotto</strong>
-            ist vorbei!<br/>
-            Schau dir das Ergebnis an:<br/>
+            ist vorbei!<br />
+            Schau dir das Ergebnis an:<br />
             <a href="/abimotto" class="message-button">
                 <strong>Zum Ergebnis</strong>
             </a>
@@ -18,7 +18,7 @@
             <h2>${section.title}</h2>
             <ul>
                 <li for(link in section.links)>
-                    <a href=link.href target=(link.external ? "_blank" : null)>${link.title}</a>
+                    <a href=link.href target=(link.external && "_blank")>${link.title}</a>
                     <a if(link.source) href=link.source target="_blank">(Source Code)</a>
                 </li>
             </ul>
