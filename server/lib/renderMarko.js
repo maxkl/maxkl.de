@@ -32,31 +32,14 @@ function doRender(template, res, locals) {
 	template.render(data, res);
 }
 
-class CachedTemplate {
-	constructor(templatePath, template, readTime) {
-		this.template = template;
-		this.readTime = readTime;
-	}
-
-	hasChanged() {
-		try {
-			var stat = fs.statSync(this.templatePath);
-			return stat.mtime().getTime() > this.readTime;
-		} catch(e) {
-			return true;
-		}
-	}
-}
-
 module.exports.install = function (viewsDir) {
 	viewsDir = path.resolve(viewsDir);
 	const templateCache = {};
 
 	function loadAndCacheTemplate(templatePath) {
-		const readTime = Date.now();
 		try {
 			const template = marko.load(templatePath, { writeToDisk: false });
-			templateCache[templatePath] = new CachedTemplate(template, readTime);
+			templateCache[templatePath] = template;
 			console.log('Loaded template from disk: ', templatePath);
 			return template;
 		} catch(e) {
@@ -67,14 +50,8 @@ module.exports.install = function (viewsDir) {
 
 	function getTemplate(templatePath) {
 		if(templateCache.hasOwnProperty(templatePath)) {
-			const cachedTemplate = templateCache[templatePath];
-
-			if(cachedTemplate.hasChanged()) {
-				return loadAndCacheTemplate(templatePath);
-			} else {
-				console.log('Loaded template from cache:', templatePath);
-				return cachedTemplate.template;
-			}
+		console.log('Loaded template from cache:', templatePath);
+			return templateCache[templatePath];
 		} else {
 			return loadAndCacheTemplate(templatePath);
 		}
