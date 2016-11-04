@@ -11,10 +11,6 @@ module.exports = function (app, db, sites) {
 		});
 	});
 
-	app.get('/powered-by', function (req, res) {
-		res.render('powered-by');
-	});
-
 	app.get('/legal', function (req, res) {
 		res.render('legal');
 	});
