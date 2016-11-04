@@ -1,5 +1,5 @@
 /**
- * Copyright: (c) 2015 Max Klein
+ * Copyright: (c) 2015-2016 Max Klein
  * License: MIT
  */
 
