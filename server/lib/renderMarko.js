@@ -32,36 +32,32 @@ function doRender(template, res, locals) {
 	template.render(data, res);
 }
 
+function loadAndCacheTemplate(templatePath, cache) {
+	try {
+		const template = marko.load(templatePath, { writeToDisk: false });
+		cache[templatePath] = template;
+		return template;
+	} catch(e) {
+		delete cache[templatePath];
+		throw e;
+	}
+}
+
+function getTemplate(templatePath, cache) {
+	if(cache.hasOwnProperty(templatePath)) {
+		return cache[templatePath];
+	} else {
+		return loadAndCacheTemplate(templatePath, cache);
+	}
+}
+
 module.exports.install = function (viewsDir) {
 	viewsDir = path.resolve(viewsDir);
 	const templateCache = {};
 
-	function loadAndCacheTemplate(templatePath) {
-		try {
-			const template = marko.load(templatePath, { writeToDisk: false });
-			templateCache[templatePath] = template;
-			console.log('Loaded template from disk: ', templatePath);
-			return template;
-		} catch(e) {
-			delete templateCache[templatePath];
-			throw e;
-		}
-	}
-
-	function getTemplate(templatePath) {
-		if(templateCache.hasOwnProperty(templatePath)) {
-		console.log('Loaded template from cache:', templatePath);
-			return templateCache[templatePath];
-		} else {
-			return loadAndCacheTemplate(templatePath);
-		}
-	}
-
 	function render(res, name, locals) {
 		const templatePath = path.join(viewsDir, name + '.marko');
-
-		const template = getTemplate(templatePath);
-
+		const template = getTemplate(templatePath, templateCache);
 		doRender(template, res, locals);
 	}
 
