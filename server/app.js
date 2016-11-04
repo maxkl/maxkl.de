@@ -33,6 +33,7 @@ require('marko/node-require').install();
 // Configuration variables
 const rootDir = path.join(__dirname, '..');
 const config = readConfig('config.json', rootDir);
+const viewsDir = path.join(rootDir, 'server/views');
 const publicDir = path.join(rootDir, 'public');
 const publicMetaDir = path.join(rootDir, 'public-meta');
 const subpageDir = path.join(rootDir, 'subpages');
@@ -103,6 +104,8 @@ connectDb().then(db => {
 		res.locals.$global.user = req.user;
 		next();
 	});
+
+	app.use(renderMarko.install(viewsDir));
 
 	// Global static files
 	app.use('/', serveStatic(publicDir));
