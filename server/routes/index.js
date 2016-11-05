@@ -3,7 +3,7 @@
  * License: MIT
  */
 
-module.exports = function (app, db, sites) {
+module.exports = function (app, db, projectSections) {
 
 	app.get('/', function (req, res) {
 		res.render('index');
@@ -11,7 +11,7 @@ module.exports = function (app, db, sites) {
 
 	app.get('/projects', function (req, res) {
 		res.render('projects', {
-			sections: sites
+			projectSections: projectSections
 		});
 	});
 

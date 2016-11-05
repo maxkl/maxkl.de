@@ -8,7 +8,7 @@ node_modules/
 
 # Project specific
 config.json
-subpages/
+projects/
 *.marko.js
 logs/
 *.pem

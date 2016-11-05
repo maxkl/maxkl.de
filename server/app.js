@@ -22,7 +22,7 @@ const bodyParser = require('body-parser');
 const readConfig = require('./lib/readConfig');
 const renderMarko = require('./lib/renderMarko');
 const user = require('./lib/user');
-const subpages = require('./lib/subpages');
+const projects = require('./lib/projects');
 
 // Register *.marko template file type
 require('marko/node-require').install();
@@ -32,7 +32,7 @@ const rootDir = path.join(__dirname, '..');
 const viewsDir = path.join(rootDir, 'server/views');
 const publicDir = path.join(rootDir, 'public');
 const publicMetaDir = path.join(rootDir, 'public-meta');
-const subpageDir = path.join(rootDir, 'subpages');
+const projectsDir = path.join(rootDir, 'projects');
 
 const config = readConfig(path.join(rootDir, 'config.json'));
 
@@ -107,13 +107,14 @@ MongoClient.connect(config.dbUrl).then(db => {
 	// Meta files like favicon, robots.txt, ... (in separate dir to reduce clutter)
 	app.use('/', serveStatic(publicMetaDir));
 
-	const subpageData = subpages.get(subpageDir);
+	// Search for projects
+	const projectsData = projects.get(projectsDir);
 
 	// Global routes
-	require('./routes/index')(app, db, subpageData.sections);
+	require('./routes/index')(app, db, projectsData.sections);
 
-	// Search for subpages
-	subpageData.subpages.forEach(subpage => subpages.use(subpage, app));
+	// Include projects
+	projectsData.projects.forEach(project => projects.use(project, app));
 
 	// Error handlers
 	require('./routes/errors')(app, db);
