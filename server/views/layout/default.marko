@@ -76,14 +76,8 @@
             <layout-placeholder name="content" />
         </div>
         <script src="/js/main.js"></script>
-        <script if(cookieMessage)>
-            document.getElementById("accept-cookies").addEventListener("click", function (evt) {
-            	evt.preventDefault();
-            	document.cookie = "a=1; expires=" + new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 25) + "; path=/; domain=.maxkl.de";
-            	document.getElementById("cookie-message").style.display = "none";
-            });
-        </script>
-        <include("./analytics.marko") />
+        <script if(cookieMessage) src="/js/cookieMessage.js"></script>
+        <script src="/js/analytics.js"></script>
         <layout-placeholder name="scripts" />
     </body>
 </html>
