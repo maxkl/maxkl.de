@@ -138,7 +138,7 @@ function getProjects(dir) {
 		if(entries.hasOwnProperty(section)) {
 			sections.push({
 				title: section,
-				links: entries[section]
+				projects: entries[section]
 			});
 		}
 	}

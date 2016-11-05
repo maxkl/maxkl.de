@@ -10,7 +10,7 @@
             <h2>${section.title}</h2>
             <ul>
                 <li for(project in section.projects)>
-                    <a href=project.href>${link.title}</a> <a if(link.source) href=link.source target="_blank">(Source Code)</a>
+                    <a href=project.href>${project.title}</a> <a if(project.source) href=project.source target="_blank">(Source Code)</a>
                 </li>
             </ul>
         </for>
