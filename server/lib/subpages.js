@@ -30,7 +30,6 @@ function readSubpageConfig(dir, name) {
 		section: 'Misc',
 		title: name.substr(0, 1).toUpperCase() + name.substr(1),
 		href: '/' + name,
-		external: false,
 		source: null
 	}, contents);
 }
@@ -80,7 +79,6 @@ function getSubpage(directory, name) {
 			section: config.section,
 			title: config.title,
 			href: config.href,
-			external: config.external,
 			source: config.source
 		}
 	}
@@ -129,7 +127,6 @@ function getSubpages(dir) {
 				entries[entry.section].push({
 					title: entry.title,
 					href: entry.href,
-					external: entry.external,
 					source: entry.source
 				});
 			}

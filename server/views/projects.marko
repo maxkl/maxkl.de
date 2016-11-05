@@ -1,16 +1,16 @@
 <layout-use("./layout/default.marko") description="Max Klein's personal website">
     <layout-put into="content">
+		<h1>My projects</h1>
         <p>
-            Hi! Visit my
-            <a href="https://github.com/maxkl" target="_blank">Github page</a>
-            for the source code of some of the pages below and for projects that don't run in a browser.
+            Visit <a href="https://github.com/maxkl" target="_blank">my GitHub page</a>
+            to view the source code of some of the projects below and to discover my
+			projects that don't run in a browser.
         </p>
-        <for(section in data.sections)>
+        <for(section in data.projects)>
             <h2>${section.title}</h2>
             <ul>
-                <li for(link in section.links)>
-                    <a href=link.href target=(link.external && "_blank")>${link.title}</a>
-                    <a if(link.source) href=link.source target="_blank">(Source Code)</a>
+                <li for(project in section.projects)>
+                    <a href=project.href>${link.title}</a> <a if(link.source) href=link.source target="_blank">(Source Code)</a>
                 </li>
             </ul>
         </for>
