@@ -183,7 +183,8 @@ nav:after {
 	padding: 0 10px;
 
 	vertical-align: middle;
-	font: 16px Menlo, Monaco, Consolas, "Courier New", monospace;
+	font-size: 16px;
+	font-family: inherit;
 	line-height: 32px;
 	border: 1px solid #979797;
 	border-radius: 0;
@@ -218,7 +219,8 @@ nav:after {
 	padding: 0 10px;
 
 	vertical-align: middle;
-	font: 16px Menlo, Monaco, Consolas, "Courier New", monospace;
+	font-size: 16px;
+	font-family: inherit;
 	line-height: 32px;
 	border: none;
 	border-radius: 0;
