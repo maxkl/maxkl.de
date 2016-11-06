@@ -8,7 +8,7 @@ My personal website, built with NodeJS.
 
 - A running MongoDB instance (on your server or another, shouldn't matter)
 - NodeJS
-- (optional) A reverse proxy (e.g. nginx)
+- A reverse proxy (e.g. nginx)
 
 ### Actual installation
 
