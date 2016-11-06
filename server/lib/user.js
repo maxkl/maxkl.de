@@ -139,7 +139,7 @@ class User {
 					if(req.user.level >= minLevel) {
 						next();
 					} else {
-						res.status(403).setContentType('text/plain');
+						res.status(403).type('text/plain');
 						res.end('You do not have sufficient permissions to access this page');
 					}
 				} else {
@@ -149,7 +149,7 @@ class User {
 			}
 
 			if(redirect === false) {
-				res.status(403).setContentType('text/plain');
+				res.status(403).type('text/plain');
 				res.end('You must be signed in to view this page');
 			} else if(redirect) {
 				res.redirect(redirect);
@@ -167,7 +167,7 @@ class User {
 			}
 
 			if(redirect === false) {
-				res.status(403).setContentType('text/plain');
+				res.status(403).type('text/plain');
 				res.end('You must not be signed in to view this page');
 			} else if(redirect) {
 				res.redirect(redirect);
