@@ -19,8 +19,8 @@ module.exports = function (app, db, projectSections) {
 		res.render('about');
 	});
 
-	app.get('/legal', function (req, res) {
-		res.render('legal');
+	app.get('/privacy', function (req, res) {
+		res.render('privacy');
 	});
 
 	require('./auth')(app, db);
