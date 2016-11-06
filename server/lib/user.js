@@ -3,22 +3,20 @@
  * License: MIT
  */
 
-var crypto = require("crypto");
-var mongodb = require("mongodb");
+const crypto = require('crypto');
 
-var
-	DEFAULT_SALT_LENGTH = 64,
-	DEFAULT_ITERATIONS = 50000,
-	DEFAULT_KEY_LENGTH = 512,
-	DEFAULT_HASH_DIGEST = "sha512";
+const DEFAULT_SALT_LENGTH = 64;
+const DEFAULT_ITERATIONS = 50000;
+const DEFAULT_KEY_LENGTH = 512;
+const DEFAULT_HASH_DIGEST = 'sha512';
 
 /**
  * Create a salt
- * @param {int} [len]
+ * @param {int} len
  * @return {Buffer}
  */
 function createSalt(len) {
-	return crypto.randomBytes(len || DEFAULT_SALT_LENGTH);
+	return crypto.randomBytes(len);
 }
 
 /**
@@ -61,7 +59,7 @@ function checkPassword(password, stored) {
 		stored.keyLength,
 		stored.hashDigest
 	).then(function (key) {
-		return key.toString("base64") === stored.key;
+		return key.toString('base64') === stored.key;
 	});
 }
 
@@ -73,31 +71,12 @@ function checkPassword(password, stored) {
 function setExpirationIndex(db) {
 	return new Promise(function (resolve, reject) {
 		function createIndex() {
-			return db.collection("users").createIndex({ expireAt: 1 }, { expireAfterSeconds: 0 }).then(resolve, reject);
+			return db.collection('users').createIndex({ expireAt: 1 }, { expireAfterSeconds: 0 }).then(resolve, reject);
 		}
 
 		// Ignore any errors while dropping the index
-		db.collection("users").dropIndex({ expireAt: 1 }).then(createIndex, createIndex);
+		db.collection('users').dropIndex({ expireAt: 1 }).then(createIndex, createIndex);
 	});
-}
-
-/**
- *
- * @param {*} req
- * @param {Db} db
- * @constructor
- */
-function User(req, db) {
-	if(!req.session) throw new Error("User requires req.session");
-
-	this._req = req;
-	this._sess = req.session;
-	this._db = db;
-
-	this.signedIn = !!this._sess.user_id;
-	this.id = this.signedIn ? this._sess.user_id : null;
-	this.email = this.signedIn ? this._sess.user_email : null;
-	this.name = this.signedIn ? this._sess.user_name : null;
 }
 
 /**
@@ -107,17 +86,8 @@ function User(req, db) {
  * @return {Promise}
  */
 function findUser(db, email) {
-	return new Promise(function (resolve, reject) {
-		db.collection("users").find({
-			email: email
-		}).limit(1).next(function (err, doc) {
-			if(err) {
-				reject(err);
-				return;
-			}
-
-			resolve(doc);
-		});
+	return db.collection('users').findOne({
+		email: email
 	});
 }
 
@@ -134,11 +104,11 @@ function findUser(db, email) {
  * @return {Promise}
  */
 function storeUser(db, email, name, key, salt, iterations, keyLength, hashDigest) {
-	return db.collection("users").insertOne({
+	return db.collection('users').insertOne({
 		email: email,
 		name: name,
 		password: {
-			key: key.toString("base64"),
+			key: key.toString('base64'),
 			salt: salt,
 			iterations: iterations,
 			keyLength: keyLength,
@@ -147,142 +117,121 @@ function storeUser(db, email, name, key, salt, iterations, keyLength, hashDigest
 	});
 }
 
-/**
- * Sign the user in
- * @param {string} email
- * @param {string} password
- * @return {Promise}
- */
-User.prototype.signIn = function signIn(email, password) {
-	var self = this;
+class User {
+	static install(options) {
+		if(!options)
+			options = {};
 
-	return findUser(this._db, email).then(function (doc) {
-		if(!doc) return false;
+		const db = options.db;
 
-		return checkPassword(password, doc.password).then(function (matches) {
-			if(matches) {
-				self._sess.user_id = self.id = doc._id.toString();
-				self._sess.user_email = self.email = email;
-				self._sess.user_name = self.name = doc.name || null;
-				self.signedIn = true;
-			}
-
-			return matches;
-		});
-	});
-};
-
-/**
- * Sign the user out
- */
-User.prototype.signOut = function signOut() {
-	this._sess.user_id = this.id = null;
-	this._sess.user_email = this.email = null;
-	this._sess.user_name = this.name = null;
-	this.signedIn = false;
-};
-
-/**
- * Register a new user
- * @param {string} email
- * @param {string} name
- * @param {string} password
- * @return {Promise}
- */
-User.prototype.register = function register(email, name, password) {
-	var self = this;
-
-	return findUser(this._db, email).then(function (doc) {
-		if(doc) return false;
-
-		var salt = createSalt().toString("base64"),
-			iterations = DEFAULT_ITERATIONS,
-			keyLength = DEFAULT_KEY_LENGTH,
-			hashDigest = DEFAULT_HASH_DIGEST;
-
-		return hashPassword(
-			password,
-			salt,
-			iterations,
-			keyLength,
-			hashDigest
-		).then(function (key) {
-			return storeUser(self._db, email, name, key, salt, iterations, keyLength, hashDigest);
-		}).then(function () {
-			return true;
-		});
-	});
-};
-
-/**
- * Create a middleware that assigns `req.user`
- * @param options
- * @return {function(req: Object, res: Object, next: function)}
- */
-function createMiddleware(options) {
-	if(!options) options = {};
-
-	var db = options.db;
-
-	return function middleware(req, res, next) {
-		// Don't overwrite
-		if(!req.user) {
+		return function userMiddleware(req, res, next) {
 			req.user = new User(req, db);
-		}
-
-		next();
+			next();
+		};
 	}
-}
 
-/**
- * Create a middleware that redirects/ends the request if the user is not signed in
- * @param {string|boolean} [redirect]
- * @return {function(req: Object, res: Object, next: function)}
- */
-function requireSignedIn(redirect) {
-	return function requireSignedInMiddleware(req, res, next) {
-		if(!req.user.signedIn) {
+	static requireSignedIn(redirect) {
+		return function requireSignedInMiddleware(req, res, next) {
+			if(req.user.signedIn) {
+				next();
+				return;
+			}
+
 			if(redirect === false) {
-				res.status(403).setContentType("text/plain");
-				res.end("You must be signed in to view this page");
+				res.status(403).setContentType('text/plain');
+				res.end('You must be signed in to view this page');
 			} else if(redirect) {
 				res.redirect(redirect);
 			} else {
-				res.redirect("/login?ret=" + encodeURIComponent(req.originalUrl));
+				res.redirect('/login?ret=' + encodeURIComponent(req.originalUrl));
+			}
+		};
+	}
+
+	static requireNotSignedIn(redirect) {
+		return function requireNotSignedInMiddleware(req, res, next) {
+			if(!req.user.signedIn) {
+				next();
+				return;
 			}
 
-			return;
-		}
-
-		next();
-	}
-}
-
-/**
- * Create a middleware that redirects/ends the request if the user is signed in
- * @param {string|boolean} [redirect]
- * @return {function(req: Object, res: Object, next: function)}
- */
-function requireNotSignedIn(redirect) {
-	return function requireNotSignedInMiddleware(req, res, next) {
-		if(req.user.signedIn) {
 			if(redirect === false) {
-				res.status(403).setContentType("text/plain");
-				res.end("You must not be signed in to view this page");
+				res.status(403).setContentType('text/plain');
+				res.end('You must not be signed in to view this page');
 			} else if(redirect) {
 				res.redirect(redirect);
 			} else {
-				res.redirect(req.query["ret"] || req.headers["referer"] || "/");
+				res.redirect(req.query['ret'] || req.headers['referer'] || '/');
 			}
+		};
+	}
 
-			return;
-		}
+	constructor(req, db) {
+		if(!req.session)
+			throw new Error('User requires req.session');
 
-		next();
+		this._req = req;
+		this._sess = req.session;
+		this._db = db;
+
+		this.signedIn = !!this._sess.user_id;
+		this.id = this.signedIn ? this._sess.user_id : null;
+		this.email = this.signedIn ? this._sess.user_email : null;
+		this.name = this.signedIn ? this._sess.user_name : null;
+	}
+
+	signIn(email, password) {
+		const self = this;
+
+		return findUser(this._db, email).then(function (doc) {
+			if(!doc)
+				return false;
+
+			return checkPassword(password, doc.password).then(function (matches) {
+				if(matches) {
+					self._sess.user_id = self.id = doc._id.toString();
+					self._sess.user_email = self.email = email;
+					self._sess.user_name = self.name = doc.name || null;
+					self.signedIn = true;
+				}
+
+				return matches;
+			});
+		});
+	}
+
+	signOut() {
+		this._sess.user_id = this.id = null;
+		this._sess.user_email = this.email = null;
+		this._sess.user_name = this.name = null;
+		this.signedIn = false;
+	}
+
+	register(email, name, password) {
+		const self = this;
+
+		return findUser(this._db, email).then(function (doc) {
+			if(doc)
+				return false;
+
+			const salt = createSalt(DEFAULT_SALT_LENGTH).toString('base64');
+			const iterations = DEFAULT_ITERATIONS;
+			const keyLength = DEFAULT_KEY_LENGTH;
+			const hashDigest = DEFAULT_HASH_DIGEST;
+
+			return hashPassword(
+				password,
+				salt,
+				iterations,
+				keyLength,
+				hashDigest
+			).then(function (key) {
+				return storeUser(self._db, email, name, key, salt, iterations, keyLength, hashDigest);
+			}).then(function () {
+				return true;
+			});
+		});
 	}
 }
 
-module.exports = exports = createMiddleware;
-
-exports.requireSignedIn = requireSignedIn;
-exports.requireNotSignedIn = requireNotSignedIn;
+module.exports = User;

@@ -3,7 +3,7 @@
  * License: MIT
  */
 
-const user = require('../lib/user');
+const User = require('../lib/user');
 
 module.exports = function (app, db) {
 
@@ -12,7 +12,7 @@ module.exports = function (app, db) {
 	// TODO: admin page
 	// TODO: legal notice
 
-	app.get('/login', user.requireNotSignedIn(), function (req, res) {
+	app.get('/login', User.requireNotSignedIn(), function (req, res) {
 		var returnUrl = req.query['ret'];
 
 		res.render('auth/login', {
@@ -85,7 +85,7 @@ module.exports = function (app, db) {
 		}
 	});
 
-	app.get('/register', user.requireNotSignedIn(), function (req, res) {
+	app.get('/register', User.requireNotSignedIn(), function (req, res) {
 		var returnUrl = req.query['ret'];
 
 		res.render('auth/register', {
@@ -150,7 +150,7 @@ module.exports = function (app, db) {
 		})
 	});
 
-	app.get('/user', user.requireSignedIn(), function (req, res) {
+	app.get('/user', User.requireSignedIn(), function (req, res) {
 		res.render('auth/user', {
 			user: {
 				id: req.user.id,

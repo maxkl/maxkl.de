@@ -21,7 +21,7 @@ const bodyParser = require('body-parser');
 // Custom/local modules
 const readConfig = require('./lib/readConfig');
 const renderMarko = require('./lib/renderMarko');
-const user = require('./lib/user');
+const User = require('./lib/user');
 const projects = require('./lib/projects');
 
 // Register *.marko template file type
@@ -97,7 +97,7 @@ MongoClient.connect(config.dbUrl).then(db => {
 		next();
 	});
 
-	app.use(user({
+	app.use(User.install({
 		db: db
 	}));
 
