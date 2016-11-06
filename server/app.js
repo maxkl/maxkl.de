@@ -55,6 +55,12 @@ MongoClient.connect(config.dbUrl).then(db => {
 
 	app.disable('x-powered-by');
 
+	// Global static files
+	app.use('/', serveStatic(publicDir));
+
+	// Meta files like favicon, robots.txt, ... (in separate dir to reduce clutter)
+	app.use('/', serveStatic(publicMetaDir));
+
 	app.use(bodyParser.urlencoded({
 		extended: false
 	}));
@@ -100,12 +106,6 @@ MongoClient.connect(config.dbUrl).then(db => {
 	});
 
 	app.use(renderMarko.install(viewsDir));
-
-	// Global static files
-	app.use('/', serveStatic(publicDir));
-
-	// Meta files like favicon, robots.txt, ... (in separate dir to reduce clutter)
-	app.use('/', serveStatic(publicMetaDir));
 
 	// Search for projects
 	const projectsData = projects.get(projectsDir);
