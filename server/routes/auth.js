@@ -8,7 +8,6 @@ const User = require('../lib/user');
 module.exports = function (app, db) {
 
 	// TODO: profile page (edit email, name, password; delete)
-	// TODO: legal notice
 
 	app.get('/login', User.requireNotSignedIn(), function (req, res) {
 		var returnUrl = req.query['ret'];
