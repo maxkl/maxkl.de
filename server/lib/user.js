@@ -10,6 +10,8 @@ const DEFAULT_ITERATIONS = 50000;
 const DEFAULT_KEY_LENGTH = 512;
 const DEFAULT_HASH_DIGEST = 'sha512';
 
+const DEFAULT_USER_LEVEL = 0;
+
 /**
  * Create a salt
  * @param {int} len
@@ -178,6 +180,7 @@ class User {
 		this.id = this.signedIn ? this._sess.user_id : null;
 		this.email = this.signedIn ? this._sess.user_email : null;
 		this.name = this.signedIn ? this._sess.user_name : null;
+		this.level = this.signedIn ? this._sess.user_level : DEFAULT_USER_LEVEL;
 	}
 
 	signIn(email, password) {
@@ -192,6 +195,7 @@ class User {
 					self._sess.user_id = self.id = doc._id.toString();
 					self._sess.user_email = self.email = email;
 					self._sess.user_name = self.name = doc.name || null;
+					self._sess.user_level = self.level = doc.hasOwnProperty('level') ? doc.level : DEFAULT_USER_LEVEL;
 					self.signedIn = true;
 				}
 

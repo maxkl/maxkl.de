@@ -152,11 +152,7 @@ module.exports = function (app, db) {
 
 	app.get('/user', User.requireSignedIn(), function (req, res) {
 		res.render('auth/user', {
-			user: {
-				id: req.user.id,
-				email: req.user.email,
-				name: req.user.name
-			}
+			user: req.user
 		});
 	});
 
