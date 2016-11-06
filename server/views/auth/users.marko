@@ -1,0 +1,17 @@
+<layout-use("../layout/default.marko") title="User info"
+    description="Your user account information at maxkl.de">
+    <layout-put into="content">
+        <h1>Users</h1>
+        <ul>
+			<li for(user in data.users)>
+				<ul>
+					<li>Id: ${user._id}</li>
+					<li>E-mail: ${user.email}</li>
+					<li>Name: ${user.name}</li>
+					<li>Level: ${user.level}</li>
+				</ul>
+			</li>
+		</ul>
+        <a href="/">To the start page</a>
+    </layout-put>
+</layout-use>
