@@ -49,6 +49,8 @@ MongoClient.connect(config.dbUrl).then(db => {
 		console.log('Server listening on ' + addrString);
 	});
 
+	app.set('trust proxy', 1);
+
 	// Assign to app so that subpages can access it
 	app.set('db', db);
 	app.set('server', server);
