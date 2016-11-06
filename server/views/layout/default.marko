@@ -58,23 +58,36 @@
             </div>
         </nav>
         <div class="content">
-            <div if(cookieMessage) class="message-box cookie-message" id="cookie-message">
-                This website uses cookies. They are required to store whether you are signed in
-                and to improve your overall experience.
-                <br />
-                <a href="#" class="message-button" id="accept-cookies">Accept</a>
-            </div>
-            <noscript>
-                <div class="message-box js-message">
-                    For full functionality of this site it is necessary to enable JavaScript.
-                    Here are the
-                    <a href="http://www.enable-javascript.com/" target="_blank">
-                        instructions how to enable JavaScript in your web browser
-                    </a>.
-                </div>
-            </noscript>
-            <layout-placeholder name="content" />
-        </div>
+			<div class="container">
+	            <div if(cookieMessage) class="message-box cookie-message" id="cookie-message">
+	                This website uses cookies. They are required to store whether you are signed in
+	                and to improve your overall experience.
+	                <br />
+	                <a href="#" class="message-button" id="accept-cookies">Accept</a>
+	            </div>
+	            <noscript>
+	                <div class="message-box js-message">
+	                    For full functionality of this site it is necessary to enable JavaScript.
+	                    Here are the
+	                    <a href="http://www.enable-javascript.com/" target="_blank">
+	                        instructions how to enable JavaScript in your web browser
+	                    </a>.
+	                </div>
+	            </noscript>
+	            <layout-placeholder name="content" />
+			</div>
+		</div>
+		<footer>
+			<div class="container">
+				<div>
+					<a href="/privacy">Privacy Policy</a>
+				</div>
+				<div>
+					&copy; Max Klein
+				</div>
+			</div>
+		</footer>
+
         <script src="/js/main.js"></script>
         <script if(cookieMessage) src="/js/cookieMessage.js"></script>
         <script src="/js/analytics.js"></script>
