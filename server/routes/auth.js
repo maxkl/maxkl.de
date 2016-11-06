@@ -156,4 +156,12 @@ module.exports = function (app, db) {
 		});
 	});
 
+	app.get('/users', User.requireSignedIn(null, 100), function (req, res, next) {
+		db.collection('users').find({}).toArray().then(function (users) {
+			res.render('auth/users', {
+				users: users
+			});
+		}).catch(err => next(err || new Error()));
+	});
+
 };

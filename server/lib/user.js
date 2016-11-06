@@ -132,10 +132,19 @@ class User {
 		};
 	}
 
-	static requireSignedIn(redirect) {
+	static requireSignedIn(redirect, minLevel) {
 		return function requireSignedInMiddleware(req, res, next) {
 			if(req.user.signedIn) {
-				next();
+				if(typeof minLevel !== 'undefined') {
+					if(req.user.level >= minLevel) {
+						next();
+					} else {
+						res.status(403).setContentType('text/plain');
+						res.end('You do not have sufficient permissions to access this page');
+					}
+				} else {
+					next();
+				}
 				return;
 			}
 
