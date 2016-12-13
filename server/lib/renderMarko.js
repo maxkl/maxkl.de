@@ -55,8 +55,8 @@ module.exports.install = function (viewsDir) {
 	viewsDir = path.resolve(viewsDir);
 	const templateCache = {};
 
-	function render(res, name, locals) {
-		const templatePath = path.join(viewsDir, name + '.marko');
+	function render(res, name, locals, viewsDirOverride) {
+		const templatePath = path.join(viewsDirOverride || viewsDir, name + '.marko');
 		const template = getTemplate(templatePath, templateCache);
 		doRender(template, res, locals);
 	}
