@@ -21,7 +21,7 @@
 	var clientId;
 
 	var adj = ['wild', 'strange', 'weird', 'colourful', 'happy', 'sad', 'cheerful', 'quirky', 'curious', 'interested', 'green', 'blue', 'yellow', 'purple', 'pink', 'pale', 'fat', 'skinny', 'lonely', 'bald', 'old', 'speedy'];
-	var thing = ['broom', 'weasel', 'fox', 'flower', 'shoe', 'mike', 'thing', 'wizard', 'wanderer', 'eagle', 'mouse', 'cat', 'tiger', 'giraffe', 'cursor', 'pointer', 'pencil', 'ball', 'uncle', 'aunt', 'guy', 'gal'];
+	var thing = ['broom', 'weasel', 'fox', 'flower', 'shoe', 'mike', 'thing', 'wizard', 'wanderer', 'eagle', 'mouse', 'cat', 'tiger', 'giraffe', 'cursor', 'pointer', 'pencil', 'ball', 'uncle', 'aunt', 'guy', 'gal', 'parrot'];
 
 	var clients = {};
 
