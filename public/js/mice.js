@@ -29,9 +29,9 @@
 		this.e = e;
 	}
 
-	function randomName() {
-		var a = adj[Math.floor(Math.random() * adj.length)];
-		var b = thing[Math.floor(Math.random() * thing.length)];
+	function nameForId(id) {
+		var a = adj[id % adj.length];
+		var b = thing[id % thing.length];
 		return a + ' ' + b;
 	}
 
@@ -109,7 +109,7 @@
 									var e = document.createElement('div');
 									e.className = 'cursor';
 									var l = document.createElement('div');
-									l.textContent = randomName();
+									l.textContent = nameForId(id);
 									e.appendChild(l);
 									e.style.left = Math.round(pos[0] * 1000) / 10 + '%';
 									e.style.top = Math.round(pos[1] * 1000) / 10 + '%';
