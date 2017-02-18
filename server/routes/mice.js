@@ -45,7 +45,7 @@ module.exports = function (app, db) {
 			// console.log('disconnected:', client.id, code, reason);
 			const index = clients.indexOf(client);
 			if(index !== -1) {
-				clients.splice(index);
+				clients.splice(index, 1);
 			} else {
 				console.error('Client not in clients array:', client.id);
 			}
