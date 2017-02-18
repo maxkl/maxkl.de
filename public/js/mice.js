@@ -40,7 +40,7 @@
 		socket.binaryType = 'arraybuffer';
 
 		socket.addEventListener('close', function (evt) {
-			console.log('Connection closed:' + evt.reason + ' (' + evt.reason + ')');
+			console.log('Connection closed:' + evt.reason + ' (' + evt.code + ')');
 			clearInterval(reportInterval);
 			setTimeout(createSocket, RECONNECT_DELAY);
 		});
