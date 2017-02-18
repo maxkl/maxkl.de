@@ -22,6 +22,7 @@
 	var thing = ['broom', 'weasel', 'fox', 'flower', 'shoe', 'mike', 'thing', 'wizard', 'wanderer', 'eagle', 'mouse', 'cat', 'tiger', 'giraffe', 'cursor', 'pointer', 'pencil', 'ball', 'uncle', 'aunt', 'guy', 'gal'];
 
 	var clients = {};
+	window.clients = clients;
 
 	function Cursor(e) {
 		this.e = e;
@@ -63,7 +64,9 @@
 						console.error('Invalid UPDATE message length:', message.byteLength);
 						return;
 					}
-					var newClientPositions = [];
+					console.log('UPDATE: ' + count + ' cursors');
+					var newClientPositions = {};
+					window.newClientPositions = newClientPositions;
 					var offset = 1;
 					for(var i = 0; i < count; i++) {
 						var id = data.getUint16(offset);
@@ -79,7 +82,6 @@
 
 					for(var id in clients) {
 						if(clients.hasOwnProperty(id)) {
-							var pos = newClientPositions[id];
 							var client = clients[id];
 
 							if(!newClientPositions.hasOwnProperty(id)) {
@@ -88,6 +90,7 @@
 								continue;
 							}
 
+							var pos = newClientPositions[id];
 							client.e.style.left = Math.round(pos[0] * 1000) / 10 + '%';
 							client.e.style.top = Math.round(pos[1] * 1000) / 10 + '%';
 						}
@@ -110,6 +113,12 @@
 								clients[id] = client;
 							}
 						}
+					}
+
+					var serverCount = Object.keys(newClientPositions).length;
+					var localCount = Object.keys(clients).length;
+					if(localCount !== serverCount) {
+						console.warn('Mismatched cursor count: ' + serverCount + ' from server, ' + localCount + ' local');
 					}
 					break;
 				default:
