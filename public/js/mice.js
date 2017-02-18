@@ -131,9 +131,9 @@
 
 	var isTouch = false;
 
-	window.addEventListener('touchmove', function (evt) {
+	window.addEventListener('touchstart', function (evt) {
 		isTouch = true;
-	})
+	});
 
 	window.addEventListener('mousemove', function (evt) {
 		if(isTouch) {
