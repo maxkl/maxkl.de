@@ -64,9 +64,7 @@
 						console.error('Invalid UPDATE message length:', message.byteLength);
 						return;
 					}
-					console.log('UPDATE: ' + count + ' cursors');
 					var newClientPositions = {};
-					window.newClientPositions = newClientPositions;
 					var offset = 1;
 					for(var i = 0; i < count; i++) {
 						var id = data.getUint16(offset);
@@ -113,12 +111,6 @@
 								clients[id] = client;
 							}
 						}
-					}
-
-					var serverCount = Object.keys(newClientPositions).length;
-					var localCount = Object.keys(clients).length;
-					if(localCount !== serverCount) {
-						console.warn('Mismatched cursor count: ' + serverCount + ' from server, ' + localCount + ' local');
 					}
 					break;
 				default:

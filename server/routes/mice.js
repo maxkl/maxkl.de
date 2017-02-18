@@ -47,7 +47,7 @@ module.exports = function (app, db) {
 			if(index !== -1) {
 				clients.splice(index, 1);
 			} else {
-				console.error('Client not in clients array:', client.id, clients);
+				console.error('Client not in clients array:', client.id);
 			}
 
 			if(clients.length === 0) {
