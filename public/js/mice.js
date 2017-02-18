@@ -14,6 +14,7 @@
 	}
 
 	var socket = null;
+	var reportInterval;
 	var mouseX = 0;
 	var mouseY = 0;
 	var posKnown = false;
