@@ -2,6 +2,7 @@
 	'use strict';
 
 	var REFRESH_INTERVAL = 100;
+	var RECONNECT_DELAY = 1000;
 
 	var TYPE_TELLID = 1;
 	var TYPE_POS = 2;
@@ -12,17 +13,16 @@
 		return v < min ? min : v > max ? max : v;
 	}
 
+	var socket = null;
 	var mouseX = 0;
 	var mouseY = 0;
 	var posKnown = false;
-	var clientIdKnown = false;
 	var clientId;
 
 	var adj = ['wild', 'strange', 'weird', 'colourful', 'happy', 'sad', 'cheerful', 'quirky', 'curious', 'interested', 'green', 'blue', 'yellow', 'purple', 'pink', 'pale', 'fat', 'skinny', 'lonely', 'bald', 'old', 'speedy'];
 	var thing = ['broom', 'weasel', 'fox', 'flower', 'shoe', 'mike', 'thing', 'wizard', 'wanderer', 'eagle', 'mouse', 'cat', 'tiger', 'giraffe', 'cursor', 'pointer', 'pencil', 'ball', 'uncle', 'aunt', 'guy', 'gal'];
 
 	var clients = {};
-	window.clients = clients;
 
 	function Cursor(e) {
 		this.e = e;
@@ -34,97 +34,120 @@
 		return a + ' ' + b;
 	}
 
-	var socket = new WebSocket('wss://maxkl.de/mice');
-	socket.binaryType = 'arraybuffer';
+	function createSocket() {
+		socket = new WebSocket('wss://maxkl.de/mice');
+		socket.binaryType = 'arraybuffer';
 
-	socket.addEventListener('error', function (evt) {
-		console.log('error:', evt);
-	});
+		socket.addEventListener('close', function (evt) {
+			console.log('Connection closed:' + evt.reason + ' (' + evt.reason + ')');
+			clearInterval(reportInterval);
+			setTimeout(createSocket, RECONNECT_DELAY);
+		});
 
-	socket.addEventListener('open', function (evt) {
-		console.log('Connection established');
-		setInterval(reportPos, REFRESH_INTERVAL);
-	});
+		socket.addEventListener('error', function (evt) {
+			console.log('error:', evt);
+		});
 
-	socket.addEventListener('message', function (evt) {
-		var message = evt.data;
+		socket.addEventListener('open', function (evt) {
+			console.log('Connection established');
+			reportInterval = setInterval(reportPos, REFRESH_INTERVAL);
+		});
 
-		if(Object.prototype.toString.call(message) === '[object ArrayBuffer]') {
-			var data = new DataView(message);
-			var type = data.getUint8(0);
-			switch(type) {
-				case TYPE_TELLID:
-					clientIdKnown = true;
-					clientId = data.getUint16(1);
-					console.log('client id:', clientId);
-					break;
-				case TYPE_UPDATE:
-					var count = (message.byteLength - 1) / 6;
-					if(Math.floor(count) !== count) {
-						console.error('Invalid UPDATE message length:', message.byteLength);
-						return;
-					}
-					var newClientPositions = {};
-					var offset = 1;
-					for(var i = 0; i < count; i++) {
-						var id = data.getUint16(offset);
-						offset += 2;
-						var x = data.getUint16(offset) / 65535;
-						offset += 2;
-						var y = data.getUint16(offset) / 65535;
-						offset += 2;
-						if(id !== clientId) {
-							newClientPositions[id] = [x, y];
+		socket.addEventListener('message', function (evt) {
+			var message = evt.data;
+
+			if(Object.prototype.toString.call(message) === '[object ArrayBuffer]') {
+				var data = new DataView(message);
+				var type = data.getUint8(0);
+				switch(type) {
+					case TYPE_TELLID:
+						clientId = data.getUint16(1);
+						console.log('client id:', clientId);
+						break;
+					case TYPE_UPDATE:
+						var count = (message.byteLength - 1) / 6;
+						if(Math.floor(count) !== count) {
+							console.error('Invalid UPDATE message length:', message.byteLength);
+							return;
 						}
-					}
-
-					for(var id in clients) {
-						if(clients.hasOwnProperty(id)) {
-							var client = clients[id];
-
-							if(!newClientPositions.hasOwnProperty(id)) {
-								client.e.parentNode.removeChild(client.e);
-								delete clients[id];
-								continue;
-							}
-
-							var pos = newClientPositions[id];
-							client.e.style.left = Math.round(pos[0] * 1000) / 10 + '%';
-							client.e.style.top = Math.round(pos[1] * 1000) / 10 + '%';
-						}
-					}
-
-					for(var id in newClientPositions) {
-						if(newClientPositions.hasOwnProperty(id)) {
-							var pos = newClientPositions[id];
-
-							if(!clients.hasOwnProperty(id)) {
-								var e = document.createElement('div');
-								e.className = 'cursor';
-								var l = document.createElement('div');
-								l.textContent = randomName();
-								e.appendChild(l);
-								e.style.left = Math.round(pos[0] * 1000) / 10 + '%';
-								e.style.top = Math.round(pos[1] * 1000) / 10 + '%';
-								document.body.appendChild(e);
-								var client = new Cursor(e);
-								clients[id] = client;
+						var newClientPositions = {};
+						var offset = 1;
+						for(var i = 0; i < count; i++) {
+							var id = data.getUint16(offset);
+							offset += 2;
+							var x = data.getUint16(offset) / 65535;
+							offset += 2;
+							var y = data.getUint16(offset) / 65535;
+							offset += 2;
+							if(id !== clientId) {
+								newClientPositions[id] = [x, y];
 							}
 						}
-					}
-					break;
-				default:
-					console.error('Unknown message type:', type);
+
+						for(var id in clients) {
+							if(clients.hasOwnProperty(id)) {
+								var client = clients[id];
+
+								if(!newClientPositions.hasOwnProperty(id)) {
+									client.e.parentNode.removeChild(client.e);
+									delete clients[id];
+									continue;
+								}
+
+								var pos = newClientPositions[id];
+								client.e.style.left = Math.round(pos[0] * 1000) / 10 + '%';
+								client.e.style.top = Math.round(pos[1] * 1000) / 10 + '%';
+							}
+						}
+
+						for(var id in newClientPositions) {
+							if(newClientPositions.hasOwnProperty(id)) {
+								var pos = newClientPositions[id];
+
+								if(!clients.hasOwnProperty(id)) {
+									var e = document.createElement('div');
+									e.className = 'cursor';
+									var l = document.createElement('div');
+									l.textContent = randomName();
+									e.appendChild(l);
+									e.style.left = Math.round(pos[0] * 1000) / 10 + '%';
+									e.style.top = Math.round(pos[1] * 1000) / 10 + '%';
+									document.body.appendChild(e);
+									var client = new Cursor(e);
+									clients[id] = client;
+								}
+							}
+						}
+						break;
+					default:
+						console.error('Unknown message type:', type);
+				}
+			} else {
+				console.error('Message of invalid type:', message);
 			}
-		} else {
-			console.error('Message of invalid type:', message);
-		}
-	});
+		});
+	}
+
+	var isTouch = false;
+
+	window.addEventListener('touchmove', function (evt) {
+		isTouch = true;
+	})
 
 	window.addEventListener('mousemove', function (evt) {
-		posKnown = true;
-		mouseX = evt.clientX / window.innerWidth;
-		mouseY = evt.clientY / window.innerHeight;
+		if(isTouch) {
+			posKnown = false;
+		} else {
+			posKnown = true;
+			mouseX = evt.clientX / window.innerWidth;
+			mouseY = evt.clientY / window.innerHeight;
+
+			if(!socket) {
+				createSocket();
+			}
+		}
+
+		isTouch = false;
 	});
 
 	window.addEventListener('mouseout', function (evt) {
@@ -132,6 +155,10 @@
 	});
 
 	function reportPos() {
+		if(!socket || socket.readyState !== WebSocket.OPEN) {
+			return;
+		}
+
 		let buffer;
 		if(posKnown) {
 			buffer = new ArrayBuffer(5);
