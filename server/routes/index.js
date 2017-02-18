@@ -25,4 +25,6 @@ module.exports = function (app, db, projectSections) {
 
 	require('./auth')(app, db);
 
+	require('./mice')(app, db);
+
 };
