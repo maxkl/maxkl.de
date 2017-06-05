@@ -1,5 +1,6 @@
 {
   "name": "maxkl.de",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.16.1",
     "connect-mongo": "^1.1.0",
