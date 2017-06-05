@@ -4,23 +4,7 @@
  */
 
 const path = require('path');
-const fs = require('fs');
 const marko = require('marko');
-
-const merge = require("./merge");
-
-module.exports = function renderMarko(res, template, data, type) {
-	console.trace('renderMarko() is deprecated, use res.render() instead');
-
-	res.type(type || "text/html");
-
-	var app = res.app;
-	data = data || {};
-	var viewData = merge({}, app.locals, res.locals, data);
-	viewData.$global = merge({}, app.locals.$global, res.locals.$global, data.$global);
-
-	template.render(viewData, res);
-};
 
 function doRender(template, res, data) {
 	data = data || {};

@@ -24,9 +24,6 @@ const renderMarko = require('./lib/renderMarko');
 const User = require('./lib/user');
 const projects = require('./lib/projects');
 
-// Register *.marko template file type
-require('marko/node-require').install();
-
 // Configuration variables
 const rootDir = path.join(__dirname, '..');
 const viewsDir = path.join(rootDir, 'server/views');
