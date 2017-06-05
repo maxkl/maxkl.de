@@ -84,26 +84,17 @@ MongoClient.connect(config.dbUrl).then(db => {
 
 	app.use(cookieParser());
 
-	app.use((req, res, next) => {
-		var cookiesAccepted = !!req.cookies['a'];
-
-		res.locals.cookiesAccepted = cookiesAccepted;
-		req.cookiesAccepted = cookiesAccepted;
-
-		if(!res.locals.$global) res.locals.$global = {};
-		res.locals.$global.cookiesAccepted = cookiesAccepted;
-		res.locals.$global.currentUrl = req.originalUrl;
-
-		next();
-	});
-
 	app.use(User.install({
 		db: db
 	}));
 
 	app.use((req, res, next) => {
-		if(!res.locals.$global) res.locals.$global = {};
-		res.locals.$global.user = req.user;
+		var cookiesAccepted = !!req.cookies['a'];
+
+		res.locals.cookiesAccepted = cookiesAccepted;
+		res.locals.currentUrl = req.originalUrl;
+		res.locals.user = req.user;
+
 		next();
 	});
 
