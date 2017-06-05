@@ -42,7 +42,7 @@ MongoClient.connect(config.dbUrl).then(db => {
 	const app = express();
 
 	// The server runs on HTTPS only
-	const server = http.createServer(app).listen(config.port, () => {
+	const server = http.createServer(app).listen(config.port, function () {
 		const addr = server.address();
 		const addrString = (addr.family == 'IPv6' ? '[' + addr.address + ']' : addr.address) + ':' + addr.port;
 
@@ -88,7 +88,7 @@ MongoClient.connect(config.dbUrl).then(db => {
 		db: db
 	}));
 
-	app.use((req, res, next) => {
+	app.use(function (req, res, next) {
 		var cookiesAccepted = !!req.cookies['a'];
 
 		res.locals.cookiesAccepted = cookiesAccepted;
