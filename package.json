@@ -7,9 +7,7 @@
     "express": "^4.14.1",
     "express-session": "^1.15.1",
     "marko": "^4.4.9",
-    "marko-layout": "^2.0.2",
     "mongodb": "^2.2.24",
-    "serve-static": "^1.11.2",
-    "ws": "^3.0.0"
+    "serve-static": "^1.11.2"
   }
 }
