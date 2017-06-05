@@ -3,8 +3,6 @@
  * License: MIT
  */
 
-'use strict';
-
 module.exports = function (file) {
 	try {
 		var config = require(file);

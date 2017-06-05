@@ -3,8 +3,6 @@
  * License: MIT
  */
 
-'use strict';
-
 // Node core modules
 const path = require('path');
 const http = require('http');
