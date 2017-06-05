@@ -9,25 +9,30 @@ accepts@~1.3.3:
     mime-types "~2.1.11"
     negotiator "0.6.1"
 
-app-module-path@^1.0.5:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/app-module-path/-/app-module-path-1.1.0.tgz#a6ac5368450f209b9f5b86e9a3e4a6ab6fe7531c"
+amdefine@>=0.0.4:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
+
+app-module-path@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/app-module-path/-/app-module-path-2.2.0.tgz#641aa55dfb7d6a6f0a8141c4b9c0aa50b6c24dd5"
+
+argly@^1.0.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/argly/-/argly-1.2.0.tgz#2b274e4551a29ff5e7199d2ed9788eb66ed36e60"
 
 array-flatten@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-1.1.1.tgz#9a5f699051b1e7073328f2a008968b64ea2955d2"
 
+assertion-error@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/assertion-error/-/assertion-error-1.0.2.tgz#13ca515d86206da0bac66e834dd397d87581094c"
+
 async-writer@^1.1.0:
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/async-writer/-/async-writer-1.4.5.tgz#8a5527b9493e59f7f31a4a47184e0ea12ebf283f"
   dependencies:
-    events "^1.0.2"
-
-async-writer@^2.0.0:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/async-writer/-/async-writer-2.1.3.tgz#5c2a3807cbb71b07d25d7e240213272af030a28f"
-  dependencies:
-    complain "^1.0.0"
     events "^1.0.2"
 
 balanced-match@^0.4.1:
@@ -75,6 +80,14 @@ buffer-shims@~1.0.0:
 bytes@2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.4.0.tgz#7d97196f9d5baf7f6935e25985549edd2a6c2339"
+
+chai@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/chai/-/chai-3.5.0.tgz#4d02637b067fe958bdbfdd3a40ec56fef7373247"
+  dependencies:
+    assertion-error "^1.0.1"
+    deep-eql "^0.1.3"
+    type-detect "^1.0.0"
 
 char-props@^0.1.5, char-props@~0.1.5:
   version "0.1.5"
@@ -132,11 +145,21 @@ debug@2.6.7:
   dependencies:
     ms "2.0.0"
 
+deep-eql@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/deep-eql/-/deep-eql-0.1.3.tgz#ef558acab8de25206cd713906d74e56930eb69f2"
+  dependencies:
+    type-detect "0.1.1"
+
+deep-is@~0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
+
 depd@1.1.0, depd@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.0.tgz#e1bd82c6aab6ced965b97b88b17ed3e528ca18c3"
 
-deresolve@^1.0.0:
+deresolve@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/deresolve/-/deresolve-1.1.2.tgz#9cf2379c8d2d631dc4b9957294b90e4a72cb6ce0"
   dependencies:
@@ -164,13 +187,46 @@ escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
 
-esprima@^2.7.0:
+escodegen@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/escodegen/-/escodegen-1.8.1.tgz#5a5b53af4693110bebb0867aa3430dd3b70a1018"
+  dependencies:
+    esprima "^2.7.1"
+    estraverse "^1.9.1"
+    esutils "^2.0.2"
+    optionator "^0.8.1"
+  optionalDependencies:
+    source-map "~0.2.0"
+
+esprima@^2.7.1:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
+
+esprima@^3.1.1:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.1.3.tgz#fdca51cee6133895e3c88d535ce49dbff62a4633"
+
+estraverse@^1.9.1:
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/estraverse/-/estraverse-1.9.3.tgz#af67f2dc922582415950926091a4005d29c9bb44"
+
+estraverse@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/estraverse/-/estraverse-4.2.0.tgz#0dee3fed31fcd469618ce7342099fc1afa0bdb13"
+
+esutils@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
 
 etag@~1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.0.tgz#6f631aef336d6c46362b51764044ce216be3c051"
+
+events-light@^1.0.0:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/events-light/-/events-light-1.0.5.tgz#964e63450ba0af4a6b022aa955b17ffef657b5ee"
+  dependencies:
+    chai "^3.5.0"
 
 events@^1.0.2:
   version "1.1.1"
@@ -223,6 +279,10 @@ express@^4.14.1:
     utils-merge "1.0.0"
     vary "~1.1.1"
 
+fast-levenshtein@~2.0.4:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
+
 finalhandler@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/finalhandler/-/finalhandler-1.0.3.tgz#ef47e77950e999780e86022a560e3217e0d0cc89"
@@ -243,7 +303,11 @@ fresh@0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.0.tgz#f474ca5e6a9246d6fd8e0953cfa9b9c805afa78e"
 
-htmljs-parser@^2.2.1:
+he@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
+
+htmljs-parser@^2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/htmljs-parser/-/htmljs-parser-2.3.2.tgz#1cc5bf9824a091c28820b33eaf78083a8eaa856c"
   dependencies:
@@ -275,17 +339,35 @@ isarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
 
-lasso-caching-fs@^1.0.0:
+lasso-caching-fs@^1.0.0, lasso-caching-fs@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/lasso-caching-fs/-/lasso-caching-fs-1.0.2.tgz#9be4eb1f06aac1260344caeaef42c2f0086eb10d"
   dependencies:
     raptor-async "^1.1.2"
 
-lasso-package-root@^1.0.0:
+lasso-modules-client@^2.0.3:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/lasso-modules-client/-/lasso-modules-client-2.0.4.tgz#00b770c7c4a74c14298d945eb9c2db9c56d870ea"
+  dependencies:
+    lasso-package-root "^1.0.0"
+    raptor-polyfill "^1.0.2"
+
+lasso-package-root@^1.0.0, lasso-package-root@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/lasso-package-root/-/lasso-package-root-1.0.1.tgz#997d0e71f41d03c5f0fa09a5bc298d796f8b2c23"
   dependencies:
     lasso-caching-fs "^1.0.0"
+
+levn@~0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/levn/-/levn-0.3.0.tgz#3b09924edf9f083c0490fdd4c0bc4421e04764ee"
+  dependencies:
+    prelude-ls "~1.1.2"
+    type-check "~0.3.2"
+
+listener-tracker@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/listener-tracker/-/listener-tracker-2.0.0.tgz#39608b435c0901fa5510217c1452728d6bc19b5f"
 
 marko-layout@^2.0.2:
   version "2.0.2"
@@ -295,35 +377,42 @@ marko-layout@^2.0.2:
     raptor-polyfill "^1.0.0"
     raptor-util "^1.0.0"
 
-marko@^3.14.2:
-  version "3.14.3"
-  resolved "https://registry.yarnpkg.com/marko/-/marko-3.14.3.tgz#0e40d0736808400015045b309098fe1064309d17"
+marko@^4.4.9:
+  version "4.4.9"
+  resolved "https://registry.yarnpkg.com/marko/-/marko-4.4.9.tgz#c643f14a12f698bf65bd5b2b252633d612578395"
   dependencies:
-    app-module-path "^1.0.5"
-    async-writer "^2.0.0"
+    app-module-path "^2.2.0"
+    argly "^1.0.0"
     browser-refresh-client "^1.0.0"
     char-props "~0.1.5"
-    deresolve "^1.0.0"
-    esprima "^2.7.0"
+    complain "^1.0.0"
+    deresolve "^1.1.2"
+    escodegen "^1.8.1"
+    esprima "^3.1.1"
+    estraverse "^4.2.0"
     events "^1.0.2"
-    htmljs-parser "^2.2.1"
-    lasso-package-root "^1.0.0"
+    events-light "^1.0.0"
+    he "^1.1.0"
+    htmljs-parser "^2.3.2"
+    lasso-caching-fs "^1.0.1"
+    lasso-modules-client "^2.0.3"
+    lasso-package-root "^1.0.1"
+    listener-tracker "^2.0.0"
     minimatch "^3.0.2"
     object-assign "^4.1.0"
     property-handlers "^1.0.0"
-    raptor-args "^1.0.0"
     raptor-async "^1.1.2"
     raptor-json "^1.0.1"
     raptor-logging "^1.0.1"
     raptor-polyfill "^1.0.0"
     raptor-promises "^1.0.1"
     raptor-regexp "^1.0.0"
-    raptor-renderer "^1.4.4"
-    raptor-strings "^1.0.0"
-    raptor-util "^2.0.1"
-    resolve-from "^1.0.0"
+    raptor-util "^3.2.0"
+    resolve-from "^2.0.0"
+    simple-sha1 "^2.1.0"
     strip-json-comments "^2.0.1"
     try-require "^1.2.1"
+    warp10 "^1.0.0"
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -394,6 +483,17 @@ on-headers@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/on-headers/-/on-headers-1.0.1.tgz#928f5d0f470d49342651ea6794b0857c100693f7"
 
+optionator@^0.8.1:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.8.2.tgz#364c5e409d3f4d6301d6c0b4c05bba50180aeb64"
+  dependencies:
+    deep-is "~0.1.3"
+    fast-levenshtein "~2.0.4"
+    levn "~0.3.0"
+    prelude-ls "~1.1.2"
+    type-check "~0.3.2"
+    wordwrap "~1.0.0"
+
 parseurl@~1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/parseurl/-/parseurl-1.3.1.tgz#c8ab8c9223ba34888aa64a297b28853bec18da56"
@@ -401,6 +501,10 @@ parseurl@~1.3.1:
 path-to-regexp@0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
+
+prelude-ls@~1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
 
 process-nextick-args@~1.0.6:
   version "1.0.7"
@@ -433,19 +537,9 @@ range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-raptor-args@^1.0.0:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/raptor-args/-/raptor-args-1.0.3.tgz#e096ce5c0f9de5e0848617a78bfface94c54dc86"
-
 raptor-async@^1.1.2:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/raptor-async/-/raptor-async-1.1.3.tgz#b83c3c9b603dc985c2c3a9f78d2b4073e6f6024c"
-
-raptor-dom@^1.0.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/raptor-dom/-/raptor-dom-1.1.1.tgz#5ede30a72dc0f997a2c1731fc1f2c44b3fb5ac5a"
-  dependencies:
-    raptor-pubsub "^1.0.5"
 
 raptor-dust@^1.1.2:
   version "1.1.12"
@@ -478,25 +572,9 @@ raptor-promises@^1.0.1:
     q "^1.0.1"
     raptor-util "^1.0.0"
 
-raptor-pubsub@^1.0.2, raptor-pubsub@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/raptor-pubsub/-/raptor-pubsub-1.0.5.tgz#15ee12a0e5059ec15b72ff9d61ecaf9f4212ef47"
-  dependencies:
-    events "^1.0.2"
-    raptor-util "^1.0.0"
-
 raptor-regexp@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/raptor-regexp/-/raptor-regexp-1.0.1.tgz#ecf0f66c6671c0cd9f5e48c3705026c5509995c0"
-
-raptor-renderer@^1.4.4:
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/raptor-renderer/-/raptor-renderer-1.4.6.tgz#6d531584d1e28f260059b6b9dd31ffdeb847dde2"
-  dependencies:
-    async-writer "^2.0.0"
-    raptor-dom "^1.0.0"
-    raptor-pubsub "^1.0.2"
-    raptor-util "^1.0.0"
 
 raptor-stacktraces@^1.0.0:
   version "1.0.1"
@@ -512,9 +590,9 @@ raptor-util@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/raptor-util/-/raptor-util-1.1.2.tgz#f2ee8076a9ae3eae2e65672e46a220074fa2dff3"
 
-raptor-util@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/raptor-util/-/raptor-util-2.0.1.tgz#3c628b828ea182d1cee308bb1b5f45eae6fe0f8d"
+raptor-util@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/raptor-util/-/raptor-util-3.2.0.tgz#23b0c803c8f1ac8a1cae67d9a6388b49161c9758"
 
 raw-body@~2.2.0:
   version "2.2.0"
@@ -543,13 +621,17 @@ require_optional@~1.0.0:
     resolve-from "^2.0.0"
     semver "^5.1.0"
 
-resolve-from@^1.0.0, resolve-from@^1.0.1:
+resolve-from@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-1.0.1.tgz#26cbfe935d1aeeeabb29bc3fe5aeb01e93d44226"
 
 resolve-from@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-2.0.0.tgz#9480ab20e94ffa1d9e80a804c7ea147611966b57"
+
+rusha@^0.8.1:
+  version "0.8.6"
+  resolved "https://registry.yarnpkg.com/rusha/-/rusha-0.8.6.tgz#b264ddaa4d49a1d67300061858ba9358c4adca14"
 
 safe-buffer@^5.0.1, safe-buffer@~5.0.1:
   version "5.0.1"
@@ -590,6 +672,18 @@ setprototypeof@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.0.3.tgz#66567e37043eeb4f04d91bd658c0cbefb55b8e04"
 
+simple-sha1@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/simple-sha1/-/simple-sha1-2.1.0.tgz#9427bb96ff1263cc10a8414cedd51a18b919e8b3"
+  dependencies:
+    rusha "^0.8.1"
+
+source-map@~0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.2.0.tgz#dab73fbcfc2ba819b4de03bd6f6eaa48164b3f9d"
+  dependencies:
+    amdefine ">=0.0.4"
+
 "statuses@>= 1.3.1 < 2", statuses@~1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.3.1.tgz#faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e"
@@ -607,6 +701,20 @@ strip-json-comments@^2.0.1:
 try-require@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/try-require/-/try-require-1.2.1.tgz#34489a2cac0c09c1cc10ed91ba011594d4333be2"
+
+type-check@~0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.3.2.tgz#5884cab512cf1d355e3fb784f30804b2b520db72"
+  dependencies:
+    prelude-ls "~1.1.2"
+
+type-detect@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-0.1.1.tgz#0ba5ec2a885640e470ea4e8505971900dac58822"
+
+type-detect@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-1.0.0.tgz#762217cc06db258ec48908a1298e8b95121e8ea2"
 
 type-is@~1.6.15:
   version "1.6.15"
@@ -640,6 +748,14 @@ utils-merge@1.0.0:
 vary@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.1.tgz#67535ebb694c1d52257457984665323f587e8d37"
+
+warp10@^1.0.0:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/warp10/-/warp10-1.3.4.tgz#d4d4fbe41b015253ade1eb7210a6e823284d1e15"
+
+wordwrap@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
 
 ws@^3.0.0:
   version "3.0.0"
