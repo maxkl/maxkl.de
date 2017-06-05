@@ -20,13 +20,9 @@ module.exports = function renderMarko(res, template, data, type) {
 	template.render(viewData, res);
 };
 
-function doRender(template, res, locals) {
-	if(typeof locals !== 'object')
-		locals = {};
-
-	const app = res.app;
-	const data = Object.assign({}, app.locals, res.locals, locals);
-	data.$global = Object.assign({}, app.locals.$global, res.locals.$global, locals.$global);
+function doRender(template, res, data) {
+	data = data || {};
+	data.$global = Object.assign({}, res.app.locals, res.locals, data.$global);
 
 	res.type('text/html');
 	template.render(data, res);
