@@ -34,7 +34,7 @@ function doRender(template, res, locals) {
 
 function loadAndCacheTemplate(templatePath, cache) {
 	try {
-		const template = marko.load(templatePath, { writeToDisk: false });
+		const template = marko.load(templatePath);
 		cache[templatePath] = template;
 		return template;
 	} catch(e) {
