@@ -1,6 +1,6 @@
-<layout-use("../layout/default.marko") title="User info"
+<include("../layout/default.marko") title="User info"
     description="Your user account information at maxkl.de">
-    <layout-put into="content">
+    <@content>
         <h1>Users</h1>
         <ul>
 			<li for(user in data.users)>
@@ -12,5 +12,5 @@
 				</ul>
 			</li>
 		</ul>
-    </layout-put>
-</layout-use>
+    </@content>
+</include>

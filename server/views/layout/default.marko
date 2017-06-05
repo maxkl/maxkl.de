@@ -32,7 +32,9 @@
         <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" />
         <link rel="stylesheet" href="/css/index.css" />
-        <layout-placeholder name="stylesheets" />
+		<if(data.stylesheets)>
+			<include(data.stylesheets) />
+		</if>
     </head>
     <body>
         $ var cookieMessage = !out.global.cookiesAccepted;
@@ -74,7 +76,9 @@
 	                    </a>.
 	                </div>
 	            </noscript>
-	            <layout-placeholder name="content" />
+	            <if(data.content)>
+					<include(data.content) />
+				</if>
 			</div>
 		</div>
 		<footer>
@@ -84,6 +88,8 @@
         <script src="/js/main.js"></script>
         <script if(cookieMessage) src="/js/cookieMessage.js"></script>
         <script src="/js/analytics.js"></script>
-        <layout-placeholder name="scripts" />
+		<if(data.scripts)>
+			<include(data.scripts) />
+		</if>
     </body>
 </html>

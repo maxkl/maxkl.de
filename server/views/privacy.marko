@@ -1,6 +1,6 @@
-<layout-use("./layout/default.marko") title="Privacy Policy"
+<include("./layout/default.marko") title="Privacy Policy"
     description="Privacy Policy of maxkl.de">
-    <layout-put into="content">
+    <@content>
         <h1>Privacy Policy</h1>
 		<p>This Privacy Policy governs the manner in which maxkl.de collects, uses, maintains and discloses information collected from users (each, a "User") of the maxkl.de website ("Site").</p>
 
@@ -56,5 +56,5 @@
 		<p>If you have any questions about this Privacy Policy, the practices of this site, or your dealings with this site, please contact us.</p>
 
 		<p>This document was last updated on November 06, 2016</p>
-    </layout-put>
-</layout-use>
+    </@content>
+</include>

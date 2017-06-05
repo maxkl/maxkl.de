@@ -1,9 +1,9 @@
-<layout-use("../layout/default.marko") title="Not found"
+<include("../layout/default.marko") title="Not found"
     description="This page could not be found">
-	<layout-put into="stylesheets">
+	<@stylesheets>
         <link rel="stylesheet" href="/css/404.css" />
-    </layout-put>
-    <layout-put into="content">
+    </@stylesheets>
+    <@content>
         <h1>You seem to be lost! (404)</h1>
         <p>
 			The requested page could not be found.<br />
@@ -15,8 +15,8 @@
 			</ul>
 		</p>
         <a href="/">Show me the exit</a>
-    </layout-put>
-	<layout-put into="scripts">
+    </@content>
+	<@scripts>
         <script src="/js/404.js"></script>
-    </layout-put>
-</layout-use>
+    </@scripts>
+</include>

@@ -1,6 +1,6 @@
-<layout-use("../layout/default.marko") title="Sign in"
+<include("../layout/default.marko") title="Sign in"
     description="Sign in to maxkl.de" hideSignIn="true">
-    <layout-put into="content">
+    <@content>
         <h1>Sign in</h1>
         <p if(data.registrationSuccessful) class="green">
             Registration successful. You can now sign in with your credentials.
@@ -24,8 +24,8 @@
             You don't have an account yet?
             <a href=data.registerLink>Register now!</a>
         </p>
-    </layout-put>
-    <layout-put into="scripts">
+    </@content>
+    <@scripts>
         <script src="/js/login.js"></script>
-    </layout-put>
-</layout-use>
+    </@scripts>
+</include>

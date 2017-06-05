@@ -1,11 +1,11 @@
-<layout-use("../layout/default.marko") title="Internal server error"
+<include("../layout/default.marko") title="Internal server error"
     description="An error occured on the server">
-    <layout-put into="content">
+    <@content>
         <h1>Sorry!</h1>
         <p>
             An error occured on the server.<br />
             Try reloading the page or come back later
         </p>
         <a href="/">To the start page</a>
-    </layout-put>
-</layout-use>
+    </@content>
+</include>

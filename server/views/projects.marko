@@ -1,5 +1,5 @@
-<layout-use("./layout/default.marko") title="Projects" description="Max Klein's personal website">
-    <layout-put into="content">
+<include("./layout/default.marko") title="Projects" description="Max Klein's personal website">
+    <@content>
 		<h1>My projects</h1>
         <p>
             Visit <a href="https://github.com/maxkl" target="_blank">my GitHub page</a>
@@ -14,5 +14,5 @@
                 </li>
             </ul>
         </for>
-    </layout-put>
-</layout-use>
+    </@content>
+</include>
