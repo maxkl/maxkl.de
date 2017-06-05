@@ -10,6 +10,8 @@ const marko = require('marko');
 const merge = require("./merge");
 
 module.exports = function renderMarko(res, template, data, type) {
+	console.trace('renderMarko() is deprecated, use res.render() instead');
+
 	res.type(type || "text/html");
 
 	var app = res.app;
