@@ -26,7 +26,6 @@ const projects = require('./lib/projects');
 const rootDir = path.join(__dirname, '..');
 const viewsDir = path.join(rootDir, 'server/views');
 const publicDir = path.join(rootDir, 'public');
-const publicMetaDir = path.join(rootDir, 'public-meta');
 const projectsDir = path.join(rootDir, 'projects');
 
 const config = readConfig(path.join(rootDir, 'config.json'));
@@ -54,9 +53,6 @@ MongoClient.connect(config.dbUrl).then(db => {
 
 	// Global static files
 	app.use('/', serveStatic(publicDir));
-
-	// Meta files like favicon, robots.txt, ... (in separate dir to reduce clutter)
-	app.use('/', serveStatic(publicMetaDir));
 
 	app.use(bodyParser.urlencoded({
 		extended: false
