@@ -12,7 +12,7 @@ module.exports = function (app, db) {
 	app.get('/login', User.requireNotSignedIn(), function (req, res) {
 		var returnUrl = req.query['ret'];
 
-		res.render('auth/login', {
+		res.renderMarko('auth/login', {
 			registrationSuccessful: req.query.hasOwnProperty('registered'),
 			registerLink: '/register' + (returnUrl ? '?ret=' + encodeURIComponent(returnUrl) : '')
 		});
@@ -85,7 +85,7 @@ module.exports = function (app, db) {
 	app.get('/register', User.requireNotSignedIn(), function (req, res) {
 		var returnUrl = req.query['ret'];
 
-		res.render('auth/register', {
+		res.renderMarko('auth/register', {
 			loginLink: '/login' + (returnUrl ? '?ret=' + encodeURIComponent(returnUrl) : '')
 		});
 	});
@@ -148,14 +148,14 @@ module.exports = function (app, db) {
 	});
 
 	app.get('/user', User.requireSignedIn(), function (req, res) {
-		res.render('auth/user', {
+		res.renderMarko('auth/user', {
 			user: req.user
 		});
 	});
 
 	app.get('/users', User.requireSignedIn(null, 100), function (req, res, next) {
 		db.collection('users').find({}).toArray().then(function (users) {
-			res.render('auth/users', {
+			res.renderMarko('auth/users', {
 				users: users
 			});
 		}).catch(err => next(err || new Error()));

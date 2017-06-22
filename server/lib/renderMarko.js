@@ -37,14 +37,14 @@ module.exports.install = function (viewsDir) {
 	viewsDir = path.resolve(viewsDir);
 	const templateCache = {};
 
-	function render(res, name, locals, viewsDirOverride) {
+	function renderMarko(res, name, locals, viewsDirOverride) {
 		const templatePath = path.join(viewsDirOverride || viewsDir, name + '.marko');
 		const template = getTemplate(templatePath, templateCache);
 		doRender(template, res, locals);
 	}
 
 	return function renderMarkoMiddleware(req, res, next) {
-		res.render = render.bind(null, res);
+		res.renderMarko = renderMarko.bind(null, res);
 		next();
 	};
 };

@@ -18,7 +18,7 @@ module.exports = function (app) {
 		if(err.status !== 404) return next(err);
 
 		res.status(404);
-		res.render('errors/404');
+		res.renderMarko('errors/404');
 	});
 
 	// Assume all other errors to be server errors (500)
@@ -26,7 +26,7 @@ module.exports = function (app) {
 		console.error("Internal server error:", err.stack || err);
 
 		res.status(500);
-		res.render('errors/500');
+		res.renderMarko('errors/500');
 	});
 
 };

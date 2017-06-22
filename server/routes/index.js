@@ -6,21 +6,21 @@
 module.exports = function (app, db, projectSections) {
 
 	app.get('/', function (req, res) {
-		res.render('index');
+		res.renderMarko('index');
 	});
 
 	app.get('/projects', function (req, res) {
-		res.render('projects', {
+		res.renderMarko('projects', {
 			projectSections: projectSections
 		});
 	});
 
 	app.get('/about', function (req, res) {
-		res.render('about');
+		res.renderMarko('about');
 	});
 
 	app.get('/privacy', function (req, res) {
-		res.render('privacy');
+		res.renderMarko('privacy');
 	});
 
 	require('./auth')(app, db);
