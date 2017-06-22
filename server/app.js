@@ -35,6 +35,8 @@ MongoClient.connect(config.dbUrl).then(db => {
 
 	const app = express();
 
+	renderMarko.install(app, viewsDir);
+
 	// The server runs on HTTPS only
 	const server = http.createServer(app).listen(config.port, function () {
 		const addr = server.address();
@@ -88,8 +90,6 @@ MongoClient.connect(config.dbUrl).then(db => {
 
 		next();
 	});
-
-	app.use(renderMarko.install(viewsDir));
 
 	// Search for projects
 	const projectsData = projects.get(projectsDir);

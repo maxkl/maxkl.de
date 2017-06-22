@@ -33,18 +33,13 @@ function getTemplate(templatePath, cache) {
 	}
 }
 
-module.exports.install = function (viewsDir) {
+module.exports.install = function (app, viewsDir) {
 	viewsDir = path.resolve(viewsDir);
 	const templateCache = {};
 
-	function renderMarko(res, name, locals, viewsDirOverride) {
+	app.response.renderMarko = function renderMarko(name, locals, viewsDirOverride) {
 		const templatePath = path.join(viewsDirOverride || viewsDir, name + '.marko');
 		const template = getTemplate(templatePath, templateCache);
-		doRender(template, res, locals);
-	}
-
-	return function renderMarkoMiddleware(req, res, next) {
-		res.renderMarko = renderMarko.bind(null, res);
-		next();
+		doRender(template, this, locals);
 	};
 };
