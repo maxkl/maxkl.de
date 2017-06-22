@@ -32,17 +32,18 @@ function readProjectConfig(dir, name) {
 	}, contents);
 }
 
-function useProject(project, app) {
+function useProject(project, app, router) {
 	const route = project.route;
 	const staticDir = project.staticDir;
 	const indexFile = project.indexFile;
 
 	if(staticDir) {
-		app.use(route, serveStatic(staticDir));
+		router.use(route, serveStatic(staticDir));
 	}
 
 	if(indexFile) {
 		try {
+			// TODO: remove from cache
 			var initProject = require(indexFile);
 		} catch(err) {
 			console.error(indexFile + ':', err.stack || err);
@@ -55,14 +56,14 @@ function useProject(project, app) {
 		}
 
 		try {
-			var ret = initProject(app);
+			var ret = initProject(app, router);
 		} catch(err) {
 			console.error(indexFile + ':', err.stack || err);
 			return;
 		}
 
 		if(typeof ret === 'function') {
-			app.use(route, ret);
+			router.use(route, ret);
 		}
 	}
 }

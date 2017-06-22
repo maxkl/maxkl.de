@@ -20,7 +20,6 @@ const bodyParser = require('body-parser');
 const readConfig = require('./lib/readConfig');
 const renderMarko = require('./lib/renderMarko');
 const User = require('./lib/user');
-const projects = require('./lib/projects');
 
 // Configuration variables
 const rootDir = path.join(__dirname, '..');
@@ -95,14 +94,10 @@ MongoClient.connect(config.dbUrl).then(db => {
 
 	app.use(renderMarko.install(viewsDir));
 
-	// Search for projects
-	const projectsData = projects.get(projectsDir);
-
 	// Global routes
-	require('./routes/index')(app, db, projectsData.sections);
+	require('./routes/index')(app, db);
 
-	// Include projects
-	projectsData.projects.forEach(project => projects.use(project, app));
+	require('./routes/projects').init(app, projectsDir);
 
 	// Error handlers
 	require('./routes/errors')(app, db);
