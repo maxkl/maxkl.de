@@ -107,24 +107,6 @@ nav:after {
 	color: inherit;
 }
 
-.navbar-user {
-	float: right;
-	line-height: 20px;
-	height: 40px;
-
-	text-align: right;
-	font-size: 14px;
-}
-
-.navbar-user.single-line {
-	line-height: 40px;
-}
-
-.navbar-user a {
-	color: #fff;
-	text-decoration: underline;
-}
-
 .content {
 	flex-grow: 1;
 }

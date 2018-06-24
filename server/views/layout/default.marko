@@ -38,8 +38,6 @@
     </head>
     <body>
         $ var cookieMessage = !out.global.cookiesAccepted;
-        $ var user = out.global.user;
-        $ var currentUrlEncoded = encodeURIComponent(out.global.currentUrl);
         <nav>
             <div class="navbar">
                 <a href="https://maxkl.de" class="navbar-brand">maxkl.de</a>
@@ -48,15 +46,6 @@
 					<li><a href="/projects">Projects</a></li>
 					<li><a href="/about">About</a></li>
 				</ul>
-                <div if(user.signedIn) class="navbar-user">
-                    ${user.name ? user.name + " (" + user.email + ")" : user.email}<br />
-                    <a href="/logout">Sign out</a>
-                </div>
-                <div else class="navbar-user single-line">
-                    <if(!input.hideSignIn)>
-                        <a href="/login?ret=${currentUrlEncoded}">Sign in</a>
-                    </if>
-                </div>
             </div>
         </nav>
         <div class="content">
@@ -87,7 +76,6 @@
 
         <script src="/js/main.js"></script>
         <script if(cookieMessage) src="/js/cookieMessage.js"></script>
-        <script src="/js/analytics.js"></script>
 		<if(input.scripts)>
 			<include(input.scripts) />
 		</if>
