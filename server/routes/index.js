@@ -3,7 +3,7 @@
  * License: MIT
  */
 
-module.exports = function (app, db, projectSections) {
+module.exports = function (app, db, projectsData) {
 
 	app.get('/', function (req, res) {
 		res.renderMarko('index');
@@ -11,7 +11,8 @@ module.exports = function (app, db, projectSections) {
 
 	app.get('/projects', function (req, res) {
 		res.renderMarko('projects', {
-			projectSections: projectSections
+			showcasedProjects: projectsData.showcased,
+            projectCategories: projectsData.categories
 		});
 	});
 

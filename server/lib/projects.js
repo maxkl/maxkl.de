@@ -1,12 +1,10 @@
 /**
- * Copyright: (c) 2016 Max Klein
+ * Copyright: (c) 2016-2018 Max Klein
  * License: MIT
  */
 
 const fs = require('fs');
 const path = require('path');
-
-const serveStatic = require('serve-static');
 
 const exists = require('./exists');
 
@@ -21,133 +19,121 @@ function readProjectConfig(dir, name) {
 	}
 
 	return Object.assign({}, {
-		static: 'public',
-		index: 'index.js',
-		route: name,
-		hideEntry: false,
-		section: 'Other',
+		hidden: false,
 		title: name.substr(0, 1).toUpperCase() + name.substr(1),
-		href: '/' + name,
-		source: null
+        category: 'Other',
+        shortDesc: '',
+        link: null,
+        sourceLink: null
 	}, contents);
 }
-
-function useProject(project, app) {
-	const route = project.route;
-	const staticDir = project.staticDir;
-	const indexFile = project.indexFile;
-
-	if(staticDir) {
-		app.use(route, serveStatic(staticDir));
-	}
-
-	if(indexFile) {
-		try {
-			var initProject = require(indexFile);
-		} catch(err) {
-			console.error(indexFile + ':', err.stack || err);
-			return;
-		}
-
-		if(typeof initProject !== 'function') {
-			console.error(indexFile + ':', 'module.exports is not a function');
-			return;
-		}
-
-		try {
-			var ret = initProject(app);
-		} catch(err) {
-			console.error(indexFile + ':', err.stack || err);
-			return;
-		}
-
-		if(typeof ret === 'function') {
-			app.use(route, ret);
-		}
-	}
-}
-
 
 function getProject(directory, name) {
 	const config = readProjectConfig(directory, name);
 
-	let entry = null;
-	if(!config.hideEntry) {
-		entry = {
-			section: config.section,
-			title: config.title,
-			href: config.href,
-			source: config.source
-		}
+	if(config.hidden) {
+		return null;
 	}
 
-	const staticDir = path.join(directory, config.static);
-	const indexFile = path.join(directory, config.index);
-
-	const project = {
-		staticDir: exists.dir(staticDir) ? staticDir : null,
-		indexFile: exists.file(indexFile) ? indexFile : null,
-		route: path.normalize('/' + config.route.replace(/[?+*()]/g, '\\$&'))
-	};
+    // TODO: thumbnail, pictures, long description
 
 	return {
-		entry: entry,
-		project: project
-	};
+        name: name
+        title: config.title,
+        category: config.category,
+        shortDesc: config.shortDesc,
+        link: config.link,
+        sourceLink: config.sourceLink
+    };
+}
+
+function readProjectsConfig(dir) {
+    const filename = path.join(dir, 'projects.json');
+
+    let contents;
+    try {
+        contents = JSON.parse(fs.readFileSync(filename));
+    } catch(e) {
+        contents = null;
+    }
+
+    return Object.assign({}, {
+        showcased: [],
+        categories: []
+    }, contents);
 }
 
 function getProjects(dir) {
-
-	const entries = {};
-	const projects = [];
+	const showcased = [];
+    const categories = [];
 
 	if(exists.dir(dir)) {
+        // Read projects.json
+        const projectsConfig = readProjectsConfig(dir);
+        const showcasedNames = projectsConfig.showcased;
+        const categoryNames = projectsConfig.categories;
+
+        const byCategory = {};
+
 		// Iterate over every file in projects/
 		fs.readdirSync(dir).forEach(filename => {
 			// Exclude hidden files & directories
-			if(filename.startsWith('.')) return;
+			if(filename.startsWith('.')) {
+                return;
+            }
 
 			// Get full path
 			var projectPath = path.resolve(dir, filename);
 
 			// Skip if project is not a directory
-			if(!exists.dir(projectPath) || exists(path.join(projectPath, '.ignore'))) return;
+			if(!exists.dir(projectPath)) {
+                return;
+            }
 
-			const result = getProject(projectPath, filename);
-			projects.push(result.project);
+			const project = getProject(projectPath, filename);
 
-			const entry = result.entry;
-			if(entry) {
-				if(!entries[entry.section]) {
-					entries[entry.section] = [];
-				}
+            if (project !== null) {
+                if (showcasedNames.includes(project.name)) {
+        			showcased.push(project);
+                }
 
-				entries[entry.section].push({
-					title: entry.title,
-					href: entry.href,
-					source: entry.source
-				});
-			}
+    			if (!byCategory.hasOwnProperty(project.category)) {
+                    byCategory[project.category] = [];
+                }
+
+                byCategory[project.category].push(project);
+            }
 		});
-	}
 
-	const sections = [];
-	for(let section in entries) {
-		if(entries.hasOwnProperty(section)) {
-			sections.push({
-				title: section,
-				projects: entries[section]
-			});
-		}
+        // Add all categories for which the order was specified
+        categoryNames.forEach(function (categoryName) {
+            if (byCategory.hasOwnProperty(categoryName)) {
+                categories.push({
+                    name: categoryName,
+                    projects: byCategory[categoryName]
+                });
+
+                byCategory[categoryName] = null;
+            }
+        });
+
+        // Add remaining categories in no special order
+        for (let categoryName in byCategory) {
+            if (byCategory[categoryName] !== null) {
+                categories.push({
+                    name: categoryName,
+                    projects: byCategory[categoryName]
+                });
+            }
+        }
 	}
 
 	return {
-		projects: projects,
-		sections: sections
+		showcased: showcased,
+        categories: categories
 	};
 }
 
 module.exports = {
-	get: getProjects,
-	use: useProject
+	get: getProjects
 };

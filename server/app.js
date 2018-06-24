@@ -1,5 +1,5 @@
 /**
- * Copyright: (c) 2015-2016 Max Klein
+ * Copyright: (c) 2015-2018 Max Klein
  * License: MIT
  */
 
@@ -21,12 +21,14 @@ const readConfig = require('./lib/readConfig');
 const renderMarko = require('./lib/renderMarko');
 const User = require('./lib/user');
 const projects = require('./lib/projects');
+const subpages = require('./lib/subpages');
 
 // Configuration variables
 const rootDir = path.join(__dirname, '..');
 const viewsDir = path.join(rootDir, 'server/views');
 const publicDir = path.join(rootDir, 'public');
 const projectsDir = path.join(rootDir, 'projects');
+const subpagesDir = path.join(rootDir, 'subpages');
 
 const config = readConfig(path.join(rootDir, 'config.json'));
 
@@ -92,13 +94,14 @@ MongoClient.connect(config.dbUrl).then(db => {
 	});
 
 	// Search for projects
-	const projectsData = projects.get(projectsDir);
+    const projectsData = projects.get(projectsDir);
 
 	// Global routes
-	require('./routes/index')(app, db, projectsData.sections);
+	require('./routes/index')(app, db, projectsData);
 
-	// Include projects
-	projectsData.projects.forEach(project => projects.use(project, app));
+	// Search for and include subpages
+	subpages.get(subpagesDir)
+        .forEach(subpage => subpages.use(subpage, app));
 
 	// Error handlers
 	require('./routes/errors')(app, db);
