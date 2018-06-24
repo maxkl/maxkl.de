@@ -14,7 +14,7 @@ function readSubpageConfig(dir, name) {
     const filename = path.join(dir, 'subpage.json');
 	const oldFilename = path.join(dir, 'project.json');
 
-    const rawContents = null;
+    let rawContents = null;
     try {
         rawContents = fs.readFileSync(filename);
     } catch(e) {
