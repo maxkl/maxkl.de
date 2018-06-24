@@ -38,7 +38,7 @@ function getProject(directory, name) {
     // TODO: thumbnail, pictures, long description
 
 	return {
-        name: name
+        name: name,
         title: config.title,
         category: config.category,
         shortDesc: config.shortDesc,
