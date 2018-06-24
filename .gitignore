@@ -9,6 +9,7 @@ node_modules/
 # Project specific
 config.json
 projects/
+subpages/
 *.marko.js
 logs/
 *.pem
