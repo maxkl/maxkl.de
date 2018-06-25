@@ -6,7 +6,9 @@
 module.exports = function (app, db, projectsData) {
 
 	app.get('/', function (req, res) {
-		res.renderMarko('index');
+		res.renderMarko('index', {
+            showcasedProjects: projectsData.showcased
+        });
 	});
 
 	app.get('/projects', function (req, res) {
