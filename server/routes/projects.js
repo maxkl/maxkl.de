@@ -3,6 +3,8 @@
  * License: MIT
  */
 
+const serveStatic = require('serve-static');
+
 module.exports = function (app, db, projectsData) {
 
 	app.get('/projects', function (req, res) {
