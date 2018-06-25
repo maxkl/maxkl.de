@@ -250,9 +250,26 @@ footer {
 }
 
 .project-list > .project {
-    flex: 1 0 auto;
+    display: flex;
     width: 50%;
     padding: 10px;
+}
+
+.project-list > .project > .thumbnail-container {
+    flex: 0 0 auto;
+    width: 60px;
+}
+
+.project-list > .project > .body {
+    flex: 0 1 auto;
+}
+
+.project-list > .project > .body > .title {
+    display:  block;
+    margin-bottom:  0.2rem;
+
+    font: inherit;
+    font-weight:  bold;
 }
 
 @media (max-width: 768px) {
