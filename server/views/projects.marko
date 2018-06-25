@@ -6,19 +6,13 @@
             to view the source code of some of the projects below and to discover my
 			projects that don't run in a browser.
         </p>
+
         <h2>Showcase</h2>
-        <ul>
-            <li for(project in input.showcasedProjects)>
-                <a href="/projects/${project.name}">${project.title}</a> ${project.shortDesc} <a if(project.link) href=project.link target="_blank">Open</a>
-            </li>
-        </ul>
+        <include("./project-list.marko", { projects: input.showcasedProjects }) />
+        
         <for(category in input.projectCategories)>
             <h2>${category.name}</h2>
-            <ul>
-                <li for(project in category.projects)>
-                    <a href="/projects/${project.name}">${project.title}</a> ${project.shortDesc} <a if(project.link) href=project.link target="_blank">Open</a>
-                </li>
-            </ul>
+            <include("./project-list.marko", { projects: category.projects }) />
         </for>
     </@content>
 </include>
