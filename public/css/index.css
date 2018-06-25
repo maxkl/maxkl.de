@@ -47,6 +47,13 @@ a:active {
 	color: #3a4387;
 }
 
+h2 > a {
+    margin-left: 1em;
+
+    font-size: 0.7em;
+    font-weight: normal;
+}
+
 nav {
 	display: block;
 	width: 100%;
@@ -261,7 +268,8 @@ footer {
 }
 
 .project-list > .project > .body {
-    flex: 0 1 auto;
+    position: relative;
+    flex: 1 1 auto;
 }
 
 .project-list > .project > .body > .title {
@@ -270,6 +278,12 @@ footer {
 
     font: inherit;
     font-weight:  bold;
+}
+
+.project-list > .project > .body > .link {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 @media (max-width: 768px) {

@@ -2,16 +2,17 @@
     <@content>
 		<h1>My projects</h1>
         <p>
-            Visit <a href="https://github.com/maxkl" target="_blank">my GitHub page</a>
-            to view the source code of some of the projects below and to discover my
-			projects that don't run in a browser.
+            These are the things I have built and programmed over time.
         </p>
 
         <h2>Showcase</h2>
         <include("./project-list.marko", { projects: input.showcasedProjects }) />
-        
+
+        <br />
+        The following projects are sorted into categories, but follow no particular order:
+
         <for(category in input.projectCategories)>
-            <h2>${category.name}</h2>
+            <h3>${category.name}</h3>
             <include("./project-list.marko", { projects: category.projects }) />
         </for>
     </@content>
