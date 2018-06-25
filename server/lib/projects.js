@@ -35,7 +35,25 @@ function getProject(directory, name) {
 		return null;
 	}
 
-    // TODO: thumbnail, pictures, long description
+    // TODO: long description
+
+    const staticDir = path.join(directory, 'static');
+
+    let hasStatic = false;
+    let hasThumbnail = false;
+    let imageCount = 0;
+
+    if (exists.dir(staticDir)) {
+        hasStatic = true;
+
+        if (exists.file(path.join(staticDir, 'thumbnail.jpg'))) {
+            hasThumbnail = true;
+        }
+
+        while (exists.file(path.join(staticDir, 'image' + (imageCount + 1)))) {
+            imageCount++;
+        }
+    }
 
 	return {
         name: name,
@@ -43,7 +61,10 @@ function getProject(directory, name) {
         category: config.category,
         shortDesc: config.shortDesc,
         link: config.link,
-        sourceLink: config.sourceLink
+        sourceLink: config.sourceLink,
+        hasStatic: hasStatic,
+        hasThumbnail: hasThumbnail,
+        imageCount: imageCount
     };
 }
 
@@ -64,6 +85,7 @@ function readProjectsConfig(dir) {
 }
 
 function getProjects(dir) {
+    const byName = {};
 	const showcased = [];
     const categories = [];
 
@@ -93,6 +115,8 @@ function getProjects(dir) {
 			const project = getProject(projectPath, filename);
 
             if (project !== null) {
+                byName[project.name] = project;
+
                 if (showcasedNames.includes(project.name)) {
         			showcased.push(project);
                 }
@@ -129,6 +153,7 @@ function getProjects(dir) {
 	}
 
 	return {
+        byName: byName,
 		showcased: showcased,
         categories: categories
 	};
