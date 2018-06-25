@@ -50,7 +50,7 @@ function getProject(directory, name) {
             hasThumbnail = true;
         }
 
-        while (exists.file(path.join(staticDir, 'image' + (imageCount + 1)))) {
+        while (exists.file(path.join(staticDir, 'image' + (imageCount + 1) + '.jpg'))) {
             imageCount++;
         }
     }
@@ -63,6 +63,7 @@ function getProject(directory, name) {
         link: config.link,
         sourceLink: config.sourceLink,
         hasStatic: hasStatic,
+        staticDir: staticDir,
         hasThumbnail: hasThumbnail,
         imageCount: imageCount
     };
