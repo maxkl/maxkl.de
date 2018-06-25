@@ -118,10 +118,6 @@ function getProjects(dir) {
             if (project !== null) {
                 byName[project.name] = project;
 
-                if (showcasedNames.includes(project.name)) {
-        			showcased.push(project);
-                }
-
     			if (!byCategory.hasOwnProperty(project.category)) {
                     byCategory[project.category] = [];
                 }
@@ -129,6 +125,12 @@ function getProjects(dir) {
                 byCategory[project.category].push(project);
             }
 		});
+
+        showcasedNames.forEach(function (projectName) {
+            if (byName.hasOwnProperty(projectName)) {
+                showcased.push(byName[projectName]);
+            }
+        });
 
         // Add all categories for which the order was specified
         categoryNames.forEach(function (categoryName) {
