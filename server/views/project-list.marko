@@ -1,5 +1,5 @@
-<ul>
-    <li for(project in input.projects)>
+<div class="project-list">
+    <div for(project in input.projects) class="project">
         <a href="/projects/${project.name}">${project.title}</a> ${project.shortDesc} <a if(project.link) href=project.link target="_blank">Open</a>
-    </li>
-</ul>
+    </div>
+</div>

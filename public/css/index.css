@@ -244,9 +244,24 @@ footer {
 	background-color: #4894ff;
 }
 
+.project-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.project-list > .project {
+    flex: 1 0 auto;
+    width: 50%;
+    padding: 10px;
+}
+
 @media (max-width: 768px) {
 	.container {
 		width: 100%;
 		padding: 0 10px;
 	}
+
+    .project-list > .project {
+        width: 100%;
+    }
 }
