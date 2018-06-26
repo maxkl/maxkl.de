@@ -286,6 +286,21 @@ footer {
     right: 0;
 }
 
+.image-list {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    height: 300px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.image-list > img {
+    display: block;
+    max-height: 100%;
+    margin-right: 15px;
+}
+
 @media (max-width: 768px) {
 	.container {
 		width: 100%;

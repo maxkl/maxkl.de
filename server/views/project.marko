@@ -4,8 +4,8 @@
         <a if(input.project.link) href=input.project.link target="_blank">Open</a>
         <a if(input.project.sourceLink) href=input.project.sourceLink target="_blank">Source code</a>
         ${input.project.shortDesc}
-        <if(input.project.imageCount > 0)>
+        <div if(input.project.imageCount > 0) class="image-list">
             <img for(i from 1 to input.project.imageCount) src="/projects/${input.project.name}/static/image${i}.jpg" />
-        </if>
+        </div>
     </@content>
 </include>
