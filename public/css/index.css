@@ -280,12 +280,6 @@ footer {
     font-weight:  bold;
 }
 
-.project-list > .project > .body > .link {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
 .button-row {
     margin: -.5em 0 1em 0;
 }
@@ -298,7 +292,7 @@ footer {
 a.button {
     display: inline-block;
     padding: .2em .5em;
-    
+
     background-color: #4077c8;
     color: #fff;
     white-space: nowrap;
