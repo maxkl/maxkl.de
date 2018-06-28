@@ -1,8 +1,10 @@
 <include("./layout/default.marko") title=input.project.title description="Max Klein's personal website">
     <@content>
 		<h1>${input.project.title}</h1>
-        <a if(input.project.link) href=input.project.link target="_blank">Open</a>
-        <a if(input.project.sourceLink) href=input.project.sourceLink target="_blank">Source code</a>
+        <div if(input.project.link || input.project.sourceLink) class="button-row">
+            <a if(input.project.link) href=input.project.link target="_blank" class="button">Open</a>
+            <a if(input.project.sourceLink) href=input.project.sourceLink target="_blank" class="button">Source code</a>
+        </div>
         ${input.project.shortDesc}
         <div if(input.project.imageCount > 0) class="image-list">
             <img for(i from 1 to input.project.imageCount) src="/projects/${input.project.name}/static/image${i}.jpg" />

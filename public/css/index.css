@@ -286,6 +286,24 @@ footer {
     right: 0;
 }
 
+.button-row {
+    margin: -.5em 0 1em 0;
+}
+
+.button-row > .button {
+    margin-right: 1em;
+    margin-top: 0.5em;
+}
+
+a.button {
+    display: inline-block;
+    padding: .2em .5em;
+    
+    background-color: #4077c8;
+    color: #fff;
+    white-space: nowrap;
+}
+
 .image-list {
     display: flex;
     align-items: center;
