@@ -5,8 +5,13 @@
 
 const fs = require('fs');
 const path = require('path');
+const request = require('request');
+const showdown = require('showdown');
 
 const exists = require('./exists');
+
+const showdownConverter = new showdown.Converter();
+showdownConverter.setFlavor('github');
 
 function readProjectConfig(dir, name) {
 	const filename = path.join(dir, 'project.json');
@@ -21,12 +26,14 @@ function readProjectConfig(dir, name) {
 	return Object.assign({}, {
 		hidden: false,
         fromGitLab: false,
-		title: name.substr(0, 1).toUpperCase() + name.substr(1),
+        gitLabId: 0,
+		title: null,
         category: 'Other',
-        shortDesc: '',
+        shortDesc: null,
         link: null,
         sourceLink: null,
-        longDesc: null
+        longDesc: null,
+        longDescFile: null
 	}, contents);
 }
 
@@ -37,7 +44,26 @@ function getProject(directory, name) {
 		return null;
 	}
 
-    // TODO: long description
+    let title = config.title;
+    if (title === null && !config.fromGitLab) {
+        title = name.substr(0, 1).toUpperCase() + name.substr(1);
+    }
+
+    let longDesc = config.longDesc;
+    if (config.longDescFile !== null) {
+        const filename = path.join(directory, path.basename(config.longDescFile));
+
+        let markdown;
+        try {
+            markdown = fs.readFileSync(filename);
+        } catch (e) {
+            markdown = null;
+        }
+
+        if (markdown !== null) {
+            longDesc = showdownConverter.makeHtml(markdown);
+        }
+    }
 
     const staticDir = path.join(directory, 'static');
 
@@ -60,17 +86,88 @@ function getProject(directory, name) {
 	return {
         name: name,
         fromGitLab: config.fromGitLab,
-        title: config.title,
+        gitLabId: config.gitLabId,
+        title: title,
         category: config.category,
         shortDesc: config.shortDesc,
         link: config.link,
         sourceLink: config.sourceLink,
-        longDesc: config.longDesc,
+        longDesc: longDesc,
         hasStatic: hasStatic,
         staticDir: staticDir,
         hasThumbnail: hasThumbnail,
         imageCount: imageCount
     };
+}
+
+function prepareProject(project, callback) {
+    if (project.fromGitLab) {
+        let loadTitle = project.title === null;
+        let loadShortDesc = project.shortDesc === null;
+        let loadSourceLink = project.sourceLink === null;
+        let loadLongDesc = project.longDesc === null;
+
+        if (loadTitle || loadShortDesc || loadSourceLink || loadLongDesc) {
+            const apiBaseUrl = 'https://gitlab.com/api/v4/projects/' + project.gitLabId;
+
+            request({ url: apiBaseUrl, json: true }, function (err, res, body) {
+                if (err) {
+                    callback();
+                    return;
+                }
+
+                if (loadTitle) {
+                    project.title = body.name;
+                }
+
+                if (loadShortDesc) {
+                    project.shortDesc = body.description;
+                }
+
+                if (loadSourceLink) {
+                    project.sourceLink = body.web_url;
+                }
+
+                if (loadLongDesc) {
+                    const url = new URL(body.readme_url);
+                    const pathParts = url.pathname.split(path.sep).filter(part => part.length > 0);
+
+                    const readmeBranch = pathParts[3];
+                    const readmeName = pathParts[4];
+
+                    const readmeUrl = apiBaseUrl + '/repository/files/' + readmeName + '/raw?ref=' + readmeBranch;
+
+                    request(readmeUrl, function (err, res, body) {
+                        if (!err) {
+                            const html = showdownConverter.makeHtml(body);
+                            project.longDesc = html;
+                        }
+
+                        callback();
+                    });
+                } else {
+                    callback();
+                }
+            });
+        } else {
+            callback();
+        }
+    } else {
+        callback();
+    }
+}
+
+function prepareAllProjects(projects, callback) {
+    let projectsLeft = projects.length;
+
+    for (let i = 0; i < projects.length; i++) {
+        prepareProject(projects[i], function () {
+            projectsLeft--;
+            if (projectsLeft === 0) {
+                callback();
+            }
+        });
+    }
 }
 
 function readProjectsConfig(dir) {
@@ -167,5 +264,7 @@ function getProjects(dir) {
 }
 
 module.exports = {
-	get: getProjects
+	get: getProjects,
+    prepare: prepareProject,
+    prepareAll: prepareAllProjects
 };

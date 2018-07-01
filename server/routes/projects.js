@@ -4,43 +4,24 @@
  */
 
 const serveStatic = require('serve-static');
-const request = require('request');
-const showdown = require('showdown');
+
+const projects = require('../lib/projects');
 
 module.exports = function (app, db, projectsData) {
 
-    const showdownConverter = new showdown.Converter();
-    showdownConverter.setFlavor('github');
-
-    function prepareProject(project, callback) {
-        if (project.fromGitLab) {
-            let loadLongDesc = false;
-
-            if (project.longDesc === null) {
-                loadLongDesc = true;
-            }
-
-            if (loadLongDesc) {
-                request.get(project.sourceLink + '/raw/master/README.md', function (err, res, body) {
-                    if (!err) {
-                        const html = showdownConverter.makeHtml(body);
-                        project.longDesc = html;
-                    }
-
-                    callback();
-                });
-            } else {
-                callback();
-            }
-        } else {
-            callback();
-        }
-    }
-
 	app.get('/projects', function (req, res) {
-        res.renderMarko('projects', {
-            showcasedProjects: projectsData.showcased,
-            projectCategories: projectsData.categories
+        const allProjects = [];
+        projectsData.categories.forEach(function (category) {
+            for (let i = 0; i < category.projects.length; i++) {
+                allProjects.push(category.projects[i]);
+            }
+        });
+
+        projects.prepareAll(allProjects, function () {
+            res.renderMarko('projects', {
+                showcasedProjects: projectsData.showcased,
+                projectCategories: projectsData.categories
+            });
         });
     });
 
@@ -54,7 +35,7 @@ module.exports = function (app, db, projectsData) {
 
         const project = projectsData.byName[projectName];
 
-        prepareProject(project, function () {
+        projects.prepare(project, function () {
             res.renderMarko('project', {
                 project: project
             });

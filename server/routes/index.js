@@ -3,11 +3,15 @@
  * License: MIT
  */
 
+const projects = require('../lib/projects');
+
 module.exports = function (app, db, projectsData) {
 
 	app.get('/', function (req, res) {
-		res.renderMarko('index', {
-            showcasedProjects: projectsData.showcased
+        projects.prepareAll(projectsData.showcased, function () {
+            res.renderMarko('index', {
+                showcasedProjects: projectsData.showcased
+            });
         });
 	});
 
