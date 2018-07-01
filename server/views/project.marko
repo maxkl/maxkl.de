@@ -5,7 +5,7 @@
             <a if(input.project.link) href=input.project.link target="_blank" class="button">Open</a>
             <a if(input.project.sourceLink) href=input.project.sourceLink target="_blank" class="button">Source code</a>
         </div>
-        ${input.project.shortDesc}
+        <div class="project-description">${input.project.shortDesc}</div>
         <div if(input.project.imageCount > 0) class="image-list">
             <img for(i from 1 to input.project.imageCount) src="/projects/${input.project.name}/static/image${i}.jpg" />
         </div>

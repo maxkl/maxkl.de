@@ -298,6 +298,10 @@ a.button {
     white-space: nowrap;
 }
 
+.project-description {
+    margin: 1em 0;
+}
+
 .image-list {
     display: flex;
     align-items: center;

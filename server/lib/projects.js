@@ -143,7 +143,7 @@ function prepareProject(project, callback) {
                             console.error(err);
                         } else {
                             const html = showdownConverter.makeHtml(body);
-                            project.longDesc = html;
+                            project.longDesc = '<small>README from GitLab:</small>' + html;
                         }
 
                         callback();
@@ -157,19 +157,6 @@ function prepareProject(project, callback) {
         }
     } else {
         callback();
-    }
-}
-
-function prepareAllProjects(projects, callback) {
-    let projectsLeft = projects.length;
-
-    for (let i = 0; i < projects.length; i++) {
-        prepareProject(projects[i], function () {
-            projectsLeft--;
-            if (projectsLeft === 0) {
-                callback();
-            }
-        });
     }
 }
 
@@ -269,6 +256,5 @@ function getProjects(dir) {
 
 module.exports = {
     get: getProjects,
-    prepare: prepareProject,
-    prepareAll: prepareAllProjects
+    prepare: prepareProject
 };
