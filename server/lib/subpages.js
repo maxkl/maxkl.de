@@ -12,7 +12,7 @@ const exists = require('./exists');
 
 function readSubpageConfig(dir, name) {
     const filename = path.join(dir, 'subpage.json');
-	const oldFilename = path.join(dir, 'project.json');
+    const oldFilename = path.join(dir, 'project.json');
 
     let rawContents = null;
     try {
@@ -25,70 +25,70 @@ function readSubpageConfig(dir, name) {
         }
     }
 
-	let contents = null;
-	try {
-		contents = JSON.parse(rawContents);
-	} catch(e) {
+    let contents = null;
+    try {
+        contents = JSON.parse(rawContents);
+    } catch(e) {
         //
-	}
+    }
 
-	return Object.assign({}, {
+    return Object.assign({}, {
         disabled: false,
-		static: 'public',
-		index: 'index.js',
-		route: name
-	}, contents);
+        static: 'public',
+        index: 'index.js',
+        route: name
+    }, contents);
 }
 
 function useSubpage(subpage, app) {
     const staticDir = subpage.staticDir;
     const indexFile = subpage.indexFile;
-	const route = subpage.route;
+    const route = subpage.route;
 
-	if(staticDir) {
-		app.use(route, serveStatic(staticDir));
-	}
+    if(staticDir) {
+        app.use(route, serveStatic(staticDir));
+    }
 
-	if(indexFile) {
+    if(indexFile) {
         let initSubpage;
-		try {
-			initSubpage = require(indexFile);
-		} catch(err) {
-			console.error(indexFile + ':', err.stack || err);
-			return;
-		}
+        try {
+            initSubpage = require(indexFile);
+        } catch(err) {
+            console.error(indexFile + ':', err.stack || err);
+            return;
+        }
 
-		if(typeof initSubpage !== 'function') {
-			console.error(indexFile + ':', 'module.exports is not a function');
-			return;
-		}
+        if(typeof initSubpage !== 'function') {
+            console.error(indexFile + ':', 'module.exports is not a function');
+            return;
+        }
 
         let ret;
-		try {
-			ret = initSubpage(app);
-		} catch(err) {
-			console.error(indexFile + ':', err.stack || err);
-			return;
-		}
+        try {
+            ret = initSubpage(app);
+        } catch(err) {
+            console.error(indexFile + ':', err.stack || err);
+            return;
+        }
 
-		if(typeof ret === 'function') {
-			app.use(route, ret);
-		}
-	}
+        if(typeof ret === 'function') {
+            app.use(route, ret);
+        }
+    }
 }
 
 
 function getSubpage(directory, name) {
-	const config = readSubpageConfig(directory, name);
+    const config = readSubpageConfig(directory, name);
 
     if (config.disabled) {
         return null;
     }
 
-	const staticDir = path.join(directory, config.static);
-	const indexFile = path.join(directory, config.index);
+    const staticDir = path.join(directory, config.static);
+    const indexFile = path.join(directory, config.index);
 
-	return {
+    return {
         staticDir: exists.dir(staticDir) ? staticDir : null,
         indexFile: exists.file(indexFile) ? indexFile : null,
         route: path.normalize('/' + config.route.replace(/[?+*()]/g, '\\$&'))
@@ -96,36 +96,36 @@ function getSubpage(directory, name) {
 }
 
 function getSubpages(dir) {
-	const subpages = [];
+    const subpages = [];
 
-	if(exists.dir(dir)) {
-		// Iterate over every file in subpages/
-		fs.readdirSync(dir).forEach(filename => {
-			// Exclude hidden files & directories
-			if(filename.startsWith('.')) {
+    if(exists.dir(dir)) {
+        // Iterate over every file in subpages/
+        fs.readdirSync(dir).forEach(filename => {
+            // Exclude hidden files & directories
+            if(filename.startsWith('.')) {
                 return;
             }
 
-			// Get full path
-			var subpagePath = path.resolve(dir, filename);
+            // Get full path
+            var subpagePath = path.resolve(dir, filename);
 
-			// Skip if subpage is not a directory
-			if(!exists.dir(subpagePath) || exists(path.join(subpagePath, '.ignore'))) {
+            // Skip if subpage is not a directory
+            if(!exists.dir(subpagePath) || exists(path.join(subpagePath, '.ignore'))) {
                 return;
             }
 
-			const subpage = getSubpage(subpagePath, filename);
+            const subpage = getSubpage(subpagePath, filename);
 
             if (subpage !== null) {
-    			subpages.push(subpage);
+                subpages.push(subpage);
             }
-		});
-	}
+        });
+    }
 
-	return subpages;
+    return subpages;
 }
 
 module.exports = {
-	get: getSubpages,
-	use: useSubpage
+    get: getSubpages,
+    use: useSubpage
 };

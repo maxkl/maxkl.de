@@ -1,6 +1,6 @@
 <include("./layout/default.marko") title=input.project.title description="Max Klein's personal website">
     <@content>
-		<h1>${input.project.title}</h1>
+        <h1>${input.project.title}</h1>
         <div if(input.project.link || input.project.sourceLink) class="button-row">
             <a if(input.project.link) href=input.project.link target="_blank" class="button">Open</a>
             <a if(input.project.sourceLink) href=input.project.sourceLink target="_blank" class="button">Source code</a>

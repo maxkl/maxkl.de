@@ -35,75 +35,75 @@ const config = readConfig(path.join(rootDir, 'config.json'));
 // Connect to mongodb database
 MongoClient.connect(config.dbUrl).then(db => {
 
-	const app = express();
+    const app = express();
 
-	renderMarko.install(app, viewsDir);
+    renderMarko.install(app, viewsDir);
 
-	// The server runs on HTTPS only
-	const server = http.createServer(app).listen(config.port, function () {
-		const addr = server.address();
-		const addrString = (addr.family == 'IPv6' ? '[' + addr.address + ']' : addr.address) + ':' + addr.port;
+    // The server runs on HTTPS only
+    const server = http.createServer(app).listen(config.port, function () {
+        const addr = server.address();
+        const addrString = (addr.family == 'IPv6' ? '[' + addr.address + ']' : addr.address) + ':' + addr.port;
 
-		console.log('Server listening on ' + addrString);
-	});
+        console.log('Server listening on ' + addrString);
+    });
 
-	app.set('trust proxy', 1);
+    app.set('trust proxy', 1);
 
-	// Assign to app so that subpages can access it
-	app.set('db', db);
-	app.set('server', server);
+    // Assign to app so that subpages can access it
+    app.set('db', db);
+    app.set('server', server);
 
-	app.disable('x-powered-by');
+    app.disable('x-powered-by');
 
-	// Global static files
-	app.use('/', serveStatic(publicDir));
+    // Global static files
+    app.use('/', serveStatic(publicDir));
 
-	app.use(bodyParser.urlencoded({
-		extended: false
-	}));
+    app.use(bodyParser.urlencoded({
+        extended: false
+    }));
 
-	app.use(bodyParser.json());
+    app.use(bodyParser.json());
 
-	app.use(session({
-		cookie: {
-			secure: true
-		},
-		name: 'sid',
-		resave: false,
-		saveUninitialized: false,
-		secret: config.sessionSecret,
-		store: new MongoStore({
-			db: db
-		})
-	}));
+    app.use(session({
+        cookie: {
+            secure: true
+        },
+        name: 'sid',
+        resave: false,
+        saveUninitialized: false,
+        secret: config.sessionSecret,
+        store: new MongoStore({
+            db: db
+        })
+    }));
 
-	app.use(cookieParser());
+    app.use(cookieParser());
 
-	app.use(User.install({
-		db: db
-	}));
+    app.use(User.install({
+        db: db
+    }));
 
-	app.use(function (req, res, next) {
-		var cookiesAccepted = !!req.cookies['a'];
+    app.use(function (req, res, next) {
+        var cookiesAccepted = !!req.cookies['a'];
 
-		res.locals.cookiesAccepted = cookiesAccepted;
-		res.locals.currentUrl = req.originalUrl;
-		res.locals.user = req.user;
+        res.locals.cookiesAccepted = cookiesAccepted;
+        res.locals.currentUrl = req.originalUrl;
+        res.locals.user = req.user;
 
-		next();
-	});
+        next();
+    });
 
-	// Search for projects
+    // Search for projects
     const projectsData = projects.get(projectsDir);
 
-	// Global routes
-	require('./routes/index')(app, db, projectsData);
+    // Global routes
+    require('./routes/index')(app, db, projectsData);
 
-	// Search for and include subpages
-	subpages.get(subpagesDir)
+    // Search for and include subpages
+    subpages.get(subpagesDir)
         .forEach(subpage => subpages.use(subpage, app));
 
-	// Error handlers
-	require('./routes/errors')(app, db);
+    // Error handlers
+    require('./routes/errors')(app, db);
 
 }).catch(err => console.error(err));

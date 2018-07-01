@@ -14,35 +14,35 @@ const showdownConverter = new showdown.Converter();
 showdownConverter.setFlavor('github');
 
 function readProjectConfig(dir, name) {
-	const filename = path.join(dir, 'project.json');
+    const filename = path.join(dir, 'project.json');
 
-	let contents;
-	try {
-		contents = JSON.parse(fs.readFileSync(filename));
-	} catch(e) {
-		contents = null;
-	}
+    let contents;
+    try {
+        contents = JSON.parse(fs.readFileSync(filename));
+    } catch(e) {
+        contents = null;
+    }
 
-	return Object.assign({}, {
-		hidden: false,
+    return Object.assign({}, {
+        hidden: false,
         fromGitLab: false,
         gitLabId: 0,
-		title: null,
+        title: null,
         category: 'Other',
         shortDesc: null,
         link: null,
         sourceLink: null,
         longDesc: null,
         longDescFile: null
-	}, contents);
+    }, contents);
 }
 
 function getProject(directory, name) {
-	const config = readProjectConfig(directory, name);
+    const config = readProjectConfig(directory, name);
 
-	if(config.hidden) {
-		return null;
-	}
+    if(config.hidden) {
+        return null;
+    }
 
     let title = config.title;
     if (title === null && !config.fromGitLab) {
@@ -83,7 +83,7 @@ function getProject(directory, name) {
         }
     }
 
-	return {
+    return {
         name: name,
         fromGitLab: config.fromGitLab,
         gitLabId: config.gitLabId,
@@ -188,10 +188,10 @@ function readProjectsConfig(dir) {
 
 function getProjects(dir) {
     const byName = {};
-	const showcased = [];
+    const showcased = [];
     const categories = [];
 
-	if(exists.dir(dir)) {
+    if(exists.dir(dir)) {
         // Read projects.json
         const projectsConfig = readProjectsConfig(dir);
         const showcasedNames = projectsConfig.showcased;
@@ -199,33 +199,33 @@ function getProjects(dir) {
 
         const byCategory = {};
 
-		// Iterate over every file in projects/
-		fs.readdirSync(dir).forEach(filename => {
-			// Exclude hidden files & directories
-			if(filename.startsWith('.')) {
+        // Iterate over every file in projects/
+        fs.readdirSync(dir).forEach(filename => {
+            // Exclude hidden files & directories
+            if(filename.startsWith('.')) {
                 return;
             }
 
-			// Get full path
-			var projectPath = path.resolve(dir, filename);
+            // Get full path
+            var projectPath = path.resolve(dir, filename);
 
-			// Skip if project is not a directory
-			if(!exists.dir(projectPath)) {
+            // Skip if project is not a directory
+            if(!exists.dir(projectPath)) {
                 return;
             }
 
-			const project = getProject(projectPath, filename);
+            const project = getProject(projectPath, filename);
 
             if (project !== null) {
                 byName[project.name] = project;
 
-    			if (!byCategory.hasOwnProperty(project.category)) {
+                if (!byCategory.hasOwnProperty(project.category)) {
                     byCategory[project.category] = [];
                 }
 
                 byCategory[project.category].push(project);
             }
-		});
+        });
 
         showcasedNames.forEach(function (projectName) {
             if (byName.hasOwnProperty(projectName)) {
@@ -254,17 +254,17 @@ function getProjects(dir) {
                 });
             }
         }
-	}
+    }
 
-	return {
+    return {
         byName: byName,
-		showcased: showcased,
+        showcased: showcased,
         categories: categories
-	};
+    };
 }
 
 module.exports = {
-	get: getProjects,
+    get: getProjects,
     prepare: prepareProject,
     prepareAll: prepareAllProjects
 };

@@ -9,7 +9,7 @@ const projects = require('../lib/projects');
 
 module.exports = function (app, db, projectsData) {
 
-	app.get('/projects', function (req, res) {
+    app.get('/projects', function (req, res) {
         const allProjects = [];
         projectsData.categories.forEach(function (category) {
             for (let i = 0; i < category.projects.length; i++) {

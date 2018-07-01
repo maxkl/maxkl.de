@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>${(input.title ? input.title + " :: " : "") + "maxkl.de"}</title>
         <meta name="description" content=input.description />
         <meta property="og:title"
@@ -30,54 +30,54 @@
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#3da2c7" />
         <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" />
         <link rel="stylesheet" href="/css/index.css" />
-		<if(input.stylesheets)>
-			<include(input.stylesheets) />
-		</if>
+        <if(input.stylesheets)>
+            <include(input.stylesheets) />
+        </if>
     </head>
     <body>
         $ var cookieMessage = !out.global.cookiesAccepted;
         <nav>
             <div class="navbar">
                 <a href="https://maxkl.de" class="navbar-brand">maxkl.de</a>
-				<ul class="navbar-links">
-					<li><a href="/">Home</a></li>
-					<li><a href="/projects">Projects</a></li>
-					<li><a href="/about">About</a></li>
-				</ul>
+                <ul class="navbar-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/projects">Projects</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
             </div>
         </nav>
         <div class="content">
-			<div class="container">
-	            <div if(cookieMessage) class="message-box cookie-message" id="cookie-message">
-	                This website uses cookies. They are required to store whether you are signed in
-	                and to improve your overall experience.
-	                <br />
-	                <a href="#" class="message-button" id="accept-cookies">Accept</a>
-	            </div>
-	            <noscript>
-	                <div class="message-box js-message">
-	                    For full functionality of this site it is necessary to enable JavaScript.
-	                    Here are the
-	                    <a href="http://www.enable-javascript.com/" target="_blank">
-	                        instructions how to enable JavaScript in your web browser
-	                    </a>.
-	                </div>
-	            </noscript>
-	            <if(input.content)>
-					<include(input.content) />
-				</if>
-			</div>
-		</div>
-		<footer>
-			<a href="/privacy">Privacy Policy</a> &middot; &copy; Max Klein
-		</footer>
+            <div class="container">
+                <div if(cookieMessage) class="message-box cookie-message" id="cookie-message">
+                    This website uses cookies. They are required to store whether you are signed in
+                    and to improve your overall experience.
+                    <br />
+                    <a href="#" class="message-button" id="accept-cookies">Accept</a>
+                </div>
+                <noscript>
+                    <div class="message-box js-message">
+                        For full functionality of this site it is necessary to enable JavaScript.
+                        Here are the
+                        <a href="http://www.enable-javascript.com/" target="_blank">
+                            instructions how to enable JavaScript in your web browser
+                        </a>.
+                    </div>
+                </noscript>
+                <if(input.content)>
+                    <include(input.content) />
+                </if>
+            </div>
+        </div>
+        <footer>
+            <a href="/privacy">Privacy Policy</a> &middot; &copy; Max Klein
+        </footer>
 
         <script src="/js/main.js"></script>
         <script if(cookieMessage) src="/js/cookieMessage.js"></script>
-		<if(input.scripts)>
-			<include(input.scripts) />
-		</if>
+        <if(input.scripts)>
+            <include(input.scripts) />
+        </if>
     </body>
 </html>

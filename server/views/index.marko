@@ -1,14 +1,14 @@
 <include("./layout/default.marko") description="Max Klein's personal website">
     <@content>
-		<h1>Hi!</h1>
+        <h1>Hi!</h1>
         <p>
             I'm Max Klein.<br />
-			This is my personal website where I publish some of my
-			projects.
-		</p>
-		<p>
-			The source code of the webseite you are viewing right now is available over on GitLab: <a href="https://gitlab.com/maxkl2/maxkl.de">maxkl2/maxkl.de</a>
-		</p>
+            This is my personal website where I publish some of my
+            projects.
+        </p>
+        <p>
+            The source code of the webseite you are viewing right now is available over on GitLab: <a href="https://gitlab.com/maxkl2/maxkl.de">maxkl2/maxkl.de</a>
+        </p>
 
         <h2>Project showcase <a href="/projects">(more projects...)</a></h2>
         <include("./project-list.marko", { projects: input.showcasedProjects }) />
