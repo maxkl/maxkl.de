@@ -4,8 +4,38 @@
  */
 
 const serveStatic = require('serve-static');
+const request = require('request');
+const showdown = require('showdown');
 
 module.exports = function (app, db, projectsData) {
+
+    const showdownConverter = new showdown.Converter();
+    showdownConverter.setFlavor('github');
+
+    function prepareProject(project, callback) {
+        if (project.fromGitLab) {
+            let loadLongDesc = false;
+
+            if (!project.hasOwnProperty('longDesc')) {
+                loadLongDesc = true;
+            }
+
+            if (loadLongDesc) {
+                request.get(project.sourceLink + '/raw/master/README.md', function (err, res, body) {
+                    if (!err) {
+                        const html = showdownConverter.makeHtml(body);
+                        project.longDesc = html;
+                    }
+
+                    callback();
+                });
+            } else {
+                callback();
+            }
+        } else {
+            callback();
+        }
+    }
 
 	app.get('/projects', function (req, res) {
         res.renderMarko('projects', {
@@ -24,8 +54,10 @@ module.exports = function (app, db, projectsData) {
 
         const project = projectsData.byName[projectName];
 
-        res.renderMarko('project', {
-            project: project
+        prepareProject(project, function () {
+            res.renderMarko('project', {
+                project: project
+            });
         });
     });
 

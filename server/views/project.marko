@@ -9,5 +9,8 @@
         <div if(input.project.imageCount > 0) class="image-list">
             <img for(i from 1 to input.project.imageCount) src="/projects/${input.project.name}/static/image${i}.jpg" />
         </div>
+        <div if(input.project.longDesc)>
+            $!{input.project.longDesc}
+        </div>
     </@content>
 </include>
