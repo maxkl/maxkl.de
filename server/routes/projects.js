@@ -10,18 +10,9 @@ const projects = require('../lib/projects');
 module.exports = function (app, db, projectsData) {
 
     app.get('/projects', function (req, res) {
-        const allProjects = [];
-        projectsData.categories.forEach(function (category) {
-            for (let i = 0; i < category.projects.length; i++) {
-                allProjects.push(category.projects[i]);
-            }
-        });
-
-        projects.prepareAll(allProjects, function () {
-            res.renderMarko('projects', {
-                showcasedProjects: projectsData.showcased,
-                projectCategories: projectsData.categories
-            });
+        res.renderMarko('projects', {
+            showcasedProjects: projectsData.showcased,
+            projectCategories: projectsData.categories
         });
     });
 
@@ -35,10 +26,8 @@ module.exports = function (app, db, projectsData) {
 
         const project = projectsData.byName[projectName];
 
-        projects.prepare(project, function () {
-            res.renderMarko('project', {
-                project: project
-            });
+        res.renderMarko('project', {
+            project: project
         });
     });
 
@@ -49,6 +38,8 @@ module.exports = function (app, db, projectsData) {
             if (project.hasStatic) {
                 app.use('/projects/' + projectName + '/static', serveStatic(project.staticDir));
             }
+
+            projects.prepare(project, function () {});
         }
     }
 
