@@ -16,7 +16,7 @@ module.exports = function (app, db, projectsData) {
         if (project.fromGitLab) {
             let loadLongDesc = false;
 
-            if (!project.hasOwnProperty('longDesc')) {
+            if (project.longDesc === null) {
                 loadLongDesc = true;
             }
 

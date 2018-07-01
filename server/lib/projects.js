@@ -20,11 +20,13 @@ function readProjectConfig(dir, name) {
 
 	return Object.assign({}, {
 		hidden: false,
+        fromGitLab: false,
 		title: name.substr(0, 1).toUpperCase() + name.substr(1),
         category: 'Other',
         shortDesc: '',
         link: null,
-        sourceLink: null
+        sourceLink: null,
+        longDesc: null
 	}, contents);
 }
 
@@ -57,11 +59,13 @@ function getProject(directory, name) {
 
 	return {
         name: name,
+        fromGitLab: config.fromGitLab,
         title: config.title,
         category: config.category,
         shortDesc: config.shortDesc,
         link: config.link,
         sourceLink: config.sourceLink,
+        longDesc: config.longDesc,
         hasStatic: hasStatic,
         staticDir: staticDir,
         hasThumbnail: hasThumbnail,
