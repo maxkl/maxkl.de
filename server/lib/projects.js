@@ -112,6 +112,7 @@ function prepareProject(project, callback) {
 
             request({ url: apiBaseUrl, json: true }, function (err, res, body) {
                 if (err) {
+                    console.error(err);
                     callback();
                     return;
                 }
@@ -138,7 +139,9 @@ function prepareProject(project, callback) {
                     const readmeUrl = apiBaseUrl + '/repository/files/' + readmeName + '/raw?ref=' + readmeBranch;
 
                     request(readmeUrl, function (err, res, body) {
-                        if (!err) {
+                        if (err) {
+                            console.error(err);
+                        } else {
                             const html = showdownConverter.makeHtml(body);
                             project.longDesc = html;
                         }
@@ -176,7 +179,8 @@ function readProjectsConfig(dir) {
     let contents;
     try {
         contents = JSON.parse(fs.readFileSync(filename));
-    } catch(e) {
+    } catch (e) {
+        console.error(e);
         contents = null;
     }
 
