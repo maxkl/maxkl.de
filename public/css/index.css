@@ -54,6 +54,20 @@ h2 > a {
     font-weight: normal;
 }
 
+code {
+    padding: 0.05em 0.3em;
+
+    font-size: 0.9em;
+    background-color: #eeeeee;
+    border-radius: 0.2em;
+}
+
+pre > code {
+    display: block;
+    padding: 0.5em 0.7em;
+    overflow-x: auto;
+}
+
 nav {
     display: block;
     width: 100%;
