@@ -55,7 +55,7 @@ function getProject(directory, name) {
 
         let markdown;
         try {
-            markdown = fs.readFileSync(filename);
+            markdown = fs.readFileSync(filename, 'utf8');
         } catch (e) {
             markdown = null;
         }
