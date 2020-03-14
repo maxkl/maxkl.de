@@ -1,5 +1,5 @@
 /**
- * Copyright: (c) 2016-2018 Max Klein
+ * Copyright: (c) 2016-2020 Max Klein
  * License: MIT
  */
 
@@ -133,8 +133,8 @@ function prepareProject(project, callback) {
                     const url = new URL(body.readme_url);
                     const pathParts = url.pathname.split(path.sep).filter(part => part.length > 0);
 
-                    const readmeBranch = pathParts[3];
-                    const readmeName = pathParts[4];
+                    const readmeBranch = body.default_branch;
+                    const readmeName = pathParts[pathParts.length - 1];
 
                     const readmeUrl = apiBaseUrl + '/repository/files/' + readmeName + '/raw?ref=' + readmeBranch;
 
