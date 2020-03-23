@@ -3,3 +3,10 @@ languageCode = "en-us"
 theme = "beautifulhugo"
 
 title = "maxkl.de"
+
+[Author]
+    name = "Max Klein"
+    gitlab = "maxkl2"
+    github = "maxkl"
+    stackoverflow = "users/3593126/max-klein"
+    xing = "Max_Klein52"
