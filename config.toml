@@ -4,9 +4,55 @@ theme = "beautifulhugo"
 
 title = "maxkl.de"
 
+[Params]
+    favicon = "/favicon.ico"
+    hideAuthor = true
+    dateFormat = "2.1.2006"
+    mainSections = ["projects", "post"]
+    postLikeSections = ["post", "projects"]
+
 [Author]
     name = "Max Klein"
     gitlab = "maxkl2"
     github = "maxkl"
     stackoverflow = "users/3593126/max-klein"
     xing = "Max_Klein52"
+
+[[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+
+[[menu.main]]
+    name = "Projects"
+    identifier = "projects"
+    weight = 2
+
+[[menu.main]]
+    parent = "projects"
+    name = "All"
+    url = "/projects/"
+    weight = 1
+
+[[menu.main]]
+    parent = "projects"
+    name = "Electronics"
+    url = "/projects/electronics/"
+    weight = 2
+
+[[menu.main]]
+    parent = "projects"
+    name = "Digital Circuits"
+    url = "/projects/digital-circuits/"
+    weight = 3
+
+[[menu.main]]
+    parent = "projects"
+    name = "Games"
+    url = "/projects/games/"
+    weight = 4
+
+[[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 3
