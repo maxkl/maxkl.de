@@ -1,0 +1,22 @@
+{{/* initialize to empty slice */}}
+{{ $pages := slice }}
+{{ $currentSection := .CurrentSection }}
+
+{{/* Select all pages whose type is one of those in Params.mainSections */}}
+{{ range where site.RegularPages "Type" "in" site.Params.mainSections }}
+  {{/* Check that the page is below the current section */}}
+  {{ if hasPrefix (.RelPermalink | string) $currentSection.RelPermalink }}
+    {{/* Append to the pages slice */}}
+    {{ $pages = $pages | append . }}
+  {{ end }}
+{{ end }}
+
+<div class="posts-list">
+  {{/* Paginate the pages we just found */}}
+  {{ $paginator := .Paginate $pages }}
+  {{ range $paginator.Pages }}
+    {{ partial "post_preview" . }}
+  {{ end }}
+</div>
+
+{{ template "_internal/pagination.html" . }}
