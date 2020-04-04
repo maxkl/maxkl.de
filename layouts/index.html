@@ -6,7 +6,22 @@
           {{.}}
         {{ end }}
 
-        {{ partial "recursive_post_list" . }}
+        {{/* initialize to empty slice */}}
+        {{ $pages := slice }}
+
+        {{/* Select all pages which have the "featured" parameter */}}
+        {{ range site.RegularPages }}
+          {{ if isset .Params "featured" }}
+            {{/* Append to the pages slice */}}
+            {{ $pages = $pages | append . }}
+          {{ end }}
+        {{ end }}
+
+        <div class="posts-list">
+          {{ range sort $pages "Params.featured" }}
+            {{ partial "post_preview" . }}
+          {{ end }}
+        </div>
       </div>
     </div>
   </div>

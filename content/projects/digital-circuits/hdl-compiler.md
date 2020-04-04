@@ -4,6 +4,7 @@ subtitle: "Compiler for a self-invented hardware description language"
 date: 2020-03-15T08:06:16+01:00
 image: /images/hdl-compiler/code-and-sim.jpg
 sourceLink: https://gitlab.com/maxkl2/hdl-compiler
+featured: 2
 ---
 
 A compiler written in Rust that compiles source code in a hardware description language which I developed myself. It produces files that can be read by [gitlab.com/maxkl2/LogicSimulator](https://gitlab.com/maxkl2/LogicSimulator), a web-based simulator for digital circuits.

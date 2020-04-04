@@ -4,6 +4,7 @@ subtitle: "An electronic load controlled by an STM32 microcontroller"
 date: 2020-03-15T07:49:29+01:00
 image: /images/electronic-load/setup.jpg
 sourceLink: https://gitlab.com/maxkl2/ElectronicLoad
+featured: 1
 ---
 
 At the moment, it's only a constant current load, but constant power and constant resistance modes could be implemented in software.

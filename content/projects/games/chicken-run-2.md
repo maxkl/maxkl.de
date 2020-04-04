@@ -5,6 +5,7 @@ date: 2020-03-15T23:30:03+01:00
 image: /images/chicken-run-2/gameplay.jpg
 link: https://maxkl.de/chicken2/
 sourceLink: https://gitlab.com/maxkl2/ChickenRun2
+featured: 4
 ---
 
 A HTML5 Jump 'n' Run game
