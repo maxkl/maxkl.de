@@ -1,7 +1,7 @@
 ---
 title: "Chicken Run 2"
 subtitle: "Flap your little wings to avoid the hay bales!"
-date: 2020-03-15T23:30:03+01:00
+date: 2016-10-15T17:18:00+02:00
 image: /images/chicken-run-2/gameplay.jpg
 link: https://maxkl.de/chicken2/
 sourceLink: https://gitlab.com/maxkl2/ChickenRun2

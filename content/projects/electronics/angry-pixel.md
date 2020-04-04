@@ -1,7 +1,7 @@
 ---
 title: "Angry Pixel"
 subtitle: "Game on the EK-TM4C123GXL and a 64x16 LED matrix where you have to throw a pixel"
-date: 2020-03-15T22:23:41+01:00
+date: 2018-02-21T22:23:06+01:00
 image: /images/angry-pixel/gameplay.jpg
 sourceLink: https://gitlab.com/maxkl2/angry-pixel
 featured: 5

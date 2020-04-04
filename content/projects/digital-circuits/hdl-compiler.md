@@ -1,7 +1,7 @@
 ---
 title: "HDL Compiler"
 subtitle: "Compiler for a self-invented hardware description language"
-date: 2020-03-15T08:06:16+01:00
+date: 2017-12-10T10:26:00+01:00
 image: /images/hdl-compiler/code-and-sim.jpg
 sourceLink: https://gitlab.com/maxkl2/hdl-compiler
 featured: 2

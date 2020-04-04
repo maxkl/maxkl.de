@@ -1,7 +1,7 @@
 ---
 title: "Electronic Load"
 subtitle: "An electronic load controlled by an STM32 microcontroller"
-date: 2020-03-15T07:49:29+01:00
+date: 2018-09-13T20:11:00+02:00
 image: /images/electronic-load/setup.jpg
 sourceLink: https://gitlab.com/maxkl2/ElectronicLoad
 featured: 1

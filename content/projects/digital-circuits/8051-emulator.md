@@ -1,7 +1,7 @@
 ---
 title: "8051 Emulator"
 subtitle: "Emulates an AT89C5131A microcontroller"
-date: 2020-03-15T23:26:13+01:00
+date: 2016-07-27T14:24:00+02:00
 #image: /images/8051-emulator/image.jpg
 sourceLink: https://gitlab.com/maxkl2/8051Emu
 ---
