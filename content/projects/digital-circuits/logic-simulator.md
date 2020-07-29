@@ -3,7 +3,7 @@ title: "Logic Simulator"
 subtitle: "A simulator for digital circuits"
 date: 2017-05-17T09:47:00+02:00
 image: /images/logic-simulator/simulation-mode.jpg
-link: https://maxkl.de/LogicSimulator/
+link: https://projects.maxkl.de/LogicSimulator/
 sourceLink: https://gitlab.com/maxkl2/LogicSimulator
 featured: 3
 ---
