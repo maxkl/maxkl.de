@@ -16,6 +16,7 @@ title = "maxkl.de"
     gitlab = "maxkl2"
     github = "maxkl"
     stackoverflow = "users/3593126/max-klein"
+    linkedin = "maxkl"
     xing = "Max_Klein52"
 
 [[menu.main]]
@@ -48,9 +49,15 @@ title = "maxkl.de"
 
 [[menu.main]]
     parent = "projects"
+    name = "Computer Graphics"
+    url = "/projects/graphics/"
+    weight = 4
+
+[[menu.main]]
+    parent = "projects"
     name = "Games"
     url = "/projects/games/"
-    weight = 4
+    weight = 5
 
 [[menu.main]]
     name = "About"
