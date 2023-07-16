@@ -32,7 +32,7 @@ The protective enclosure was fabricated from 2 and 3 mm acrylic sheets by the la
 
 {{< gallery >}}
 	{{< figure src="/images/thermometer/showcase.jpg" caption="Fully assembled thermometer in use" >}}
-	{{< figure src="/images/thermometer/datalog.jpg" caption="Data log of temperature and relative humidity recorded by the device" >}}
+	{{< figure src="/images/thermometer/datalog.png" caption="Data log of temperature and relative humidity recorded by the device" >}}
 	{{< figure src="/images/thermometer/front.jpg" caption="PCB front side" >}}
 	{{< figure src="/images/thermometer/back.jpg" caption="PCB back side" >}}
 	{{< figure src="/images/thermometer/programming.jpg" caption="Programming and debugging using the custom pogo pin assembly" >}}
