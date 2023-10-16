@@ -7,10 +7,27 @@ sourceLink: https://gitlab.com/maxkl2/PreciseTemp
 featured: 0
 ---
 
+<!--## Description-->
+
 <!-- Motivation -->
 The idea for this combined thermometer and hygrometer came from the desire for a way to determine the best way to cool my shared attic flat in the summer. It should be able to measure temperatures down to a minimum precision of 0.1 °C and react quickly to changes in the ambient temperature. I wanted it to be small and portable, with a battery life long enough so that I didn't have to worry about replacing the battery too often even with regular use. In addition, a simple data logging functionality would be nice.
 
 <!--more-->
+
+## Gallery
+
+{{< gallery >}}
+	{{< figure src="/images/thermometer/showcase.jpg" caption="Fully assembled thermometer in use" >}}
+	{{< figure src="/images/thermometer/datalog.png" caption="Data log of temperature and relative humidity recorded by the device" >}}
+	{{< figure src="/images/thermometer/front.jpg" caption="PCB front side" >}}
+	{{< figure src="/images/thermometer/back.jpg" caption="PCB back side" >}}
+	{{< figure src="/images/thermometer/programming.jpg" caption="Programming and debugging using the custom pogo pin assembly" >}}
+	{{< figure src="/images/thermometer/usb.jpg" caption="Connection to a PC over USB for data logging" >}}
+	{{< figure src="/images/thermometer/freezer.jpg" caption="Measuring negative temperatures" >}}
+	{{< figure src="/images/thermometer/schematic.png" caption="Schematic" >}}
+{{< /gallery >}}
+
+## Design details
 
 <!-- Sensors -->
 To achieve the desired specifications without requiring difficult calibration, fully integrated sensors with I²C interfaces were chosen. The temperature sensor is a [TMP117 by Texas Instruments](https://www.ti.com/lit/ds/symlink/tmp117.pdf) with guaranteed ±0.1 °C accuracy from -20 °C to 50 °C and a resolution of 0.0078 °C. The [HTU31D by TE](https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7FHTU31_RHT_SENSOR_IC%7F5%7Fpdf%7FEnglish%7FENG_DS_HTU31_RHT_SENSOR_IC_5.pdf%7FCAT-HSC0007) was selected as the humidity sensor. Its accuracy of ±2 %RH is good compared to other similar sensors and was deemed sufficient for the application.
@@ -28,15 +45,3 @@ The thermometer is powered by a single CR2032 coin cell. A buck-boost converter 
 <!-- Enclosure -->
 The protective enclosure was fabricated from 2 and 3 mm acrylic sheets by the laser cutting service [Formulor](https://www.formulor.de/).
 
-## Gallery
-
-{{< gallery >}}
-	{{< figure src="/images/thermometer/showcase.jpg" caption="Fully assembled thermometer in use" >}}
-	{{< figure src="/images/thermometer/datalog.png" caption="Data log of temperature and relative humidity recorded by the device" >}}
-	{{< figure src="/images/thermometer/front.jpg" caption="PCB front side" >}}
-	{{< figure src="/images/thermometer/back.jpg" caption="PCB back side" >}}
-	{{< figure src="/images/thermometer/programming.jpg" caption="Programming and debugging using the custom pogo pin assembly" >}}
-	{{< figure src="/images/thermometer/usb.jpg" caption="Connection to a PC over USB for data logging" >}}
-	{{< figure src="/images/thermometer/freezer.jpg" caption="Measuring negative temperatures" >}}
-	{{< figure src="/images/thermometer/schematic.png" caption="Schematic" >}}
-{{< /gallery >}}
