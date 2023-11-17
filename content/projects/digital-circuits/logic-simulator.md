@@ -10,13 +10,11 @@ featured: 3
 
 This is a web application for editing and simulating digital circuits.
 
-The simulator uses a cycle-based algorithm: each component is evaluated once per simulation cycle. It does not account for the propagation delay of wires or components. At the moment, the simulation speed is fixed to the screen refresh rate. However, the plan is to run the simulation in a background thread (web worker) in the future, which would make much higher simulation speeds possible.
+The simulator uses a cycle-based algorithm: each component is evaluated once per simulation cycle. It does not account for the propagation delay of wires or components. The simulation runs in a background worker process, which means that it can run at high speeds without affecting the user interface. However, it is also possible to tie the simulation speed to the screen refresh rate.
 
-I've implemented all the basic logic gates, and a few more complex components. It's also possible to create custom components from the existing ones.
+I have implemented all the basic logic gates, and a few more complex components such as counters or memory. It is also possible to graphically combine existing components into new ones.
 
-Circuits can be saved locally as JSON files. Currently, there is no way to save them online.
-
-The ultimate goal for me is to implement a CPU inside this simulator. This would definitely be possible at the moment, but I'd like to improve the editor and the simulation algorithm first, to make it a bit easier.
+The ultimate goal was to implement a CPU inside this simulator. See [HDL Compiler]({{< relref "hdl-compiler" >}}).
 
 ## Gallery
 

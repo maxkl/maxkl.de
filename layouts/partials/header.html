@@ -56,10 +56,10 @@
                 {{ if or $link $sourceLink }}
                   <div class="btn-toolbar" style="margin-top: 1em;">
                     {{ if $link }}
-                      <a href="{{ $link }}" class="btn btn-primary">Open <i class="fas fa-external-link-alt"></i></a>
+                      <a href="{{ $link }}" target="_blank" class="btn btn-primary">Open <i class="fas fa-external-link-alt"></i></a>
                     {{ end }}
                     {{ if $sourceLink }}
-                      <a href="{{ $sourceLink }}" class="btn btn-primary">View source <i class="fas fa-external-link-alt"></i></a>
+                      <a href="{{ $sourceLink }}" target="_blank" class="btn btn-primary">View source <i class="fas fa-external-link-alt"></i></a>
                     {{ end }}
                   </div>
                 {{ end }}
@@ -96,10 +96,10 @@
               {{ if or $link $sourceLink }}
                 <div class="btn-toolbar" style="margin-top: 1em;">
                   {{ if $link }}
-                    <a href="{{ $link }}" class="btn btn-primary">Open <i class="fas fa-external-link-alt"></i></a>
+                    <a href="{{ $link }}" target="_blank" class="btn btn-primary">Open <i class="fas fa-external-link-alt"></i></a>
                   {{ end }}
                   {{ if $sourceLink }}
-                    <a href="{{ $sourceLink }}" class="btn btn-primary">View source <i class="fas fa-external-link-alt"></i></a>
+                    <a href="{{ $sourceLink }}" target="_blank" class="btn btn-primary">View source <i class="fas fa-external-link-alt"></i></a>
                   {{ end }}
                 </div>
               {{ end }}

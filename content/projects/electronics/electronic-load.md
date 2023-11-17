@@ -4,7 +4,7 @@ subtitle: "An electronic load controlled by an STM32 microcontroller"
 date: 2018-09-13T20:11:00+02:00
 image: /images/electronic-load/setup.jpg
 sourceLink: https://gitlab.com/maxkl2/ElectronicLoad
-featured: 1
+featured: 2
 ---
 
 At the moment, it's only a constant current load, but constant power and constant resistance modes could be implemented in software.
@@ -18,13 +18,14 @@ The microcontroller could also be used to implement stepping of the load current
 The components are dimensioned for a load current up to 5 A and an input voltage up to 50 V. The power dissipation is obviously limited to less than 5 A at 50 V (which would be 250 W!).
 I did not test the maximum power dissipation yet, but it should be possible to improve it by adding a fan to the heat sink.
 
-The project was inspired by [this video by Dave Jones](https://youtu.be/8xX2SVcItOA).
+The project was inspired by [this video by Dave Jones (EEVblog)](https://youtu.be/8xX2SVcItOA).
 
 ## Gallery
 
 {{< gallery >}}
 	{{< figure src="/images/electronic-load/setup.jpg" >}}
 	{{< figure src="/images/electronic-load/top-open.jpg" >}}
+	{{< figure src="/images/electronic-load/schematic.png" >}}
 	{{< figure src="/images/electronic-load/main-and-front-board.jpg" >}}
 	{{< figure src="/images/electronic-load/main-board.jpg" >}}
 	{{< figure src="/images/electronic-load/front-board.jpg" >}}
